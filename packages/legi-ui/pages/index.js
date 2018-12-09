@@ -3,15 +3,14 @@ import React from "react";
 import styled from "styled-components";
 //import Tree from "react-ui-tree";
 import AsyncFetch from "../src/AsyncFetch";
-import map from "unist-util-map";
-import cx from "classnames";
 
 import Tree from "../src/Tree";
+import BreadCrumbs from "../src/BreadCrumbs";
 import Autocomplete from "../src/Autocomplete";
 
 import "../src/styles.css";
 import "../src/code.css";
-import "../src/tree.css";
+// import "../src/tree.css";
 
 const fetchStructure = code =>
   fetch(`http://127.0.0.1:3005/texte/${code}/structure`).then(r => r.json());
@@ -34,30 +33,7 @@ const fetchNode = (code, node) => {
   }
 };
 
-const BreadcrumbsContainer = styled.div`
-  span {
-    border-right: 1px solid silver;
-    padding: 0 10px;
-  }
-`;
-
-const Breadcrumbs = ({ items, onClick }) => (
-  <BreadcrumbsContainer>
-    {items &&
-      items.map(p => (
-        <span
-          style={{ borderRight: "1px solid silver", padding: "0 10px" }}
-          key={p.id}
-        >
-          <a href="#" onClick={() => onClick(p)}>
-            {p.titre_ta}
-          </a>
-        </span>
-      ))}
-  </BreadcrumbsContainer>
-);
-
-const Article = ({ parents, data, onSectionClick }) => (
+const Article = ({ data }) => (
   <div>
     <h1>
       {data.titre}
@@ -71,7 +47,6 @@ const Article = ({ parents, data, onSectionClick }) => (
       </a>
     </h1>
 
-    <Breadcrumbs items={parents} onClick={onSectionClick} />
     <div dangerouslySetInnerHTML={{ __html: data.bloc_textuel }} />
     <div dangerouslySetInnerHTML={{ __html: data.nota }} />
   </div>
@@ -91,13 +66,14 @@ const H = ({ depth, ...props }) =>
 
 const MAX_DEPTH = 3;
 
-const Section = ({ children, data, titre_ta, depth = 0 }) =>
-  (depth < MAX_DEPTH && (
-    <div>
-      <H depth={depth}>{titre_ta}</H>
+const Section = ({ children, data, depth = 0 }) => (
+  <div>
+    <H depth={depth}>
+      {data && data.titre_ta}
       {(depth === 0 &&
         data.cid && (
           <a
+            style={{ marginLeft: 10, fontSize: 12 }}
             href={`https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${
               data.id
             }&cidTexte=${data.cid}`}
@@ -106,24 +82,26 @@ const Section = ({ children, data, titre_ta, depth = 0 }) =>
           </a>
         )) ||
         null}
-      {children &&
-        children.map(child => {
-          if (child.type === "article") {
-            return <li key={child.data.id}>{child.data.titre}</li>;
-          } else if (child.type === "section") {
-            return (
-              (
-                <div key={child.data.id}>
-                  <H depth={depth + 1}>{child.data.titre_ta}</H>
+    </H>
+    {children &&
+      children.map(child => {
+        if (child.type === "article") {
+          return <li key={child.data.id}>{child.data.titre}</li>;
+        } else if (child.type === "section") {
+          return (
+            (
+              <div key={child.data.id}>
+                <H depth={depth + 1}>{child.data.titre_ta}</H>
+                {depth < MAX_DEPTH && (
                   <Section depth={depth + 1}>{child.children}</Section>
-                </div>
-              ) || null
-            );
-          }
-        })}
-    </div>
-  )) ||
-  null;
+                )}
+              </div>
+            ) || null
+          );
+        }
+      })}
+  </div>
+);
 
 const previewComponents = {
   article: Article,
@@ -140,7 +118,8 @@ const Preview = ({ code, node, onSectionClick }) => {
         if (result) {
           return (
             <div className="code">
-              <PreviewComponent {...result} onSectionClick={onSectionClick} />
+              <BreadCrumbs items={result.parents} onClick={onSectionClick} />
+              <PreviewComponent {...result} />
             </div>
           );
         }
@@ -167,7 +146,11 @@ class Browser extends React.Component {
       active: isOpened ? node : null
     });
   };
-  onSectionClick = section => {};
+  onSectionClick = section => {
+    this.setState({
+      active: { ...section, type: "section" }
+    });
+  };
   render() {
     return (
       <div style={{ display: "flex", flexDirection: "row" }}>
