@@ -1,0 +1,430 @@
+[
+  {
+    "id": "LEGITEXT000006071029",
+    "titre": "Code pénal (ancien)"
+  },
+  {
+    "id": "LEGITEXT000006070721",
+    "titre": "Code civil"
+  },
+  {
+    "id": "LEGITEXT000005634379",
+    "titre": "Code de commerce"
+  },
+  {
+    "id": "LEGITEXT000006069441",
+    "titre": "Code de commerce (ancien)"
+  },
+  {
+    "id": "LEGITEXT000006071071",
+    "titre": "Code de déontologie de la police nationale"
+  },
+  {
+    "id": "LEGITEXT000006071103",
+    "titre": "Code de déontologie de la profession de commissaire aux comptes"
+  },
+  {
+    "id": "LEGITEXT000006070159",
+    "titre": "Code de déontologie des agents de police municipale"
+  },
+  {
+    "id": "LEGITEXT000006074232",
+    "titre": "Code de déontologie des architectes"
+  },
+  {
+    "id": "LEGITEXT000006072636",
+    "titre": "Code de déontologie des chirurgiens-dentistes"
+  },
+  {
+    "id": "LEGITEXT000006072664",
+    "titre": "Code de déontologie des médecins"
+  },
+  {
+    "id": "LEGITEXT000006074510",
+    "titre": "Code de déontologie des professionnels de l'expertise comptable"
+  },
+  {
+    "id": "LEGITEXT000006072635",
+    "titre": "Code de déontologie des sages-femmes"
+  },
+  {
+    "id": "LEGITEXT000006072634",
+    "titre": "Code de déontologie médicale"
+  },
+  {
+    "id": "LEGITEXT000006072360",
+    "titre": "Code de déontologie vétérinaire"
+  },
+  {
+    "id": "LEGITEXT000006070933",
+    "titre": "Code de justice administrative"
+  },
+  {
+    "id": "LEGITEXT000006070884",
+    "titre": "Code de justice militaire"
+  },
+  {
+    "id": "LEGITEXT000006071360",
+    "titre": "Code de justice militaire (nouveau)"
+  },
+  {
+    "id": "LEGITEXT000006071737",
+    "titre": "Code de l'Office national interprofessionnel du blé"
+  },
+  {
+    "id": "LEGITEXT000006074069",
+    "titre": "Code de l'action sociale et des familles"
+  },
+  {
+    "id": "LEGITEXT000006075116",
+    "titre": "Code de l'artisanat"
+  },
+  {
+    "id": "LEGITEXT000006074234",
+    "titre": "Code de l'aviation civile"
+  },
+  {
+    "id": "LEGITEXT000006071014",
+    "titre": "Code de l'enseignement technique"
+  },
+  {
+    "id": "LEGITEXT000006070158",
+    "titre": "Code de l'entrée et du séjour des étrangers et du droit d'asile"
+  },
+  {
+    "id": "LEGITEXT000006074220",
+    "titre": "Code de l'environnement"
+  },
+  {
+    "id": "LEGITEXT000006074224",
+    "titre": "Code de l'expropriation pour cause d'utilité publique"
+  },
+  {
+    "id": "LEGITEXT000006070882",
+    "titre": "Code de l'industrie cinématographique"
+  },
+  {
+    "id": "LEGITEXT000006071164",
+    "titre": "Code de l'organisation judiciaire"
+  },
+  {
+    "id": "LEGITEXT000006074075",
+    "titre": "Code de l'urbanisme"
+  },
+  {
+    "id": "LEGITEXT000006071191",
+    "titre": "Code de l'éducation"
+  },
+  {
+    "id": "LEGITEXT000023983208",
+    "titre": "Code de l'énergie"
+  },
+  {
+    "id": "LEGITEXT000006071007",
+    "titre": "Code de la légion d'honneur et de la médaille militaire"
+  },
+  {
+    "id": "LEGITEXT000037701019",
+    "titre": "Code de la commande publique"
+  },
+  {
+    "id": "LEGITEXT000006069565",
+    "titre": "Code de la consommation"
+  },
+  {
+    "id": "LEGITEXT000006069472",
+    "titre": "Code de la consommation des boissons et des mesures contre l'alcoolisme applicable dans la collectivité territoriale de Mayotte"
+  },
+  {
+    "id": "LEGITEXT000006074096",
+    "titre": "Code de la construction et de l'habitation"
+  },
+  {
+    "id": "LEGITEXT000006071307",
+    "titre": "Code de la défense"
+  },
+  {
+    "id": "LEGITEXT000006072637",
+    "titre": "Code de la famille et de l'aide sociale"
+  },
+  {
+    "id": "LEGITEXT000037673300",
+    "titre": "Code de la légion d'honneur, de la Médaille militaire et de l'ordre national du Mérite"
+  },
+  {
+    "id": "LEGITEXT000006074067",
+    "titre": "Code de la mutualité"
+  },
+  {
+    "id": "LEGITEXT000006071189",
+    "titre": "Code de la nationalité française"
+  },
+  {
+    "id": "LEGITEXT000006069414",
+    "titre": "Code de la propriété intellectuelle"
+  },
+  {
+    "id": "LEGITEXT000006071190",
+    "titre": "Code de la recherche"
+  },
+  {
+    "id": "LEGITEXT000006074947",
+    "titre": "Code de la route (ancien)"
+  },
+  {
+    "id": "LEGITEXT000006074228",
+    "titre": "Code de la route"
+  },
+  {
+    "id": "LEGITEXT000006072665",
+    "titre": "Code de la santé publique"
+  },
+  {
+    "id": "LEGITEXT000025503132",
+    "titre": "Code de la sécurité intérieure"
+  },
+  {
+    "id": "LEGITEXT000006073189",
+    "titre": "Code de la sécurité sociale"
+  },
+  {
+    "id": "LEGITEXT000006070667",
+    "titre": "Code de la voirie routière"
+  },
+  {
+    "id": "LEGITEXT000006070716",
+    "titre": "Code de procédure civile"
+  },
+  {
+    "id": "LEGITEXT000006070680",
+    "titre": "Code de procédure civile (1807)"
+  },
+  {
+    "id": "LEGITEXT000006071154",
+    "titre": "Code de procédure pénale"
+  },
+  {
+    "id": "LEGITEXT000006073984",
+    "titre": "Code des assurances"
+  },
+  {
+    "id": "LEGITEXT000006073422",
+    "titre": "Code des caisses d'épargne"
+  },
+  {
+    "id": "LEGITEXT000006070162",
+    "titre": "Code des communes"
+  },
+  {
+    "id": "LEGITEXT000006070300",
+    "titre": "Code des communes de la Nouvelle-Calédonie"
+  },
+  {
+    "id": "LEGITEXT000006071570",
+    "titre": "Code des douanes"
+  },
+  {
+    "id": "LEGITEXT000006071645",
+    "titre": "Code des douanes de Mayotte"
+  },
+  {
+    "id": "LEGITEXT000006075115",
+    "titre": "Code des débits de boissons et des mesures contre l'alcoolisme"
+  },
+  {
+    "id": "LEGITEXT000006070666",
+    "titre": "Code des instruments monétaires et des médailles"
+  },
+  {
+    "id": "LEGITEXT000006070249",
+    "titre": "Code des juridictions financières"
+  },
+  {
+    "id": "LEGITEXT000005627819",
+    "titre": "Code des marchés publics (édition 2006)"
+  },
+  {
+    "id": "LEGITEXT000006069564",
+    "titre": "Code des marchés publics (édition 2001)"
+  },
+  {
+    "id": "LEGITEXT000006069562",
+    "titre": "Code des marchés publics (édition 1964)"
+  },
+  {
+    "id": "LEGITEXT000006072666",
+    "titre": "Code des marchés publics (édition 2004)"
+  },
+  {
+    "id": "LEGITEXT000006070302",
+    "titre": "Code des pensions civiles et militaires de retraite"
+  },
+  {
+    "id": "LEGITEXT000006074066",
+    "titre": "Code des pensions de retraite des marins français du commerce, de pêche ou de plaisance"
+  },
+  {
+    "id": "LEGITEXT000031712069",
+    "titre": "Code des pensions militaires d'invalidité et des victimes de guerre"
+  },
+  {
+    "id": "LEGITEXT000006074068",
+    "titre": "Code des pensions militaires d'invalidité et des victimes de la guerre"
+  },
+  {
+    "id": "LEGITEXT000006074233",
+    "titre": "Code des ports maritimes"
+  },
+  {
+    "id": "LEGITEXT000006070987",
+    "titre": "Code des postes et des communications électroniques"
+  },
+  {
+    "id": "LEGITEXT000025024948",
+    "titre": "Code des procédures civiles d'exécution"
+  },
+  {
+    "id": "LEGITEXT000031366350",
+    "titre": "Code des relations entre le public et l'administration"
+  },
+  {
+    "id": "LEGITEXT000023086525",
+    "titre": "Code des transports"
+  },
+  {
+    "id": "LEGITEXT000006071344",
+    "titre": "Code des tribunaux administratifs et des cours administratives d'appel"
+  },
+  {
+    "id": "LEGITEXT000006071188",
+    "titre": "Code disciplinaire et pénal de la marine marchande"
+  },
+  {
+    "id": "LEGITEXT000006071646",
+    "titre": "Code du blé"
+  },
+  {
+    "id": "LEGITEXT000020908868",
+    "titre": "Code du cinéma et de l'image animée"
+  },
+  {
+    "id": "LEGITEXT000006070208",
+    "titre": "Code du domaine de l'Etat"
+  },
+  {
+    "id": "LEGITEXT000006074235",
+    "titre": "Code du domaine de l'Etat et des collectivités publiques applicable à la collectivité territoriale de Mayotte"
+  },
+  {
+    "id": "LEGITEXT000006074237",
+    "titre": "Code du domaine public fluvial et de la navigation intérieure"
+  },
+  {
+    "id": "LEGITEXT000006074236",
+    "titre": "Code du patrimoine"
+  },
+  {
+    "id": "LEGITEXT000006071335",
+    "titre": "Code du service national"
+  },
+  {
+    "id": "LEGITEXT000006071318",
+    "titre": "Code du sport"
+  },
+  {
+    "id": "LEGITEXT000006074073",
+    "titre": "Code du tourisme"
+  },
+  {
+    "id": "LEGITEXT000006072050",
+    "titre": "Code du travail"
+  },
+  {
+    "id": "LEGITEXT000006072052",
+    "titre": "Code du travail applicable à Mayotte"
+  },
+  {
+    "id": "LEGITEXT000006072051",
+    "titre": "Code du travail maritime"
+  },
+  {
+    "id": "LEGITEXT000006071657",
+    "titre": "Code du vin"
+  },
+  {
+    "id": "LEGITEXT000006071514",
+    "titre": "Code forestier"
+  },
+  {
+    "id": "LEGITEXT000025244092",
+    "titre": "Code forestier (nouveau)"
+  },
+  {
+    "id": "LEGITEXT000006071556",
+    "titre": "Code forestier de Mayotte"
+  },
+  {
+    "id": "LEGITEXT000006070299",
+    "titre": "Code général de la propriété des personnes publiques"
+  },
+  {
+    "id": "LEGITEXT000006070633",
+    "titre": "Code général des collectivités territoriales"
+  },
+  {
+    "id": "LEGITEXT000006069568",
+    "titre": "Code général des impôts, annexe 1"
+  },
+  {
+    "id": "LEGITEXT000006069577",
+    "titre": "Code général des impôts"
+  },
+  {
+    "id": "LEGITEXT000006069569",
+    "titre": "Code général des impôts, annexe 2"
+  },
+  {
+    "id": "LEGITEXT000006069574",
+    "titre": "Code général des impôts, annexe 3"
+  },
+  {
+    "id": "LEGITEXT000006069576",
+    "titre": "Code général des impôts, annexe 4"
+  },
+  {
+    "id": "LEGITEXT000006071785",
+    "titre": "Code minier"
+  },
+  {
+    "id": "LEGITEXT000023501962",
+    "titre": "Code minier (nouveau)"
+  },
+  {
+    "id": "LEGITEXT000006072026",
+    "titre": "Code monétaire et financier"
+  },
+  {
+    "id": "LEGITEXT000006070719",
+    "titre": "Code pénal"
+  },
+  {
+    "id": "LEGITEXT000006071367",
+    "titre": "Code rural (nouveau)"
+  },
+  {
+    "id": "LEGITEXT000006071366",
+    "titre": "Code rural (ancien)"
+  },
+  {
+    "id": "LEGITEXT000022197698",
+    "titre": "Code rural et de la pêche maritime"
+  },
+  {
+    "id": "LEGITEXT000006070239",
+    "titre": "Code électoral"
+  },
+  {
+    "id": "LEGITEXT000006069583",
+    "titre": "Livre des procédures fiscales"
+  }
+]

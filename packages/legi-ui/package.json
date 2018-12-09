@@ -1,0 +1,22 @@
+{
+  "name": "code-browser",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Julien Bouquillon <julien.bouquillon@sg.social.gouv.fr>",
+  "license": "MIT",
+  "scripts": {
+    "start": "next dev"
+  },
+  "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "fuse.js": "^3.3.0",
+    "next": "^7.0.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-autocomplete": "^1.8.1",
+    "react-dom": "^16.6.3",
+    "react-ui-tree": "^4.0.0",
+    "styled-components": "^4.1.2",
+    "unist-util-map": "^1.0.4"
+  }
+}
