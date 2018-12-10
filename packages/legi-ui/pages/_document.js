@@ -69,7 +69,7 @@ MyDocument.getInitialProps = ctx => {
 
     return WrappedComponent;
   });
-
+  console.log("pageContext", pageContext);
   return {
     ...page,
     pageContext,
