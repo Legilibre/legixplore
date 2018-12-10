@@ -1,19 +1,12 @@
 [
   {
-    "id": "LEGITEXT000006071029",
-    "titre": "Code pénal (ancien)"
-  },
-  {
     "id": "LEGITEXT000006070721",
     "titre": "Code civil"
   },
   {
     "id": "LEGITEXT000005634379",
-    "titre": "Code de commerce"
-  },
-  {
-    "id": "LEGITEXT000006069441",
-    "titre": "Code de commerce (ancien)"
+    "titre": "Code de commerce",
+    "description": "En France, le Code de commerce est un ensemble de lois qui portent sur le droit commercial."
   },
   {
     "id": "LEGITEXT000006071071",
@@ -168,10 +161,6 @@
     "titre": "Code de la recherche"
   },
   {
-    "id": "LEGITEXT000006074947",
-    "titre": "Code de la route (ancien)"
-  },
-  {
     "id": "LEGITEXT000006074228",
     "titre": "Code de la route"
   },
@@ -321,7 +310,8 @@
   },
   {
     "id": "LEGITEXT000006074236",
-    "titre": "Code du patrimoine"
+    "titre": "Code du patrimoine",
+    "description": "Le code du patrimoine est un code français regroupant des dispositions de droit français concernant le patrimoine et certains services culturels."
   },
   {
     "id": "LEGITEXT000006071335",
@@ -337,7 +327,8 @@
   },
   {
     "id": "LEGITEXT000006072050",
-    "titre": "Code du travail"
+    "titre": "Code du travail",
+    "description": "Le code du travail français est un recueil organisé de la plupart des textes législatifs et réglementaires applicables en matière de droit du travail, et qui concerne essentiellement les salariés sous contrat de travail de droit privé, les salariés du secteur public étant généralement soumis à des statuts particuliers."
   },
   {
     "id": "LEGITEXT000006072052",
@@ -410,10 +401,6 @@
   {
     "id": "LEGITEXT000006071367",
     "titre": "Code rural (nouveau)"
-  },
-  {
-    "id": "LEGITEXT000006071366",
-    "titre": "Code rural (ancien)"
   },
   {
     "id": "LEGITEXT000022197698",

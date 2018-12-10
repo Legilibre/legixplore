@@ -2,6 +2,8 @@ import React from "react";
 import AsyncFetch from "../src/AsyncFetch";
 import fetch from "node-fetch";
 import memoize from "memoizee";
+import Head from "next/head";
+
 import Tree from "../src/Tree";
 import Layout from "../src/Layout";
 
@@ -131,6 +133,10 @@ class Browser extends React.Component {
   }
 }
 
+import codes from "../src/codes";
+
+const getCodeTitle = cid => codes.find(code => code.id === cid).titre;
+
 class CodePage extends React.Component {
   static async getInitialProps({ query }) {
     const structure = await fetchStructure(query.code);
@@ -142,20 +148,24 @@ class CodePage extends React.Component {
       detailData = await fetchSection(query.code, query.section);
     }
     return {
-      ...query,
+      query,
       structure,
       detailData
     };
   }
   render() {
-    const { structure, detailData, code } = this.props;
+    const { structure, detailData, query } = this.props;
     const PreviewComponent = detailData && previewComponents[detailData.type];
+    const codeTitle = getCodeTitle(query.code);
     return (
-      <Layout title="LEGI-explorer" structure={structure}>
+      <Layout title={codeTitle} structure={structure}>
+        <Head>
+          <title>{codeTitle} - LEGI explorer</title>
+        </Head>
         {detailData.data && (
           <div style={{ marginTop: 20 }}>
             <BreadCrumbs
-              cid={code}
+              cid={query.code}
               items={detailData.parents}
               onClick={() => {}}
             />

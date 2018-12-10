@@ -2,17 +2,15 @@ import React from "react";
 import cx from "classnames";
 import { withRouter } from "next/router";
 
+import { Link } from "./routes";
+
 import {
   Hidden,
   Divider,
-  Chip,
-  IconButton,
   Drawer as MaterialDrawer,
-  List,
   Typography
 } from "@material-ui/core";
 
-import { ChevronLeft as ChevronLeftIcon } from "@material-ui/icons";
 import Tree from "./Tree";
 
 const DrawerContent = withRouter(({ classes, structure, onToggle, router }) => (
@@ -21,7 +19,18 @@ const DrawerContent = withRouter(({ classes, structure, onToggle, router }) => (
 
 const Drawer = ({ classes, onToggle, opened, structure }) => (
   <div style={{ alignItems: "start" }}>
-    <div className={classes.toolbarIcon} />
+    <div className={classes.toolbarIcon}>
+      <Link route="index">
+        <Typography
+          color="inherit"
+          variant="h4"
+          align="center"
+          style={{ width: "100%", cursor: "pointer" }}
+        >
+          legiXplorer
+        </Typography>
+      </Link>
+    </div>
     <Divider />
     <Hidden smUp initialWidth="lg">
       <MaterialDrawer
