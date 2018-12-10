@@ -1,8 +1,33 @@
 import React from "react";
-import cx from "classnames";
+import { Link } from "./routes";
+/*
+
+  <React.Fragment>
+    <div className={classes.toolbarIcon}>
+      <IconButton onClick={onToggle}>
+        <ChevronLeftIcon />
+      </IconButton>
+    </div>
+    <List>
+      <Typography color="inherit">Entry 1</Typography>
+      <Typography color="inherit">Entry 1</Typography>
+      <Typography color="inherit">Entry 1</Typography>
+      <Typography color="inherit">Entry 1</Typography>
+      <Typography color="inherit">Entry 1</Typography>
+      <Typography color="inherit">Entry 1</Typography>
+    </List>
+    <Divider />
+    <List>
+      <Typography color="inherit">Entry 1</Typography>
+    </List>
+  </React.Fragment>
+  */
+
+import { Typography } from "@material-ui/core";
 
 const TreeNode = ({
   id,
+  cid,
   titre_ta,
   type,
   onClick,
@@ -12,43 +37,34 @@ const TreeNode = ({
   depth = 0
 }) => {
   const expand = isOpened(id);
+  console.log("type, id", type, id, cid);
   return (
     <div
       key={id}
-      className={cx({
-        node: true,
-        "is-active": isActive(id),
-        "is-opened": depth < 2 || expand
-      })}
       style={{
         marginLeft: Math.max(10, Math.min(6, depth + 1) * (5 - depth)) + "px"
       }}
     >
-      <div
-        style={{
-          margin: "5px 0",
-          textOverflow: "ellipsis",
-          width: "100%",
-          whiteSpace: "nowrap",
-          overflow: "hidden"
-        }}
-      >
-        <a
-          style={{ cursor: "pointer" }}
-          onClick={e => {
-            e.preventDefault();
-            onClick({ id, titre_ta, type });
-          }}
-        >
-          {titre_ta}
-        </a>
-      </div>
+      <Typography color="inherit" noWrap={true}>
+        <Link route={type} params={{ code: cid, [type]: id }}>
+          <a
+            title={titre_ta}
+            style={{ cursor: "pointer" }}
+            onClick={e => {
+              onClick({ id, titre_ta, type });
+            }}
+          >
+            {titre_ta}
+          </a>
+        </Link>
+      </Typography>
       <div>
         {children &&
           expand &&
           children.map(child => (
             <TreeNode
               key={child.id}
+              cid={cid}
               {...child}
               onClick={onClick}
               isActive={isActive}
@@ -99,10 +115,11 @@ class Tree extends React.Component {
   };
 
   render() {
-    const { id, titre_ta, children } = this.props;
+    const { cid, id, titre_ta, children } = this.props;
     return (
       <TreeNode
         id={id}
+        cid={cid}
         titre_ta={titre_ta}
         onClick={this.onToggle}
         isActive={this.isActive}

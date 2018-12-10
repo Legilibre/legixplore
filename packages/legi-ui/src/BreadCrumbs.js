@@ -1,31 +1,40 @@
 import React from "react";
-import styled from "styled-components";
 
-const BreadcrumbContainer = styled.span`
-  border-right: 1px solid silver;
-  padding: 0 10px;
-`;
+import { Typography } from "@material-ui/core";
 
-const BreadcrumbsContainer = styled.div`
-  ${BreadcrumbContainer}:first-child {
-    padding-left: 0;
-  }
-  ${BreadcrumbContainer}:last-child {
-    border-right: 0px;
-  }
-`;
+import { Link } from "./routes";
 
-const Breadcrumbs = ({ items, onClick }) => (
-  <BreadcrumbsContainer>
+const Breadcrumbs = ({ classes = {}, cid, items, onClick }) => (
+  <div>
     {items &&
-      items.map(p => (
-        <BreadcrumbContainer key={p.id}>
-          <a href="#" onClick={() => onClick(p)}>
-            {p.titre_ta}
-          </a>
-        </BreadcrumbContainer>
+      items.map((p, i, all) => (
+        <Typography
+          key={p.id}
+          component="div"
+          color="inherit"
+          noWrap
+          style={{
+            marginRight: 5,
+            display: "inline-block",
+            maxWidth: 100 / items.length + "%",
+            cursor: "pointer"
+          }}
+          className={classes.title}
+        >
+          <Link to="section" params={{ code: cid, section: p.id }}>
+            <span
+              style={{ textDecoration: "underline" }}
+              title={p.titre_ta}
+              href="#"
+              onClick={() => onClick(p)}
+            >
+              {p.titre_ta}
+            </span>
+          </Link>
+          {(i < all.length - 1 && " > ") || null}
+        </Typography>
       ))}
-  </BreadcrumbsContainer>
+  </div>
 );
 
 export default Breadcrumbs;

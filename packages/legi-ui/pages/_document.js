@@ -58,7 +58,6 @@ MyDocument.getInitialProps = ctx => {
   let pageContext;
   const page = ctx.renderPage(Component => {
     const WrappedComponent = props => {
-      console.log("props", props);
       pageContext = props.pageContext;
       return <Component {...props} />;
     };
@@ -69,7 +68,6 @@ MyDocument.getInitialProps = ctx => {
 
     return WrappedComponent;
   });
-  console.log("pageContext", pageContext);
   return {
     ...page,
     pageContext,

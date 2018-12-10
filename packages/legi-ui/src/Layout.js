@@ -80,7 +80,7 @@ const styles = theme => ({
   }
 });
 
-const _Layout = ({ title, classes, opened, onToggle, children }) => (
+const _Layout = ({ title, classes, opened, onToggle, children, structure }) => (
   <div className={classes.root}>
     <AppBar
       position="absolute"
@@ -106,7 +106,12 @@ const _Layout = ({ title, classes, opened, onToggle, children }) => (
         </Typography>
       </Toolbar>
     </AppBar>
-    <Drawer classes={classes} onToggle={onToggle} opened={opened} />
+    <Drawer
+      structure={structure}
+      classes={classes}
+      onToggle={onToggle}
+      opened={opened}
+    />
     <main className={classes.content}>{children}</main>
   </div>
 );

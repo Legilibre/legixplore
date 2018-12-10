@@ -1,9 +1,11 @@
 import React from "react";
 import cx from "classnames";
+import { withRouter } from "next/router";
 
 import {
   Hidden,
   Divider,
+  Chip,
   IconButton,
   Drawer as MaterialDrawer,
   List,
@@ -11,26 +13,16 @@ import {
 } from "@material-ui/core";
 
 import { ChevronLeft as ChevronLeftIcon } from "@material-ui/icons";
+import Tree from "./Tree";
 
-const DrawerContent = ({ classes, onToggle }) => (
-  <React.Fragment>
-    <div className={classes.toolbarIcon}>
-      <IconButton onClick={onToggle}>
-        <ChevronLeftIcon />
-      </IconButton>
-    </div>
-    <List>
-      <Typography color="inherit">Entry 1</Typography>
-    </List>
-    <Divider />
-    <List>
-      <Typography color="inherit">Entry 1</Typography>
-    </List>
-  </React.Fragment>
-);
+const DrawerContent = withRouter(({ classes, structure, onToggle, router }) => (
+  <Tree {...structure} cid={router.query.code} />
+));
 
-const Drawer = ({ classes, onToggle, opened }) => (
+const Drawer = ({ classes, onToggle, opened, structure }) => (
   <div style={{ alignItems: "start" }}>
+    <div className={classes.toolbarIcon} />
+    <Divider />
     <Hidden smUp initialWidth="lg">
       <MaterialDrawer
         variant="temporary"
@@ -43,7 +35,11 @@ const Drawer = ({ classes, onToggle, opened }) => (
           keepMounted: true // Better open performance on mobile.
         }}
       >
-        <DrawerContent classes={classes} onToggle={onToggle} />
+        <DrawerContent
+          structure={structure}
+          classes={classes}
+          onToggle={onToggle}
+        />
       </MaterialDrawer>
     </Hidden>
     <Hidden xsDown initialWidth="lg">
@@ -54,7 +50,11 @@ const Drawer = ({ classes, onToggle, opened }) => (
         variant="permanent"
         open={opened}
       >
-        <DrawerContent classes={classes} onToggle={onToggle} />
+        <DrawerContent
+          structure={structure}
+          classes={classes}
+          onToggle={onToggle}
+        />
       </MaterialDrawer>
     </Hidden>
   </div>

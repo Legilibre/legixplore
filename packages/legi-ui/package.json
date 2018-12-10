@@ -5,15 +5,21 @@
   "author": "Julien Bouquillon <julien.bouquillon@sg.social.gouv.fr>",
   "license": "MIT",
   "scripts": {
-    "start": "next dev"
+    "dev": "node server",
+    "build": "next build",
+    "start": "NODE_ENV=production node server"
   },
   "dependencies": {
     "@material-ui/core": "^3.6.2",
     "@material-ui/icons": "^3.0.1",
+    "@socialgouv/next-routes": "^1.5.1",
     "@zeit/next-css": "^1.0.1",
     "classnames": "^2.2.6",
+    "express": "^4.16.4",
     "fuse.js": "^3.3.0",
+    "memoizee": "^0.4.14",
     "next": "^7.0.2",
+    "node-fetch": "^2.3.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-autocomplete": "^1.8.1",

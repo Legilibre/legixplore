@@ -1,11 +1,16 @@
+import React from "react";
 import { Typography } from "@material-ui/core";
+
+import Layout from "../src/Layout";
 
 class Home extends React.Component {
   render() {
     return (
-      <Typography variant="h1" color="inherit">
-        Home
-      </Typography>
+      <Layout title="LEGI-explorer">
+        <Typography variant="h1" color="inherit">
+          Home
+        </Typography>
+      </Layout>
     );
   }
 }

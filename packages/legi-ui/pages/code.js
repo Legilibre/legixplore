@@ -1,29 +1,28 @@
-//import { Treebeard, decorators } from "react-treebeard";
 import React from "react";
-import styled from "styled-components";
-//import Tree from "react-ui-tree";
 import AsyncFetch from "../src/AsyncFetch";
-
+import fetch from "node-fetch";
+import memoize from "memoizee";
 import Tree from "../src/Tree";
+import Layout from "../src/Layout";
+
+import { Link } from "../src/routes";
 import BreadCrumbs from "../src/BreadCrumbs";
 import Autocomplete from "../src/Autocomplete";
 
-import "../src/styles.css";
-import "../src/code.css";
-// import "../src/tree.css";
+// import "../src/styles.css";
+// import "../src/code.css";
 
-const fetchStructure = code =>
-  fetch(`http://127.0.0.1:3005/texte/${code}/structure`).then(r => r.json());
+const fetchStructure = memoize(code =>
+  fetch(`http://127.0.0.1:3005/texte/${code}/structure`).then(r => r.json())
+);
 
-const fetchSection = (code, id) =>
-  fetch(`http://127.0.0.1:3005/texte/${code}/section/${id}`).then(r =>
-    r.json()
-  );
+const fetchSection = memoize((code, id) =>
+  fetch(`http://127.0.0.1:3005/texte/${code}/section/${id}`).then(r => r.json())
+);
 
-const fetchArticle = (code, id) =>
-  fetch(`http://127.0.0.1:3005/texte/${code}/article/${id}`).then(r =>
-    r.json()
-  );
+const fetchArticle = memoize((code, id) =>
+  fetch(`http://127.0.0.1:3005/texte/${code}/article/${id}`).then(r => r.json())
+);
 
 const fetchNode = (code, node) => {
   if (node.type === "article") {
@@ -86,7 +85,16 @@ const Section = ({ children, data, depth = 0 }) => (
     {children &&
       children.map(child => {
         if (child.type === "article") {
-          return <li key={child.data.id}>{child.data.titre}</li>;
+          return (
+            <li key={child.data.id}>
+              <Link
+                route="article"
+                params={{ code: child.data.cid, article: child.data.id }}
+              >
+                <a>{child.data.titre}</a>
+              </Link>
+            </li>
+          );
         } else if (child.type === "section") {
           return (
             (
@@ -131,12 +139,10 @@ const Preview = ({ code, node, onSectionClick }) => {
 
 class Browser extends React.Component {
   state = {
-    active: null,
-    code: "LEGITEXT000006072665"
+    active: null
   };
   onSelectCode = code => {
     this.setState({
-      code: code.id,
       active: null
     });
   };
@@ -166,15 +172,7 @@ class Browser extends React.Component {
             items={require("../src/codes.json")}
             onSelect={this.onSelectCode}
           />
-          <AsyncFetch
-            fetch={() => fetchStructure(this.state.code)}
-            fetchKey={this.state.code}
-            autoFetch={true}
-            render={({ status, result }) =>
-              (result && <Tree {...result} onToggle={this.onToggle} />) ||
-              "loading..."
-            }
-          />
+          <Tree {...this.props.structure} onToggle={this.onToggle} />
         </div>
         <div style={{ background: "#efefef", flex: "1 0 0", padding: 20 }}>
           {(this.state.active && (
@@ -191,4 +189,40 @@ class Browser extends React.Component {
   }
 }
 
-export default () => <Browser />;
+class CodePage extends React.Component {
+  static async getInitialProps({ query }) {
+    const structure = await fetchStructure(query.code);
+    let detailData = {};
+    if (query.article) {
+      detailData = await fetchArticle(query.code, query.article);
+    }
+    if (query.section) {
+      detailData = await fetchSection(query.code, query.section);
+    }
+    return {
+      ...query,
+      structure,
+      detailData
+    };
+  }
+  render() {
+    const { structure, detailData, code } = this.props;
+    const PreviewComponent = detailData && previewComponents[detailData.type];
+    return (
+      <Layout title="LEGI-explorer" structure={structure}>
+        {detailData.data && (
+          <div style={{ marginTop: 20 }}>
+            <BreadCrumbs
+              cid={code}
+              items={detailData.parents}
+              onClick={() => {}}
+            />
+            <PreviewComponent {...detailData} />
+          </div>
+        )}
+      </Layout>
+    );
+  }
+}
+
+export default CodePage;
