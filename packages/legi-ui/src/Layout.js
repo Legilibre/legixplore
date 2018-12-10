@@ -1,6 +1,5 @@
 import React from "react";
 import cx from "classnames";
-
 import { withStyles } from "@material-ui/core/styles";
 import { Menu as MenuIcon } from "@material-ui/icons";
 import { IconButton, Typography, AppBar, Toolbar } from "@material-ui/core";
@@ -80,7 +79,15 @@ const styles = theme => ({
   }
 });
 
-const _Layout = ({ title, classes, opened, onToggle, children, structure }) => (
+const _Layout = ({
+  title,
+  classes,
+  opened,
+  onToggle,
+  children,
+  structure,
+  router
+}) => (
   <div className={classes.root}>
     <AppBar
       position="absolute"

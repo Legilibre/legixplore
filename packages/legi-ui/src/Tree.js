@@ -1,4 +1,5 @@
 import React from "react";
+import find from "unist-util-find";
 import { Link } from "./routes";
 /*
 
@@ -25,6 +26,25 @@ import { Link } from "./routes";
 
 import { Typography } from "@material-ui/core";
 
+import { Folder, FolderOpen, Subject } from "@material-ui/icons";
+
+const isParentOf = (id, type, children, filters) => {
+  const child = find({ children }, node => {
+    if (filters.section) {
+      if (id == filters.section && type === "section") {
+        return true;
+      }
+      return node.type === "section" && node.id === filters.section;
+    } else if (filters.article) {
+      if (id == filters.article && type === "article") {
+        return true;
+      }
+      return node.type === "article" && node.id === filters.article;
+    }
+  });
+  return child;
+};
+
 const TreeNode = ({
   id,
   cid,
@@ -34,30 +54,64 @@ const TreeNode = ({
   isActive,
   isOpened,
   children,
+  query,
   depth = 0
 }) => {
-  const expand = isOpened(id);
-  console.log("type, id", type, id, cid);
+  console.log("titre_ta", titre_ta, query.article, isActive(id));
+  const expand =
+    isOpened(id) ||
+    isParentOf(id, type, children, {
+      section: query.section,
+      article: query.article
+    });
+
   return (
     <div
       key={id}
       style={{
+        marginTop: 5,
+        marginBottom: 5,
         marginLeft: Math.max(10, Math.min(6, depth + 1) * (5 - depth)) + "px"
       }}
     >
-      <Typography color="inherit" noWrap={true}>
+      {(depth === 0 && (
+        <Typography
+          color="inherit"
+          noWrap
+          align="center"
+          style={{
+            padding: "15px auto",
+            textDecoration: isActive(id) ? "underline" : "none"
+          }}
+        >
+          {titre_ta}
+        </Typography>
+      )) || (
         <Link route={type} params={{ code: cid, [type]: id }}>
-          <a
-            title={titre_ta}
+          <Typography
             style={{ cursor: "pointer" }}
+            color="inherit"
+            noWrap={true}
             onClick={e => {
               onClick({ id, titre_ta, type });
             }}
+            title={titre_ta}
           >
+            {type === "section" ? (
+              expand ? (
+                <FolderOpen
+                  style={{ verticalAlign: "bottom", marginRight: 5 }}
+                />
+              ) : (
+                <Folder style={{ verticalAlign: "bottom", marginRight: 5 }} />
+              )
+            ) : (
+              <Subject style={{ verticalAlign: "bottom", marginRight: 5 }} />
+            )}
             {titre_ta}
-          </a>
+          </Typography>
         </Link>
-      </Typography>
+      )}
       <div>
         {children &&
           expand &&
@@ -70,6 +124,7 @@ const TreeNode = ({
               isActive={isActive}
               isOpened={isOpened}
               depth={depth + 1}
+              query={query}
             />
           ))}
       </div>
@@ -115,7 +170,7 @@ class Tree extends React.Component {
   };
 
   render() {
-    const { cid, id, titre_ta, children } = this.props;
+    const { cid, id, titre_ta, children, query } = this.props;
     return (
       <TreeNode
         id={id}
@@ -124,6 +179,7 @@ class Tree extends React.Component {
         onClick={this.onToggle}
         isActive={this.isActive}
         isOpened={this.isOpened}
+        query={query}
       >
         {children}
       </TreeNode>

@@ -16,7 +16,7 @@ import { ChevronLeft as ChevronLeftIcon } from "@material-ui/icons";
 import Tree from "./Tree";
 
 const DrawerContent = withRouter(({ classes, structure, onToggle, router }) => (
-  <Tree {...structure} cid={router.query.code} />
+  <Tree {...structure} cid={router.query.code} query={router.query} />
 ));
 
 const Drawer = ({ classes, onToggle, opened, structure }) => (

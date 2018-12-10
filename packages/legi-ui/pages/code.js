@@ -6,6 +6,8 @@ import Tree from "../src/Tree";
 import Layout from "../src/Layout";
 
 import { Link } from "../src/routes";
+import Article from "../src/Article";
+import Section from "../src/Section";
 import BreadCrumbs from "../src/BreadCrumbs";
 import Autocomplete from "../src/Autocomplete";
 
@@ -32,84 +34,24 @@ const fetchNode = (code, node) => {
   }
 };
 
-const Article = ({ data }) => (
-  <div>
-    <h1>
-      {data.titre}
-      <a
-        href={`https://www.legifrance.gouv.fr/affichCodeArticle.do?idArticle=${
-          data.id
-        }&cidTexte=${data.cid}`}
-        style={{ fontSize: "1rem", margin: "0 20px" }}
-      >
-        Voir sur Légifrance
-      </a>
-    </h1>
+// const Article = ({ data }) => (
+//   <div>
+//     <h1>
+//       {data.titre}
+//       <a
+//         href={`https://www.legifrance.gouv.fr/affichCodeArticle.do?idArticle=${
+//           data.id
+//         }&cidTexte=${data.cid}`}
+//         style={{ fontSize: "1rem", margin: "0 20px" }}
+//       >
+//         Voir sur Légifrance
+//       </a>
+//     </h1>
 
-    <div dangerouslySetInnerHTML={{ __html: data.bloc_textuel }} />
-    <div dangerouslySetInnerHTML={{ __html: data.nota }} />
-  </div>
-);
-
-const H = ({ depth, ...props }) =>
-  [
-    <h1 {...props} />,
-    <h2 {...props} />,
-    <h3 {...props} />,
-    <h4 {...props} />,
-    <h5 {...props} />,
-    <h6 {...props} />,
-    <h7 {...props} />,
-    <h8 {...props} />
-  ][depth] || null;
-
-const MAX_DEPTH = 3;
-
-const Section = ({ children, data, depth = 0 }) => (
-  <div>
-    <H depth={depth}>
-      {data && data.titre_ta}
-      {(depth === 0 &&
-        data.cid && (
-          <a
-            style={{ marginLeft: 10, fontSize: 12 }}
-            href={`https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${
-              data.id
-            }&cidTexte=${data.cid}`}
-          >
-            Légifrance
-          </a>
-        )) ||
-        null}
-    </H>
-    {children &&
-      children.map(child => {
-        if (child.type === "article") {
-          return (
-            <li key={child.data.id}>
-              <Link
-                route="article"
-                params={{ code: child.data.cid, article: child.data.id }}
-              >
-                <a>{child.data.titre}</a>
-              </Link>
-            </li>
-          );
-        } else if (child.type === "section") {
-          return (
-            (
-              <div key={child.data.id}>
-                <H depth={depth + 1}>{child.data.titre_ta}</H>
-                {depth < MAX_DEPTH && (
-                  <Section depth={depth + 1}>{child.children}</Section>
-                )}
-              </div>
-            ) || null
-          );
-        }
-      })}
-  </div>
-);
+//     <div dangerouslySetInnerHTML={{ __html: data.bloc_textuel }} />
+//     <div dangerouslySetInnerHTML={{ __html: data.nota }} />
+//   </div>
+// );
 
 const previewComponents = {
   article: Article,

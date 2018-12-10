@@ -27,6 +27,7 @@
     "react-jss": "^8.6.1",
     "react-ui-tree": "^4.0.0",
     "styled-components": "^4.1.2",
+    "unist-util-find": "^1.0.1",
     "unist-util-map": "^1.0.4"
   }
 }
