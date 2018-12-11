@@ -7,11 +7,10 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-
-import { Link } from "./routes";
-import { Link as LinkIcon } from "@material-ui/icons";
 import { OpenInNew as OpenInNewIcon } from "@material-ui/icons";
 import { ZoomIn as ZoomInIcon } from "@material-ui/icons";
+
+import { Link } from "./routes";
 
 const styles = {
   card: {
@@ -25,12 +24,11 @@ const styles = {
   }
 };
 
-const MAX_DEPTH = 2;
+const MAX_DEPTH = 1;
 
 const getMaxH = val => `h${Math.min(6, val)}`;
 
 import Article from "./Article";
-import withFetchNode from "./lib/withFetchNode";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 import AsyncFetch from "./lib/AsyncFetch";
@@ -59,9 +57,19 @@ const Section = ({ classes, data, children, depth = 0 }) => {
                   autoFetch={true}
                   render={({ status, result }) => {
                     if (result) {
-                      return <Article key={child.data.id} {...result} />;
+                      return (
+                        <Article
+                          showDetails={true}
+                          key={child.data.id}
+                          {...result}
+                        />
+                      );
                     }
-                    return <CircularProgress />;
+                    return (
+                      <CircularProgress
+                        style={{ display: "block", margin: 10 }}
+                      />
+                    );
                   }}
                 />
               );
@@ -69,7 +77,7 @@ const Section = ({ classes, data, children, depth = 0 }) => {
               return (
                 (
                   <div key={child.data.id}>
-                    {depth < MAX_DEPTH && (
+                    {(depth < MAX_DEPTH && (
                       <Section
                         classes={classes}
                         depth={depth + 1}
@@ -77,6 +85,24 @@ const Section = ({ classes, data, children, depth = 0 }) => {
                       >
                         {child.children}
                       </Section>
+                    )) || (
+                      <Link
+                        route="section"
+                        params={{
+                          code: child.data.cid,
+                          section: child.data.id
+                        }}
+                      >
+                        <Button
+                          style={{ margin: 10 }}
+                          color="primary"
+                          variant="outlined"
+                          size="small"
+                        >
+                          <ZoomInIcon style={{ marginRight: 5 }} />
+                          {child.data.titre_ta}
+                        </Button>
+                      </Link>
                     )}
                   </div>
                 ) || null
@@ -95,6 +121,7 @@ const Section = ({ classes, data, children, depth = 0 }) => {
         <Button
           target="_blank"
           color="primary"
+          variant="outlined"
           href={`https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${
             data.id
           }&cidTexte=${data.cid}`}

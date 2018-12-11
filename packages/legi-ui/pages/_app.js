@@ -13,6 +13,11 @@ class MyApp extends App {
     this.pageContext = getPageContext();
   }
 
+  componentDidUpdate() {
+    console.log("componentDidUpdate");
+    window.scrollTo(0, 0);
+  }
+
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");

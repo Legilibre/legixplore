@@ -8,7 +8,12 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-import { OpenInNew as OpenInNewIcon } from "@material-ui/icons";
+import {
+  ZoomIn as ZoomInIcon,
+  OpenInNew as OpenInNewIcon
+} from "@material-ui/icons";
+
+import { Link } from "./routes";
 
 const styles = {
   card: {
@@ -44,15 +49,24 @@ export const ArticleContent = ({ data }) => (
   </React.Fragment>
 );
 
-const Article = ({ classes, data }) => {
+const Article = ({ classes, data, showDetails }) => {
   return (
     <Card className={classes.card} style={{ marginTop: 10 }}>
       <CardContent>
         <ArticleContent data={data} />
       </CardContent>
       <CardActions>
+        {(showDetails && (
+          <Link route="article" params={{ code: data.cid, article: data.id }}>
+            <Button color="primary" variant="outlined" size="small">
+              <ZoomInIcon style={{ marginRight: 5 }} />
+              Détails
+            </Button>
+          </Link>
+        )) ||
+          null}
         <Button
-          color="primary"
+          variant="outlined"
           target="_blank"
           href={`https://www.legifrance.gouv.fr/affichCodeArticle.do?idArticle=${
             data.id

@@ -5,12 +5,13 @@ import { ChevronRight } from "@material-ui/icons";
 
 import { Link } from "./routes";
 
-const Breadcrumbs = ({ classes = {}, cid, items, onClick }) => (
+const Breadcrumbs = ({ classes = {}, title, cid, items, onClick }) => (
   <div>
     {items &&
       items.map((p, i, all) => (
         <React.Fragment key={p.id}>
           <Typography
+            key={p.id}
             component="div"
             color="inherit"
             noWrap
@@ -21,16 +22,20 @@ const Breadcrumbs = ({ classes = {}, cid, items, onClick }) => (
             }}
             className={classes.title}
           >
-            <Link to="section" params={{ code: cid, section: p.id }}>
-              <span
-                style={{ textDecoration: "underline" }}
-                title={p.titre_ta}
-                href="#"
-                onClick={() => onClick(p)}
-              >
-                {p.titre_ta}
-              </span>
-            </Link>
+            {p.id ? (
+              <Link route="section" params={{ code: cid, section: p.id }}>
+                <span
+                  style={{ textDecoration: "underline" }}
+                  title={p.titre_ta}
+                  href="#"
+                  onClick={() => onClick(p)}
+                >
+                  {p.titre_ta}
+                </span>
+              </Link>
+            ) : (
+              p.titre_ta
+            )}
           </Typography>
           {(i < all.length - 1 && (
             <ChevronRight

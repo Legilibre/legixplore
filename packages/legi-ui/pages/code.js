@@ -37,8 +37,9 @@ class CodePage extends React.Component {
         {detailData.data && (
           <div style={{ marginTop: 20 }}>
             <BreadCrumbs
+              title={codeTitle}
               cid={query.code}
-              items={detailData.parents}
+              items={[{ titre_ta: codeTitle }, ...detailData.parents]}
               onClick={() => {}}
             />
             <DetailView cid={query.code} node={detailData} />
