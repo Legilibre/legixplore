@@ -102,7 +102,8 @@
   },
   {
     "id": "LEGITEXT000006074075",
-    "titre": "Code de l'urbanisme"
+    "titre": "Code de l'urbanisme",
+    "descriptions": "Le code de l'urbanisme et de l'habitation est créé par le décret no 54-766 du 26 juillet 1954."
   },
   {
     "id": "LEGITEXT000006071191",
@@ -154,7 +155,8 @@
   },
   {
     "id": "LEGITEXT000006069414",
-    "titre": "Code de la propriété intellectuelle"
+    "titre": "Code de la propriété intellectuelle",
+    "description": "Regroupe la plupart des anciennes lois régissant les deux branches de la propriété intellectuelle, que constituent la propriété industrielle et la propriété littéraire et artistique."
   },
   {
     "id": "LEGITEXT000006071190",
@@ -170,7 +172,8 @@
   },
   {
     "id": "LEGITEXT000025503132",
-    "titre": "Code de la sécurité intérieure"
+    "titre": "Code de la sécurité intérieure",
+    "description": "Le Code de la sécurité intérieure est, en droit français, un code juridique créé en 2012 pour regrouper l'ensemble des dispositions législatives et réglementaires ayant trait à la sécurité intérieure."
   },
   {
     "id": "LEGITEXT000006073189",
@@ -323,7 +326,8 @@
   },
   {
     "id": "LEGITEXT000006074073",
-    "titre": "Code du tourisme"
+    "titre": "Code du tourisme",
+    "description": "Sa création récente fut motivée par l'hétérogénéité de la législation intéressant le secteur du tourisme. Cette dernière ayant évolué au fil du temps sans cohérence, l’accès au droit du tourisme était devenu complexe pour l’ensemble des acteurs du secteur."
   },
   {
     "id": "LEGITEXT000006072050",

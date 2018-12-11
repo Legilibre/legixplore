@@ -9,15 +9,14 @@ const Breadcrumbs = ({ classes = {}, cid, items, onClick }) => (
   <div>
     {items &&
       items.map((p, i, all) => (
-        <React.Fragment>
+        <React.Fragment key={p.id}>
           <Typography
-            key={p.id}
             component="div"
             color="inherit"
             noWrap
             style={{
               display: "inline-block",
-              maxWidth: `calc(${100 / items.length + "%"} - 28px)`,
+              maxWidth: `calc(${100 / items.length + "%"} - 24px)`,
               cursor: "pointer"
             }}
             className={classes.title}

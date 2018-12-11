@@ -1,28 +1,6 @@
 import React from "react";
 import find from "unist-util-find";
 import { Link } from "./routes";
-/*
-
-  <React.Fragment>
-    <div className={classes.toolbarIcon}>
-      <IconButton onClick={onToggle}>
-        <ChevronLeftIcon />
-      </IconButton>
-    </div>
-    <List>
-      <Typography color="inherit">Entry 1</Typography>
-      <Typography color="inherit">Entry 1</Typography>
-      <Typography color="inherit">Entry 1</Typography>
-      <Typography color="inherit">Entry 1</Typography>
-      <Typography color="inherit">Entry 1</Typography>
-      <Typography color="inherit">Entry 1</Typography>
-    </List>
-    <Divider />
-    <List>
-      <Typography color="inherit">Entry 1</Typography>
-    </List>
-  </React.Fragment>
-  */
 
 import { Typography } from "@material-ui/core";
 
@@ -57,7 +35,6 @@ const TreeNode = ({
   query,
   depth = 0
 }) => {
-  console.log("titre_ta", titre_ta, query.article, isActive(id));
   const expand =
     isOpened(id) ||
     isParentOf(id, type, children, {
@@ -74,19 +51,7 @@ const TreeNode = ({
         marginLeft: Math.max(10, Math.min(6, depth + 1) * (5 - depth)) + "px"
       }}
     >
-      {(depth === 0 && (
-        <Typography
-          color="inherit"
-          noWrap
-          align="center"
-          style={{
-            padding: "15px auto",
-            textDecoration: isActive(id) ? "underline" : "none"
-          }}
-        >
-          {titre_ta}
-        </Typography>
-      )) || (
+      {depth > 0 && (
         <Link route={type} params={{ code: cid, [type]: id }}>
           <Typography
             style={{ cursor: "pointer" }}

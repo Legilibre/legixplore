@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-import { Link } from "@material-ui/icons";
+import { OpenInNew as OpenInNewIcon } from "@material-ui/icons";
 
 const styles = {
   card: {
@@ -22,37 +22,44 @@ const styles = {
   }
 };
 
+export const ArticleContent = ({ data }) => (
+  <React.Fragment>
+    <Typography variant="h5" component="h2">
+      {data.titre}
+    </Typography>
+    <Typography
+      component="p"
+      dangerouslySetInnerHTML={{ __html: data.bloc_textuel }}
+    />
+    {(data.nota && (
+      <div>
+        <Divider />
+        <Typography
+          component="p"
+          dangerouslySetInnerHTML={{ __html: data.nota }}
+        />
+      </div>
+    )) ||
+      null}
+  </React.Fragment>
+);
+
 const Article = ({ classes, data }) => {
   return (
     <Card className={classes.card} style={{ marginTop: 10 }}>
       <CardContent>
-        <Typography variant="h5" component="h2">
-          {data.titre}
-        </Typography>
-        <Typography
-          component="p"
-          dangerouslySetInnerHTML={{ __html: data.bloc_textuel }}
-        />
-        {(data.nota && (
-          <div>
-            <Divider />
-            <Typography
-              component="p"
-              dangerouslySetInnerHTML={{ __html: data.nota }}
-            />
-          </div>
-        )) ||
-          null}
+        <ArticleContent data={data} />
       </CardContent>
       <CardActions>
         <Button
           color="primary"
+          target="_blank"
           href={`https://www.legifrance.gouv.fr/affichCodeArticle.do?idArticle=${
             data.id
           }&cidTexte=${data.cid}`}
           size="small"
         >
-          <Link style={{ marginRight: 5 }} />
+          <OpenInNewIcon style={{ marginRight: 5 }} />
           Voir sur Légifrance
         </Button>
       </CardActions>
