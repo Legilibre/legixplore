@@ -7,10 +7,15 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { OpenInNew as OpenInNewIcon } from "@material-ui/icons";
 import { ZoomIn as ZoomInIcon } from "@material-ui/icons";
 
+import ButtonLegifrance from "./ButtonLegifrance";
 import { Link } from "./routes";
+import Article from "./Article";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import AsyncFetch from "./lib/AsyncFetch";
+import { fetchArticle } from "./api";
+import { CardMetadata, CardApi } from "./Metadata";
 
 const styles = {
   card: {
@@ -27,12 +32,6 @@ const styles = {
 const MAX_DEPTH = 1;
 
 const getMaxH = val => `h${Math.min(6, val)}`;
-
-import Article from "./Article";
-
-import CircularProgress from "@material-ui/core/CircularProgress";
-import AsyncFetch from "./lib/AsyncFetch";
-import { fetchArticle } from "./api";
 
 const Section = ({ classes, data, children, depth = 0 }) => {
   const content = (
@@ -59,7 +58,7 @@ const Section = ({ classes, data, children, depth = 0 }) => {
                     if (result) {
                       return (
                         <Article
-                          showDetails={true}
+                          showDetails={false}
                           key={child.data.id}
                           {...result}
                         />
@@ -113,29 +112,30 @@ const Section = ({ classes, data, children, depth = 0 }) => {
     </React.Fragment>
   );
 
-  // if (depth === 0) {
   return (
-    <Card className={classes.card} style={{ marginTop: 10 }}>
-      <CardContent>{content}</CardContent>
-      <CardActions>
-        <Button
-          target="_blank"
-          color="primary"
-          variant="outlined"
-          href={`https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${
-            data.id
-          }&cidTexte=${data.cid}`}
-          size="small"
-        >
-          <OpenInNewIcon style={{ marginRight: 5 }} />
-          Voir sur Légifrance
-        </Button>
-      </CardActions>
-    </Card>
+    <React.Fragment>
+      <Card className={classes.card} style={{ marginTop: 10 }}>
+        <CardContent>{content}</CardContent>
+        <CardActions>
+          <ButtonLegifrance
+            href={`https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${
+              data.id
+            }&cidTexte=${data.cid}`}
+          />
+        </CardActions>
+      </Card>
+      {(depth === 0 && (
+        <React.Fragment>
+          <CardMetadata data={data} classes={classes} />
+          <CardApi
+            url={`https://1.2.3.4/code/${data.cid}/section/${data.id}.json`}
+            classes={classes}
+          />
+        </React.Fragment>
+      )) ||
+        null}
+    </React.Fragment>
   );
-  // }
-
-  //return content;
 };
 
 Section.propTypes = {

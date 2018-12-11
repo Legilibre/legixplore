@@ -6,6 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 
 import {
@@ -13,6 +14,7 @@ import {
   OpenInNew as OpenInNewIcon
 } from "@material-ui/icons";
 
+import ArticleMeta from "./ArticleMeta";
 import { Link } from "./routes";
 
 const styles = {
@@ -26,6 +28,8 @@ const styles = {
     marginBottom: 12
   }
 };
+
+import { CardMetadata, CardApi } from "./Metadata";
 
 export const ArticleContent = ({ data }) => (
   <React.Fragment>
@@ -49,14 +53,14 @@ export const ArticleContent = ({ data }) => (
   </React.Fragment>
 );
 
-const Article = ({ classes, data, showDetails }) => {
-  return (
+const Article = ({ classes, data, showPreview }) => (
+  <React.Fragment>
     <Card className={classes.card} style={{ marginTop: 10 }}>
       <CardContent>
         <ArticleContent data={data} />
       </CardContent>
       <CardActions>
-        {(showDetails && (
+        {(!showPreview && (
           <Link route="article" params={{ code: data.cid, article: data.id }}>
             <Button color="primary" variant="outlined" size="small">
               <ZoomInIcon style={{ marginRight: 5 }} />
@@ -65,6 +69,7 @@ const Article = ({ classes, data, showDetails }) => {
           </Link>
         )) ||
           null}
+
         <Button
           variant="outlined"
           target="_blank"
@@ -78,8 +83,76 @@ const Article = ({ classes, data, showDetails }) => {
         </Button>
       </CardActions>
     </Card>
-  );
-};
+
+    {(showPreview && (
+      <React.Fragment>
+        <Card className={classes.card} style={{ marginTop: 10 }}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              Métadonnées
+            </Typography>
+            <ArticleMeta data={data} />
+          </CardContent>
+        </Card>
+
+        <Card className={classes.card} style={{ marginTop: 10 }}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              API
+            </Typography>
+
+            <TextField
+              defaultValue={`https://1.2.3.4/code/${data.cid}/article/${
+                data.id
+              }.json`}
+              margin="normal"
+              style={{ width: "100%" }}
+              InputProps={{
+                readOnly: true
+              }}
+            />
+          </CardContent>
+        </Card>
+      </React.Fragment>
+    )) ||
+      null}
+  </React.Fragment>
+);
+
+export const ArticlePreview = ({ classes, data }) => (
+  <React.Fragment>
+    <Card className={classes.card} style={{ marginTop: 10 }}>
+      <CardContent>
+        <ArticleContent data={data} />
+      </CardContent>
+      <CardActions>
+        <Link route="article" params={{ code: data.cid, article: data.id }}>
+          <Button color="primary" variant="outlined" size="small">
+            <ZoomInIcon style={{ marginRight: 5 }} />
+            Détails
+          </Button>
+        </Link>
+        <Button
+          variant="outlined"
+          target="_blank"
+          href={`https://www.legifrance.gouv.fr/affichCodeArticle.do?idArticle=${
+            data.id
+          }&cidTexte=${data.cid}`}
+          size="small"
+        >
+          <OpenInNewIcon style={{ marginRight: 5 }} />
+          Voir sur Légifrance
+        </Button>
+      </CardActions>
+    </Card>
+
+    <CardMetadata classes={classes} data={data} />
+    <CardApi
+      classes={classes}
+      url={`https://1.2.3.4/code/${data.cid}/article/${data.id}.json`}
+    />
+  </React.Fragment>
+);
 
 /*
 

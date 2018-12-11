@@ -9,7 +9,7 @@ const detailViewComponents = {
 const DetailView = props => {
   const DetailViewComponent =
     props.node && detailViewComponents[props.node.type];
-  return <DetailViewComponent {...props.node} />;
+  return <DetailViewComponent showPreview={true} {...props.node} />;
 };
 
 export default DetailView;
