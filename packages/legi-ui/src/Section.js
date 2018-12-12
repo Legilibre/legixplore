@@ -5,10 +5,9 @@ import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { ZoomIn as ZoomInIcon } from "@material-ui/icons";
 
+import ButtonDetailSection from "./ButtonDetailSection";
 import ButtonLegifrance from "./ButtonLegifrance";
 import { Link } from "./routes";
 import Article from "./Article";
@@ -47,29 +46,35 @@ const Section = ({ classes, data, children, depth = 0 }) => {
       </Link>
 
       <List>
+        {(children &&
+          children.length === 0 && (
+            <Typography>
+              Le présent chapitre ne comprend pas de dispositions
+              réglementaires.
+            </Typography>
+          )) ||
+          null}
         {children &&
           children.map(child => {
             if (child.type === "article") {
               return (
                 <AsyncFetch
+                  key={child.data.id}
                   fetch={() => fetchArticle(child.data.cid, child.data.id)}
                   autoFetch={true}
-                  render={({ status, result }) => {
-                    if (result) {
-                      return (
-                        <Article
-                          showDetails={false}
-                          key={child.data.id}
-                          {...result}
-                        />
-                      );
-                    }
-                    return (
+                  render={({ status, result }) =>
+                    (result && (
+                      <Article
+                        showDetails={false}
+                        key={child.data.id}
+                        {...result}
+                      />
+                    )) || (
                       <CircularProgress
                         style={{ display: "block", margin: 10 }}
                       />
-                    );
-                  }}
+                    )
+                  }
                 />
               );
             } else if (child.type === "section") {
@@ -85,23 +90,24 @@ const Section = ({ classes, data, children, depth = 0 }) => {
                         {child.children}
                       </Section>
                     )) || (
-                      <Link
-                        route="section"
-                        params={{
-                          code: child.data.cid,
-                          section: child.data.id
-                        }}
-                      >
-                        <Button
-                          style={{ margin: 10 }}
-                          color="primary"
-                          variant="outlined"
-                          size="small"
+                      <li>
+                        <Link
+                          route="section"
+                          params={{
+                            code: child.data.cid,
+                            section: child.data.id
+                          }}
                         >
-                          <ZoomInIcon style={{ marginRight: 5 }} />
-                          {child.data.titre_ta}
-                        </Button>
-                      </Link>
+                          <Typography
+                            style={{
+                              cursor: "pointer",
+                              textDecoration: "underline"
+                            }}
+                          >
+                            {child.data.titre_ta}
+                          </Typography>
+                        </Link>
+                      </li>
                     )}
                   </div>
                 ) || null
@@ -117,6 +123,10 @@ const Section = ({ classes, data, children, depth = 0 }) => {
       <Card className={classes.card} style={{ marginTop: 10 }}>
         <CardContent>{content}</CardContent>
         <CardActions>
+          {(depth > 0 && (
+            <ButtonDetailSection code={data.cid} section={data.id} />
+          )) ||
+            null}
           <ButtonLegifrance
             href={`https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${
               data.id

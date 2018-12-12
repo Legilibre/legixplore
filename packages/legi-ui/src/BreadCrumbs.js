@@ -9,9 +9,8 @@ const Breadcrumbs = ({ classes = {}, title, cid, items, onClick }) => (
   <div>
     {items &&
       items.map((p, i, all) => (
-        <React.Fragment key={p.id}>
+        <React.Fragment key={p.id + i}>
           <Typography
-            key={p.id}
             component="div"
             color="inherit"
             noWrap
@@ -34,11 +33,12 @@ const Breadcrumbs = ({ classes = {}, title, cid, items, onClick }) => (
                 </span>
               </Link>
             ) : (
-              p.titre_ta
+              <span>{p.titre_ta}</span>
             )}
           </Typography>
           {(i < all.length - 1 && (
             <ChevronRight
+              key={`chevron${p.id}`}
               color="primary"
               style={{ verticalAlign: "top", marginRight: 5 }}
             />

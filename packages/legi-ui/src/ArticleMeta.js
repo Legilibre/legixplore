@@ -60,7 +60,7 @@ const ArticleMeta = ({ classes, data }) => {
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <TableRow className={classes.row} key={row.id}>
+            <TableRow className={classes.row} key={row.key}>
               <CustomTableCell component="th" scope="row">
                 {row.key}
               </CustomTableCell>

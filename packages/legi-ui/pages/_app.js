@@ -4,7 +4,7 @@ import Head from "next/head";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import JssProvider from "react-jss/lib/JssProvider";
-
+import { withRouter } from "next/router";
 import getPageContext from "../src/getPageContext";
 
 class MyApp extends App {
@@ -12,10 +12,18 @@ class MyApp extends App {
     super(props);
     this.pageContext = getPageContext();
   }
-
   componentDidUpdate() {
-    console.log("componentDidUpdate");
-    window.scrollTo(0, 0);
+    this.scrollTop();
+  }
+  scrollTop() {
+    if (typeof document !== undefined) {
+      console.log("scrollTop");
+      window.scrollTo(0, 0);
+      const main = document.querySelector("main");
+      if (main) {
+        main.scrollTop = 0;
+      }
+    }
   }
 
   componentDidMount() {
@@ -24,6 +32,7 @@ class MyApp extends App {
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
+    console.log("this.props.router", this.props.router);
   }
 
   render() {
@@ -56,4 +65,4 @@ class MyApp extends App {
   }
 }
 
-export default MyApp;
+export default withRouter(MyApp);

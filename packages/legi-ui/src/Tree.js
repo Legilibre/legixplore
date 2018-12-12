@@ -54,7 +54,10 @@ const TreeNode = ({
       {depth > 0 && (
         <Link route={type} params={{ code: cid, [type]: id }}>
           <Typography
-            style={{ cursor: "pointer" }}
+            style={{
+              cursor: "pointer",
+              textDecoration: isActive(id) ? "underline" : "none"
+            }}
             color="inherit"
             noWrap={true}
             onClick={e => {
