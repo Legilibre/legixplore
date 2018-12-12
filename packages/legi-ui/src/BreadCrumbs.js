@@ -15,6 +15,7 @@ const Breadcrumbs = ({ classes = {}, title, cid, items, onClick }) => (
             color="inherit"
             noWrap
             style={{
+              textDecoration: "underline",
               display: "inline-block",
               maxWidth: `calc(${100 / items.length + "%"} - 24px)`,
               cursor: "pointer"
@@ -33,7 +34,9 @@ const Breadcrumbs = ({ classes = {}, title, cid, items, onClick }) => (
                 </span>
               </Link>
             ) : (
-              <span>{p.titre_ta}</span>
+              <Link route="code" params={{ code: cid }}>
+                <span>{p.titre_ta}</span>
+              </Link>
             )}
           </Typography>
           {(i < all.length - 1 && (

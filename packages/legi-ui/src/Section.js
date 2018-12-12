@@ -32,89 +32,155 @@ const MAX_DEPTH = 1;
 
 const getMaxH = val => `h${Math.min(6, val)}`;
 
+const SectionTitle = ({ title, variant = "h3", linkParams }) => (
+  <Link route="section" params={linkParams}>
+    <Typography
+      component="span"
+      style={{ marginTop: 10, cursor: "pointer" }}
+      variant={variant}
+    >
+      {title}
+    </Typography>
+  </Link>
+);
+
+const DefaultEmptyMessage = ({ children }) =>
+  children &&
+  children.length === 0 && (
+    <Typography>
+      Le présent chapitre ne comprend pas de dispositions réglementaires.
+    </Typography>
+  );
+
+const AsyncArticle = ({ cid, id }) => (
+  <AsyncFetch
+    fetch={() => fetchArticle(cid, id)}
+    autoFetch={true}
+    render={({ status, result }) =>
+      (result && <Article showDetails={false} {...result} />) || (
+        <CircularProgress style={{ display: "block", margin: 10 }} />
+      )
+    }
+  />
+);
+
+export const SectionChildLink = ({ cid, id, titre_ta }) => (
+  <div style={{ marginLeft: 10 }}>
+    <Link
+      route="section"
+      params={{
+        code: cid,
+        section: id
+      }}
+    >
+      <Typography
+        variant="subtitle1"
+        style={{
+          cursor: "pointer",
+          textDecoration: "underline"
+        }}
+      >
+        {titre_ta}
+      </Typography>
+    </Link>
+  </div>
+);
+
+// const SectionChild = ({
+//   classes,
+//   type,
+//   cid,
+//   id,
+//   recurse = true,
+//   depth = 0,
+//   maxDepth = 1
+// }) => {
+//   if (child.data && child.type === "article") {
+//     return <AsyncArticle cid={child.data.cid} id={child.data.id} />;
+//   } else if (child.data && child.type === "section") {
+//     if (depth < maxDepth) {
+//       return (
+//         <Section
+//           classes={classes}
+//           depth={depth + 1}
+//           maxDepth={maxDepth}
+//           data={child.data}
+//         >
+//           {child.children}
+//         </Section>
+//       );
+//     }
+//     return (
+//       <SectionChildLink
+//         cid={child.data.cid}
+//         id={child.data.id}
+//         titre_ta={child.data.titre_ta}
+//       />
+//     );
+//   }
+// };
+
+/*
+    return (
+      (
+        <div key={child.data.id}>
+          {(depth < MAX_DEPTH && (
+            // recursive component
+            <Section classes={classes} depth={depth + 1} data={child.data}>
+              {child.children}
+            </Section>
+          )) || (
+            <SectionChildLink
+              cid={child.data.cid}
+              id={child.data.id}
+              titre_ta={child.data.titre_ta}
+            />
+          )}
+        </div>
+      ) || null
+    );
+  }
+};
+*/
 const Section = ({ classes, data, children, depth = 0 }) => {
+  // content of the current section
   const content = (
     <React.Fragment>
-      <Link route="section" params={{ code: data.cid, section: data.id }}>
-        <Typography
-          component="span"
-          style={{ marginTop: 10, cursor: "pointer" }}
-          variant={getMaxH(depth + 5)}
-        >
-          {data.titre_ta}{" "}
-        </Typography>
-      </Link>
-
-      <List>
-        {(children &&
-          children.length === 0 && (
-            <Typography>
-              Le présent chapitre ne comprend pas de dispositions
-              réglementaires.
-            </Typography>
-          )) ||
-          null}
-        {children &&
-          children.map(child => {
-            if (child.type === "article") {
-              return (
-                <AsyncFetch
-                  key={child.data.id}
-                  fetch={() => fetchArticle(child.data.cid, child.data.id)}
-                  autoFetch={true}
-                  render={({ status, result }) =>
-                    (result && (
-                      <Article
-                        showDetails={false}
-                        key={child.data.id}
-                        {...result}
-                      />
-                    )) || (
-                      <CircularProgress
-                        style={{ display: "block", margin: 10 }}
-                      />
-                    )
-                  }
-                />
-              );
-            } else if (child.type === "section") {
-              return (
-                (
-                  <div key={child.data.id}>
-                    {(depth < MAX_DEPTH && (
-                      <Section
-                        classes={classes}
-                        depth={depth + 1}
-                        data={child.data}
-                      >
-                        {child.children}
-                      </Section>
-                    )) || (
-                      <li>
-                        <Link
-                          route="section"
-                          params={{
-                            code: child.data.cid,
-                            section: child.data.id
-                          }}
-                        >
-                          <Typography
-                            style={{
-                              cursor: "pointer",
-                              textDecoration: "underline"
-                            }}
-                          >
-                            {child.data.titre_ta}
-                          </Typography>
-                        </Link>
-                      </li>
-                    )}
-                  </div>
-                ) || null
-              );
-            }
-          })}
-      </List>
+      <SectionTitle
+        linkParams={{ code: data.cid, section: data.id }}
+        variant={getMaxH(depth + 5)}
+        title={data.titre_ta}
+      />
+      <DefaultEmptyMessage>{children}</DefaultEmptyMessage>
+      {children &&
+        children.map(child => {
+          if (child.data && child.type === "article") {
+            return <AsyncArticle cid={child.data.cid} id={child.data.id} />;
+          } else if (child.data && child.type === "section") {
+            return (
+              (
+                <div key={child.data.id}>
+                  {(depth < MAX_DEPTH && (
+                    // recursive component
+                    <Section
+                      classes={classes}
+                      depth={depth + 1}
+                      data={child.data}
+                    >
+                      {child.children}
+                    </Section>
+                  )) || (
+                    <SectionChildLink
+                      cid={child.data.cid}
+                      id={child.data.id}
+                      titre_ta={child.data.titre_ta}
+                    />
+                  )}
+                </div>
+              ) || null
+            );
+          }
+        })}
     </React.Fragment>
   );
 
@@ -135,6 +201,7 @@ const Section = ({ classes, data, children, depth = 0 }) => {
         </CardActions>
       </Card>
       {(depth === 0 && (
+        // show metadata for main section only
         <React.Fragment>
           <CardMetadata data={data} classes={classes} />
           <CardApi

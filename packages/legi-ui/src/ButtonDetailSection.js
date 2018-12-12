@@ -13,12 +13,7 @@ const ButtonDetailSection = ({ code, section, title = "Détails" }) => (
       section
     }}
   >
-    <Button
-      style={{ margin: 10 }}
-      color="primary"
-      variant="outlined"
-      size="small"
-    >
+    <Button color="primary" variant="outlined" size="small">
       <ZoomInIcon style={{ marginRight: 5 }} />
       {title}
     </Button>

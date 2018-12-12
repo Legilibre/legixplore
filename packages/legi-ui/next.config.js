@@ -1,8 +1,10 @@
 let PHASE_PRODUCTION_SERVER = "PHASE_PRODUCTION_SERVER";
 
 try {
-  let { PHASE_PRODUCTION_SERVER } = require("next-server/constants");
+  PHASE_PRODUCTION_SERVER = require("next-server/constants")
+    .PHASE_PRODUCTION_SERVER;
 } catch (e) {
+  console.log("e", e);
   // pass
 }
 

@@ -4,6 +4,8 @@ import Head from "next/head";
 import Layout from "../src/Layout";
 import BreadCrumbs from "../src/BreadCrumbs";
 import DetailView from "../src/DetailView";
+import Code from "../src/Code";
+
 import { fetchArticle, fetchSection, fetchStructure } from "../src/api";
 
 import codes from "../src/codes";
@@ -34,7 +36,7 @@ class CodePage extends React.Component {
         <Head>
           <title>{codeTitle} - LEGI explorer</title>
         </Head>
-        {detailData.data && (
+        {(detailData.data && (
           <div style={{ marginTop: 20 }}>
             <BreadCrumbs
               title={codeTitle}
@@ -44,7 +46,7 @@ class CodePage extends React.Component {
             />
             <DetailView cid={query.code} node={detailData} />
           </div>
-        )}
+        )) || <Code cid={query.code} titre={codeTitle} structure={structure} />}
       </Layout>
     );
   }
