@@ -82,6 +82,19 @@ const styles = theme => ({
   }
 });
 
+const ToolbarTitle = ({ classes, style, title }) => (
+  <Typography
+    style={style}
+    component="h1"
+    variant="h6"
+    color="inherit"
+    noWrap
+    className={classes.title}
+  >
+    {title}
+  </Typography>
+);
+
 const _Layout = ({
   cid,
   title,
@@ -110,18 +123,17 @@ const _Layout = ({
         >
           <MenuIcon />
         </IconButton>
-        <Link route="code" params={{ code: cid }}>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            style={{ cursor: "pointer" }}
-            className={classes.title}
-          >
-            {title}
-          </Typography>
-        </Link>
+        {(cid && (
+          <Link route="code" params={{ code: cid }}>
+            <div>
+              <ToolbarTitle
+                classes={classes}
+                title={title}
+                style={{ cursor: "pointer" }}
+              />
+            </div>
+          </Link>
+        )) || <ToolbarTitle classes={classes} title={title} />}
       </Toolbar>
     </AppBar>
     {(enableDrawer && (

@@ -139,7 +139,13 @@ const Section = ({ classes, data, children, depth = 0 }) => {
       {children &&
         children.map(child => {
           if (child.data && child.type === "article") {
-            return <AsyncArticle cid={child.data.cid} id={child.data.id} />;
+            return (
+              <AsyncArticle
+                key={child.data.id}
+                cid={child.data.cid}
+                id={child.data.id}
+              />
+            );
           } else if (child.data && child.type === "section") {
             return (
               (

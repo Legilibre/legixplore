@@ -35,12 +35,10 @@ const TreeNode = ({
   query,
   depth = 0
 }) => {
-  const expand =
-    isOpened(id) ||
-    isParentOf(id, type, children, {
-      section: query.section,
-      article: query.article
-    });
+  const expand = isParentOf(id, type, children, {
+    section: query.section,
+    article: query.article
+  });
 
   return (
     <div
@@ -60,9 +58,6 @@ const TreeNode = ({
             }}
             color="inherit"
             noWrap={true}
-            onClick={e => {
-              onClick({ id, titre_ta, type });
-            }}
             title={titre_ta}
           >
             {type === "section" ? (
@@ -119,23 +114,23 @@ class Tree extends React.Component {
     activeId: null,
     opened: []
   };
-  onToggle = node => {
-    if (node.type === "text") return;
-    this.setState(
-      state => getNewTreeState(state, node),
-      () => {
-        if (this.props.onToggle) {
-          this.props.onToggle(node, this.state.opened);
-        }
-      }
-    );
-  };
-  isActive = id => {
-    return this.state.activeId === id;
-  };
-  isOpened = id => {
-    return !id || this.state.opened.indexOf(id) > -1;
-  };
+  // onToggle = node => {
+  //   if (node.type === "text") return;
+  //   this.setState(
+  //     state => getNewTreeState(state, node),
+  //     () => {
+  //       if (this.props.onToggle) {
+  //         this.props.onToggle(node, this.state.opened);
+  //       }
+  //     }
+  //   );
+  // };
+  // isActive = id => {
+  //   return this.state.activeId === id;
+  // };
+  // isOpened = id => {
+  //   return !id || this.state.opened.indexOf(id) > -1;
+  // };
 
   render() {
     const { cid, id, titre_ta, children, query } = this.props;
@@ -146,7 +141,7 @@ class Tree extends React.Component {
         titre_ta={titre_ta}
         onClick={this.onToggle}
         isActive={this.isActive}
-        isOpened={this.isOpened}
+        //isOpened={this.isOpened}
         query={query}
       >
         {children}
