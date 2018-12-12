@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Menu as MenuIcon } from "@material-ui/icons";
 import { IconButton, Typography, AppBar, Toolbar } from "@material-ui/core";
 
+import { Link } from "./routes";
 import withToggle from "./lib/withToggle";
 import Drawer from "./Drawer";
 
@@ -82,6 +83,7 @@ const styles = theme => ({
 });
 
 const _Layout = ({
+  cid,
   title,
   classes,
   opened,
@@ -108,15 +110,18 @@ const _Layout = ({
         >
           <MenuIcon />
         </IconButton>
-        <Typography
-          component="h1"
-          variant="h6"
-          color="inherit"
-          noWrap
-          className={classes.title}
-        >
-          {title}
-        </Typography>
+        <Link route="code" params={{ code: cid }}>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            style={{ cursor: "pointer" }}
+            className={classes.title}
+          >
+            {title}
+          </Typography>
+        </Link>
       </Toolbar>
     </AppBar>
     {(enableDrawer && (

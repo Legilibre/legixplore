@@ -32,7 +32,7 @@ class CodePage extends React.Component {
     const { structure, detailData, query } = this.props;
     const codeTitle = getCodeTitle(query.code);
     return (
-      <Layout title={codeTitle} structure={structure}>
+      <Layout title={codeTitle} structure={structure} cid={query.code}>
         <Head>
           <title>{codeTitle} - LEGI explorer</title>
         </Head>

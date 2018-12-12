@@ -8,6 +8,7 @@ import CardActions from "@material-ui/core/CardActions";
 import { withStyles } from "@material-ui/core/styles";
 import map from "unist-util-map";
 
+import AsyncArticle from "./AsyncArticle";
 import { CardApi } from "./Metadata";
 import ButtonLegifrance from "./ButtonLegifrance";
 import ButtonDetailSection from "./ButtonDetailSection";
@@ -54,20 +55,28 @@ const Code = ({ classes, cid, titre, structure }) => (
             <CardContent>
               <Typography variant="h5">{child.titre_ta}</Typography>
               <List>
-                {child.children.map(child2 => (
-                  <SectionChildLink
-                    key={child2.id}
-                    cid={cid}
-                    id={child2.id}
-                    titre_ta={child2.titre_ta}
-                  />
-                ))}
+                {child.children.map(child2 => {
+                  if (child2.type === "section") {
+                    return (
+                      <SectionChildLink
+                        key={child2.id}
+                        cid={cid}
+                        id={child2.id}
+                        titre_ta={child2.titre_ta}
+                      />
+                    );
+                  } else if (child2.type === "article") {
+                    return <AsyncArticle cid={cid} id={child2.id} />;
+                  }
+                })}
               </List>
             </CardContent>
             <CardActions>
               <ButtonDetailSection code={cid} section={child.id} />
               <ButtonLegifrance
-                href={`https://www.legifrance.gouv.fr/affichCode.do?cidTexte=${cid}`}
+                href={`https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${
+                  child.id
+                }&cidTexte=${child.cid}`}
               />
             </CardActions>
           </Card>

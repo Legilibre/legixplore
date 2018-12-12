@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import List from "@material-ui/core/List";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -10,10 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import ButtonDetailSection from "./ButtonDetailSection";
 import ButtonLegifrance from "./ButtonLegifrance";
 import { Link } from "./routes";
-import Article from "./Article";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import AsyncFetch from "./lib/AsyncFetch";
-import { fetchArticle } from "./api";
+import AsyncArticle from "./AsyncArticle";
 import { CardMetadata, CardApi } from "./Metadata";
 
 const styles = {
@@ -51,18 +47,6 @@ const DefaultEmptyMessage = ({ children }) =>
       Le présent chapitre ne comprend pas de dispositions réglementaires.
     </Typography>
   );
-
-const AsyncArticle = ({ cid, id }) => (
-  <AsyncFetch
-    fetch={() => fetchArticle(cid, id)}
-    autoFetch={true}
-    render={({ status, result }) =>
-      (result && <Article showDetails={false} {...result} />) || (
-        <CircularProgress style={{ display: "block", margin: 10 }} />
-      )
-    }
-  />
-);
 
 export const SectionChildLink = ({ cid, id, titre_ta }) => (
   <div style={{ marginLeft: 10 }}>
