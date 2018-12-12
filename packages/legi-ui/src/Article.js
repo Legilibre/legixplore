@@ -69,7 +69,7 @@ const Article = ({ classes, data, showPreview }) => (
         <CardMetadata classes={classes} data={data} />
         <CardApi
           classes={classes}
-          url={`https://1.2.3.4/code/${data.cid}/article/${data.id}.json`}
+          url={`https://legi.now.sh/code/${data.cid}/article/${data.id}.json`}
         />
       </React.Fragment>
     )) ||

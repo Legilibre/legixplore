@@ -138,7 +138,7 @@ const Section = ({ classes, data, children, depth = 0 }) => {
         <React.Fragment>
           <CardMetadata data={data} classes={classes} />
           <CardApi
-            url={`https://1.2.3.4/code/${data.cid}/section/${data.id}.json`}
+            url={`https://legi.now.sh/code/${data.cid}/section/${data.id}.json`}
             classes={classes}
           />
         </React.Fragment>
