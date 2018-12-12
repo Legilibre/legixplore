@@ -17,7 +17,6 @@ class MyApp extends App {
   }
   scrollTop() {
     if (typeof document !== undefined) {
-      console.log("scrollTop");
       window.scrollTo(0, 0);
       const main = document.querySelector("main");
       if (main) {
@@ -32,7 +31,6 @@ class MyApp extends App {
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
-    console.log("this.props.router", this.props.router);
   }
 
   render() {
