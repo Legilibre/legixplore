@@ -91,10 +91,5 @@ const Code = ({ classes, cid, titre, structure }) => (
     <CardApi classes={classes} url={`https://legi.now.sh/code/${cid}.json`} />
   </React.Fragment>
 );
-/*
-)}
-    <Typography variant="h3">{titre}</Typography>
-    <CardApi classes={classes} url={`https://legi.now.sh/code/${id}.json`} />
-    {structure.children.map(child => <Section data={child})}
-    */
+
 export default withStyles(styles)(Code);

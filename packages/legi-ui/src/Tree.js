@@ -1,10 +1,13 @@
 import React from "react";
 import find from "unist-util-find";
-import { Link } from "./routes";
-
+import cx from "classnames";
+import { withRouter } from "next/router";
+import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 
 import { Folder, FolderOpen, Subject } from "@material-ui/icons";
+
+import { Link } from "./routes";
 
 const isParentOf = (id, type, children, filters) => {
   const child = find({ children }, node => {
@@ -23,53 +26,76 @@ const isParentOf = (id, type, children, filters) => {
   return child;
 };
 
+const isActive = (props, id) => {
+  return props.article === id || props.section === id;
+};
+
+const styles = theme => ({
+  nodeRow: {
+    marginTop: 5,
+    marginBottom: 5
+  },
+  nodeLabel: {
+    cursor: "pointer",
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline"
+    }
+  },
+  underlined: {
+    textDecoration: "underline"
+  },
+  icon: {
+    verticalAlign: "bottom",
+    marginRight: 5
+  }
+});
+
 const TreeNode = ({
   id,
+  classes,
   cid,
   titre_ta,
   type,
   onClick,
-  isActive,
-  isOpened,
   children,
   query,
   depth = 0
 }) => {
-  const expand = isParentOf(id, type, children, {
-    section: query.section,
-    article: query.article
-  });
+  const expand =
+    depth < 2 ||
+    isParentOf(id, type, children, {
+      section: query.section,
+      article: query.article
+    });
 
   return (
     <div
       key={id}
+      className={classes.nodeRow}
       style={{
-        marginTop: 5,
-        marginBottom: 5,
         marginLeft: Math.max(10, Math.min(6, depth + 1) * (5 - depth)) + "px"
       }}
     >
       {depth > 0 && (
         <Link route={type} params={{ code: cid, [type]: id }}>
           <Typography
-            style={{
-              cursor: "pointer",
-              textDecoration: isActive(id) ? "underline" : "none"
-            }}
+            className={cx(
+              classes.nodeLabel,
+              isActive(query, id) && classes.underlined
+            )}
             color="inherit"
             noWrap={true}
             title={titre_ta}
           >
             {type === "section" ? (
               expand ? (
-                <FolderOpen
-                  style={{ verticalAlign: "bottom", marginRight: 5 }}
-                />
+                <FolderOpen className={classes.icon} />
               ) : (
-                <Folder style={{ verticalAlign: "bottom", marginRight: 5 }} />
+                <Folder className={classes.icon} />
               )
             ) : (
-              <Subject style={{ verticalAlign: "bottom", marginRight: 5 }} />
+              <Subject className={classes.icon} />
             )}
             {titre_ta}
           </Typography>
@@ -79,13 +105,13 @@ const TreeNode = ({
         {children &&
           expand &&
           children.map(child => (
+            // recursive component
             <TreeNode
+              classes={classes}
               key={child.id}
               cid={cid}
               {...child}
               onClick={onClick}
-              isActive={isActive}
-              isOpened={isOpened}
               depth={depth + 1}
               query={query}
             />
@@ -95,54 +121,17 @@ const TreeNode = ({
   );
 };
 
-// update state tree when toggling some tree node
-const getNewTreeState = (state, node) => {
-  const newState = {
-    activeId: state.activeId === node.id ? null : node.id,
-    opened: state.opened
-  };
-  if (state.opened.indexOf(node.id) === -1) {
-    newState.opened = [...newState.opened, node.id];
-  } else {
-    newState.opened = newState.opened.filter(item => item !== node.id);
-  }
-  return newState;
-};
-
 class Tree extends React.Component {
-  state = {
-    activeId: null,
-    opened: []
-  };
-  // onToggle = node => {
-  //   if (node.type === "text") return;
-  //   this.setState(
-  //     state => getNewTreeState(state, node),
-  //     () => {
-  //       if (this.props.onToggle) {
-  //         this.props.onToggle(node, this.state.opened);
-  //       }
-  //     }
-  //   );
-  // };
-  // isActive = id => {
-  //   return this.state.activeId === id;
-  // };
-  // isOpened = id => {
-  //   return !id || this.state.opened.indexOf(id) > -1;
-  // };
-
   render() {
-    const { cid, id, titre_ta, children, query } = this.props;
+    const { classes, cid, id, titre_ta, children, router } = this.props;
     return (
       <TreeNode
         id={id}
         cid={cid}
+        classes={classes}
         titre_ta={titre_ta}
         onClick={this.onToggle}
-        isActive={this.isActive}
-        //isOpened={this.isOpened}
-        query={query}
+        query={router.query}
       >
         {children}
       </TreeNode>
@@ -150,4 +139,4 @@ class Tree extends React.Component {
   }
 }
 
-export default Tree;
+export default withRouter(withStyles(styles)(Tree));

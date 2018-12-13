@@ -8,7 +8,7 @@ import { Link } from "./routes";
 import withToggle from "./lib/withToggle";
 import Drawer from "./Drawer";
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const styles = theme => ({
   root: {
@@ -138,6 +138,7 @@ const _Layout = ({
     </AppBar>
     {(enableDrawer && (
       <Drawer
+        cid={cid}
         structure={structure}
         classes={classes}
         onToggle={onToggle}

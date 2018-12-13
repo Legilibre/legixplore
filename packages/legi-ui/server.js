@@ -1,4 +1,4 @@
-// server.js
+const express = require("express");
 const next = require("next");
 
 const { fetchArticle, fetchSection, fetchStructure } = require("./src/api");
@@ -6,8 +6,6 @@ const routes = require("./src/routes");
 
 const app = next({ dev: process.env.NODE_ENV !== "production" });
 const handler = routes.getRequestHandler(app);
-
-const express = require("express");
 
 const PORT = process.env.PORT || 3000;
 

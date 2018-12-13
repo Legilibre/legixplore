@@ -13,11 +13,7 @@ import {
 
 import Tree from "./Tree";
 
-const DrawerContent = withRouter(({ classes, structure, onToggle, router }) => (
-  <Tree {...structure} cid={router.query.code} query={router.query} />
-));
-
-const Drawer = ({ classes, onToggle, opened, structure }) => (
+const Drawer = ({ classes, cid, onToggle, opened, structure }) => (
   <div style={{ alignItems: "start" }}>
     <div className={classes.toolbarIcon}>
       <Link route="index">
@@ -44,11 +40,7 @@ const Drawer = ({ classes, onToggle, opened, structure }) => (
           keepMounted: true // Better open performance on mobile.
         }}
       >
-        <DrawerContent
-          structure={structure}
-          classes={classes}
-          onToggle={onToggle}
-        />
+        <Tree cid={cid} {...structure} />
       </MaterialDrawer>
     </Hidden>
     <Hidden xsDown initialWidth="lg">
@@ -59,11 +51,7 @@ const Drawer = ({ classes, onToggle, opened, structure }) => (
         variant="permanent"
         open={opened}
       >
-        <DrawerContent
-          structure={structure}
-          classes={classes}
-          onToggle={onToggle}
-        />
+        <Tree cid={cid} {...structure} />
       </MaterialDrawer>
     </Hidden>
   </div>
