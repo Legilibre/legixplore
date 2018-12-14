@@ -6,6 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import striptags from "striptags";
 
 const styles = {
   card: {
@@ -32,15 +33,16 @@ export const ArticleContent = ({ data }) => (
       component="p"
       dangerouslySetInnerHTML={{ __html: data.bloc_textuel }}
     />
-    {(data.nota && (
-      <React.Fragment>
-        <Divider />
-        <Typography
-          component="p"
-          dangerouslySetInnerHTML={{ __html: data.nota }}
-        />
-      </React.Fragment>
-    )) ||
+    {(data.nota &&
+      striptags(data.nota).trim() !== "" && (
+        <React.Fragment>
+          <Divider />
+          <Typography
+            component="p"
+            dangerouslySetInnerHTML={{ __html: data.nota }}
+          />
+        </React.Fragment>
+      )) ||
       null}
   </React.Fragment>
 );
