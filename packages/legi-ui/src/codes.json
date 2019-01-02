@@ -1,13 +1,11 @@
 [
   {
     "id": "LEGITEXT000006070721",
-    "titre": "Code civil",
-    "description": "Le Code civil des Français, appelé usuellement « Code civil », « Code Napoléon » ou encore « Code napoléonien », regroupe les lois relatives au droit civil français, c’est-à-dire l'ensemble des règles qui déterminent le statut des personnes, celui des biens et celui des relations entre les personnes privées."
+    "titre": "Code civil"
   },
   {
     "id": "LEGITEXT000005634379",
-    "titre": "Code de commerce",
-    "description": "En France, le Code de commerce est un ensemble de lois qui portent sur le droit commercial."
+    "titre": "Code de commerce"
   },
   {
     "id": "LEGITEXT000006071071",
@@ -51,7 +49,8 @@
   },
   {
     "id": "LEGITEXT000006070933",
-    "titre": "Code de justice administrative"
+    "titre": "Code de justice administrative",
+    "description": "Duis  commodo do sunt  occaecat sed excepteur ut  nisi sunt est culpa duis deserunt enim ut labore ad veniam dolor mollit velit pariatur do duis nisi in consequat culpa. "
   },
   {
     "id": "LEGITEXT000006070884",
@@ -156,8 +155,7 @@
   },
   {
     "id": "LEGITEXT000006069414",
-    "titre": "Code de la propriété intellectuelle",
-    "description": "Regroupe la plupart des anciennes lois régissant les deux branches de la propriété intellectuelle, que constituent la propriété industrielle et la propriété littéraire et artistique."
+    "titre": "Code de la propriété intellectuelle"
   },
   {
     "id": "LEGITEXT000006071190",
@@ -169,13 +167,11 @@
   },
   {
     "id": "LEGITEXT000006072665",
-    "titre": "Code de la santé publique",
-    "description": "Le Code de la santé publique français, créé en 1953, a été refondu par ordonnance en 2000 pour la partie législative et par cinq importants décrets pour la partie réglementaire entre 2003 et 2005. Sa publication a entraîné l'abrogation simultanée de plusieurs centaines de textes désormais codifiés. Wikipédia"
+    "titre": "Code de la santé publique"
   },
   {
     "id": "LEGITEXT000025503132",
-    "titre": "Code de la sécurité intérieure",
-    "description": "Le Code de la sécurité intérieure est, en droit français, un code juridique créé en 2012 pour regrouper l'ensemble des dispositions législatives et réglementaires ayant trait à la sécurité intérieure."
+    "titre": "Code de la sécurité intérieure"
   },
   {
     "id": "LEGITEXT000006073189",
@@ -279,11 +275,13 @@
   },
   {
     "id": "LEGITEXT000031366350",
-    "titre": "Code des relations entre le public et l'administration"
+    "titre": "Code des relations entre le public et l'administration",
+    "description": "Le Code des relations entre le public et les administrations (CRPA1) est un code regroupant les dispositions régissant les relations entre le public au sens large (administré, entreprise) et l'administration française. Il est décrit comme une « étape majeure du droit administratif français » en rassemblant dans un texte unique les dispositions applicables aux relations entre l'administration et les administrés."
   },
   {
     "id": "LEGITEXT000023086525",
-    "titre": "Code des transports"
+    "titre": "Code des transports",
+    "description": "Le code des transports est un code juridique qui regroupe les dispositions juridiques relatives aux transports en France. Publié le 3 novembre 2010, il entre en vigueur le 1er décembre de la même année."
   },
   {
     "id": "LEGITEXT000006071344",
@@ -315,8 +313,7 @@
   },
   {
     "id": "LEGITEXT000006074236",
-    "titre": "Code du patrimoine",
-    "description": "Le code du patrimoine est un code français regroupant des dispositions de droit français concernant le patrimoine et certains services culturels."
+    "titre": "Code du patrimoine"
   },
   {
     "id": "LEGITEXT000006071335",
@@ -328,8 +325,7 @@
   },
   {
     "id": "LEGITEXT000006074073",
-    "titre": "Code du tourisme",
-    "description": "Sa création récente fut motivée par l'hétérogénéité de la législation intéressant le secteur du tourisme. Cette dernière ayant évolué au fil du temps sans cohérence, l’accès au droit du tourisme était devenu complexe pour l’ensemble des acteurs du secteur."
+    "titre": "Code du tourisme"
   },
   {
     "id": "LEGITEXT000006072050",
@@ -402,7 +398,8 @@
   },
   {
     "id": "LEGITEXT000006070719",
-    "titre": "Code pénal"
+    "titre": "Code pénal",
+    "description": "Le code pénal est la codification du droit pénal français. Il est entré en vigueur le 1er mars 1994 pour remplacer le code pénal de 1810, et qu'on appelle désormais le code pénal ancien dans les rares décisions devant encore l'appliquer. Le nouveau code pénal a été créé par plusieurs lois promulguées le 22 juillet 1992, et introduit la notion juridique d'intérêts fondamentaux de la nation (livre IV, titre Ier)."
   },
   {
     "id": "LEGITEXT000006071367",
@@ -410,7 +407,8 @@
   },
   {
     "id": "LEGITEXT000022197698",
-    "titre": "Code rural et de la pêche maritime"
+    "titre": "Code rural et de la pêche maritime",
+    "description": "Le code rural et de la pêche maritime est un code juridique qui appartient à l'ensemble des codes spécialisés français. Initialement nommé code rural, il est envisagé dès l'époque napoléonienne, il n'est publié, sous sa première forme, que sous la Troisième République. Le code en vigueur, élaboré par étapes à partir de 1980, devient code rural et de la pêche maritime en 2010."
   },
   {
     "id": "LEGITEXT000006070239",
