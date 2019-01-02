@@ -7,6 +7,71 @@ import JssProvider from "react-jss/lib/JssProvider";
 import { withRouter } from "next/router";
 import getPageContext from "../src/getPageContext";
 
+import { withStyles } from "@material-ui/core/styles";
+import LinearProgress from "@material-ui/core/LinearProgress";
+
+const styles = {
+  root: {
+    position: "fixed",
+    top: 0,
+    width: "100%"
+  }
+};
+
+class _RouterLinearProgress extends React.Component {
+  state = {
+    loading: false
+  };
+  handleRouteChangeStart = url => {
+    this.setState({ loading: true });
+  };
+  handleRouteChangeComplete = url => {
+    this.setState({ loading: false });
+  };
+  handleRouteChangeError = url => {
+    this.setState({ loading: false });
+  };
+  componentDidMount() {
+    this.props.router.events.on(
+      "routeChangeStart",
+      this.handleRouteChangeStart
+    );
+    this.props.router.events.on(
+      "routeChangeComplete",
+      this.handleRouteChangeComplete
+    );
+    this.props.router.events.on(
+      "routeChangeError",
+      this.handleRouteChangeError
+    );
+  }
+  componentWillUnmount() {
+    this.props.router.events.off(
+      "routeChangeStart",
+      this.handleRouteChangeStart
+    );
+    this.props.router.events.off(
+      "routeChangeComplete",
+      this.handleRouteChangeComplete
+    );
+    this.props.router.events.off(
+      "routeChangeError",
+      this.handleRouteChangeError
+    );
+  }
+  render() {
+    return (
+      <div className={this.props.classes.root}>
+        {this.state.loading && <LinearProgress />}
+      </div>
+    );
+  }
+}
+
+const RouterLinearProgress = withStyles(styles)(
+  withRouter(_RouterLinearProgress)
+);
+
 class MyApp extends App {
   constructor(props) {
     super(props);
@@ -58,6 +123,7 @@ class MyApp extends App {
             <Component pageContext={this.pageContext} {...pageProps} />
           </MuiThemeProvider>
         </JssProvider>
+        <RouterLinearProgress />
       </Container>
     );
   }
