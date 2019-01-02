@@ -27,7 +27,7 @@ import ButtonDetailArticle from "./ButtonDetailArticle";
 export const ArticleContent = ({ data }) => (
   <React.Fragment>
     <Typography variant="h5" component="h2">
-      {data.titre}
+      {data.titre_ta}
     </Typography>
     <Typography
       component="p"
