@@ -30,6 +30,10 @@ const styles = theme => ({
     background: theme.palette.primary.main,
     color: theme.palette.primary.contrastText
   },
+  cellOverflow: {
+    maxHeight: 100,
+    overflow: "scroll"
+  },
   table: {
     minWidth: 700
   },
@@ -40,36 +44,39 @@ const styles = theme => ({
   }
 });
 
+const MetaTable = ({ classes, rows }) => (
+  <Paper className={classes.root}>
+    <Table padding="dense" className={classes.table}>
+      <TableHead>
+        <TableRow>
+          <CustomTableCell className={classes.cellHeader}>Clé</CustomTableCell>
+          <CustomTableCell className={classes.cellHeader}>
+            Valeur
+          </CustomTableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {rows.map(row => (
+          <TableRow className={classes.row} key={row.key}>
+            <CustomTableCell component="th" scope="row">
+              {row.key}
+            </CustomTableCell>
+            <CustomTableCell>
+              <div className={classes.cellOverflow}>{row.value}</div>
+            </CustomTableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  </Paper>
+);
+
 const ArticleMeta = ({ classes, data }) => {
-  const hiddenMetas = ["bloc_textuel", "nota"];
+  const hiddenMetas = ["liens"];
   const rows = Object.keys(data)
     .filter(key => hiddenMetas.indexOf(key) === -1)
     .map(key => ({ key, value: data[key] }));
-  return (
-    <Paper className={classes.root}>
-      <Table padding="dense" className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <CustomTableCell className={classes.cellHeader}>
-              Clé
-            </CustomTableCell>
-            <CustomTableCell className={classes.cellHeader}>
-              Valeur
-            </CustomTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow className={classes.row} key={row.key}>
-              <CustomTableCell component="th" scope="row">
-                {row.key}
-              </CustomTableCell>
-              <CustomTableCell>{row.value}</CustomTableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
-  );
+  return <MetaTable classes={classes} rows={rows} />;
 };
+
 export default withStyles(styles)(ArticleMeta);
