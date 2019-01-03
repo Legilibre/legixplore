@@ -14,7 +14,9 @@ const styles = {
   root: {
     position: "fixed",
     top: 0,
-    width: "100%"
+    width: "100%",
+    height: "4px",
+    zIndex: 9999
   }
 };
 
