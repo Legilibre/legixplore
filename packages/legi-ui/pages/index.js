@@ -92,10 +92,19 @@ const getFuse = data => new Fuse(data, DEFAULT_FUSE_OPTIONS);
 //   render() {}
 // }
 
+const visibleCodes = [
+  "LEGITEXT000006070933",
+  "LEGITEXT000031366350",
+  "LEGITEXT000023086525",
+  "LEGITEXT000006072050",
+  "LEGITEXT000006070719",
+  "LEGITEXT000022197698"
+];
+
 class Home extends React.Component {
   state = {
     query: "",
-    codes: this.props.codes
+    codes: this.props.codes.filter(code => visibleCodes.indexOf(code.id) > -1)
   };
   static async getInitialProps({ query }) {
     const codes = await fetchCodes();
@@ -142,7 +151,7 @@ class Home extends React.Component {
           <CodesGrid classes={classes} codes={codes} />
           <CardApi
             classes={this.props.classes}
-            style={{ width: "100%" }}
+            style={{ width: "100%", marginTop: 40 }}
             url={`https://legi.now.sh/codes.json`}
           />
         </div>

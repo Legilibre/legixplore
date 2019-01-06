@@ -76,6 +76,7 @@ export const CardMetadata = ({ classes, data }) => {
   );
   const cite = data.liens.filter(lien => lien.typelien === "CITATION");
   const citePar = data.liens.filter(lien => lien.typelien === "CITATION_R");
+
   return (
     <React.Fragment>
       <MetaCard classes={classes} title="Liens">
