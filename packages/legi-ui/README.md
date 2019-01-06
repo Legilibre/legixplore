@@ -1,16 +1,6 @@
 # legiXplorer
 
-Explorateur non-officiel de la base [LEGI]().
-
-Utilise [legi-api]() et des fichiers issus de [legi.py]() pour afficher les 105 codes de la base LEGI.
-
-Démo : https://legi.now.sh
-
-## Usage
-
-```sh
-docker run -p 3000:3000 @socialgouv/legiXplorer
-```
+Interface web pour [legiXplore]()
 
 ### API
 
