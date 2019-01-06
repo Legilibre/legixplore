@@ -193,7 +193,7 @@ const Section = ({ classes, data, children, depth = 0 }) => {
       {(depth === 0 && (
         // show metadata for main section only
         <React.Fragment>
-          <CardMetadata data={data} classes={classes} />
+          <CardMetadata data={data} classes={classes} currentId={data.id} />
           <CardApi
             url={`https://legi.now.sh/code/${data.cid}/section/${data.id}.json`}
             classes={classes}

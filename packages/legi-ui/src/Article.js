@@ -1,12 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import striptags from "striptags";
+
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Divider from "@material-ui/core/Divider";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import striptags from "striptags";
+
+import { CardMetadata, CardApi } from "./Metadata";
+import ButtonLegifrance from "./ButtonLegifrance";
+import ButtonDetailArticle from "./ButtonDetailArticle";
 
 const styles = {
   card: {
@@ -19,10 +24,6 @@ const styles = {
     marginBottom: 12
   }
 };
-
-import { CardMetadata, CardApi } from "./Metadata";
-import ButtonLegifrance from "./ButtonLegifrance";
-import ButtonDetailArticle from "./ButtonDetailArticle";
 
 export const ArticleContent = ({ data }) => (
   <React.Fragment>
@@ -68,7 +69,7 @@ const Article = ({ classes, data, showPreview }) => (
 
     {(showPreview && (
       <React.Fragment>
-        <CardMetadata classes={classes} data={data} />
+        <CardMetadata classes={classes} data={data} currentId={data.id} />
         <CardApi
           classes={classes}
           url={`https://legi.now.sh/code/${data.cid}/article/${data.id}.json`}

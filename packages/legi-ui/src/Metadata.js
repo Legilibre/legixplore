@@ -58,7 +58,7 @@ const BlocLinks = ({ title, links, Icon, render }) =>
     )) ||
   null;
 
-export const CardMetadata = ({ classes, data }) => {
+export const CardMetadata = ({ classes, data, currentId }) => {
   const metadata = (
     <MetaCard classes={classes} title="Métadonnées">
       <ArticleMeta data={data} />
@@ -69,13 +69,15 @@ export const CardMetadata = ({ classes, data }) => {
     return metadata;
   }
 
-  const creePar = data.liens.filter(lien => lien.typelien === "CREATION");
-  const abrogePar = data.liens.filter(lien => lien.typelien === "ABROGATION");
-  const modifiePar = data.liens.filter(
-    lien => lien.typelien === "MODIFICATION"
-  );
-  const cite = data.liens.filter(lien => lien.typelien === "CITATION");
-  const citePar = data.liens.filter(lien => lien.typelien === "CITATION_R");
+  const filterBy = type => data.liens.filter(lien => lien.typelien === type);
+
+  const creePar = filterBy("CREATION");
+  const abrogePar = filterBy("ABROGATION");
+  const modifiePar = filterBy("MODIFICATION");
+  const cite = filterBy("CITATION").filter(lien => lien.dst_id !== currentId);
+  const citePar = filterBy("CITATION_R");
+  const codifiePar = filterBy("CODIFICATION");
+  const anciensTextes = filterBy("CONCORDANCE");
 
   return (
     <React.Fragment>
@@ -87,9 +89,9 @@ export const CardMetadata = ({ classes, data }) => {
           render={link => (
             <Link
               route="article"
-              params={{ code: link.dst_cid, article: link.dst_id }}
+              params={{ code: link.dst_cid || "unknown", article: link.dst_id }}
             >
-              <a>{link.dst_titre}</a>
+              <a>{link.dst_titre || link.titre}</a>
             </Link>
           )}
         />
@@ -100,37 +102,55 @@ export const CardMetadata = ({ classes, data }) => {
           render={link => (
             <Link
               route="article"
-              params={{ code: link.dst_cid, article: link.dst_id }}
+              params={{ code: link.dst_cid || "unknown", article: link.dst_id }}
             >
-              <a>{link.dst_titre}</a>
+              <a>{link.dst_titre || link.titre}</a>
             </Link>
           )}
         />
         <BlocLinks
-          title="Citations"
+          title="Cité"
           links={cite}
           Icon={SubjectIcon}
           render={link => (
             <Link
               route="article"
-              params={{ code: link.dst_cid, article: link.dst_id }}
+              params={{ code: link.dst_cid || "unknown", article: link.dst_id }}
             >
-              <a>{link.dst_titre}</a>
+              <a>{link.dst_titre || link.titre}</a>
             </Link>
           )}
         />
         <BlocLinks
-          title="Citations par"
+          title="Cité par"
           links={citePar}
           Icon={SubjectIcon}
+          render={link =>
+            console.log(link) || (
+              <Link
+                route="article"
+                params={{ code: link.article_cid, article: link.src_id }}
+              >
+                <a>{link.dst_titre || link.titre || link.dst_id}</a>
+              </Link>
+            )
+          }
+        />
+        <BlocLinks
+          title="Codifié par"
+          links={codifiePar}
+          Icon={SubjectIcon}
           render={link => (
-            <Link
-              route="article"
-              params={{ code: "xxx", article: link.src_id }}
-            >
-              <a>{link.dst_titre || link.dst_id}</a>
+            <Link route="code" params={{ code: link.dst_cid }}>
+              <a>{link.dst_titre || link.titre}</a>
             </Link>
           )}
+        />
+        <BlocLinks
+          title="Anciens textes"
+          links={anciensTextes}
+          Icon={SubjectIcon}
+          render={link => link.dst_titre || link.titre || link.dst_id}
         />
       </MetaCard>
       {metadata}
