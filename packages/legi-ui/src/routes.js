@@ -1,6 +1,5 @@
 const routes = require("@socialgouv/next-routes");
 
-// Name   Page      Pattern
 module.exports = routes()
   .add({
     name: "section",
@@ -17,4 +16,5 @@ module.exports = routes()
     pattern: "/code/:code",
     page: "code"
   })
+  .add({ name: "codes", pattern: "/codes", page: "index" })
   .add({ name: "index", pattern: "/", page: "index" });

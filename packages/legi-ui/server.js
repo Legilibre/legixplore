@@ -1,7 +1,12 @@
 const express = require("express");
 const next = require("next");
 
-const { fetchArticle, fetchSection, fetchStructure } = require("./src/api");
+const {
+  fetchArticle,
+  fetchSection,
+  fetchStructure,
+  fetchCodes
+} = require("./src/api");
 const routes = require("./src/routes");
 
 const app = next({ dev: process.env.NODE_ENV !== "production" });
@@ -12,6 +17,9 @@ const PORT = process.env.PORT || 3000;
 app.prepare().then(() => {
   express()
     // API proxy
+    .get("/codes.json", async (req, res) => {
+      res.json(await fetchCodes());
+    })
     .get("/code/:code.json", async (req, res) => {
       res.json(await fetchStructure(req.params.code));
     })

@@ -16,6 +16,8 @@ const fetchStructure = memoize(code =>
   fetch(`${API_URL}/code/${code}/structure`).then(r => r.json())
 );
 
+const fetchCodes = memoize(() => fetch(`${API_URL}/codes`).then(r => r.json()));
+
 const fetchNode = (code, node) => {
   if (node.type === "article") {
     return fetchArticle(code, node.data.id);
@@ -29,5 +31,6 @@ module.exports = {
   fetchSection,
   fetchArticle,
   fetchStructure,
+  fetchCodes,
   fetchNode
 };

@@ -1,14 +1,17 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
+import PropTypes from "prop-types";
+import Fuse from "fuse.js";
 
 import { Link } from "../src/routes";
 import Layout from "../src/Layout";
+import { fetchCodes } from "../src/api";
+import { CardApi } from "../src/Metadata";
 
-import PropTypes from "prop-types";
+import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
-
+import Grid from "@material-ui/core/Grid";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 
@@ -27,8 +30,6 @@ const styles = theme => ({
     }, ${theme.palette.primary.main})`
   }
 });
-
-import Grid from "@material-ui/core/Grid";
 
 const CodesGrid = ({ classes, codes, children }) => (
   <Grid
@@ -67,10 +68,6 @@ Code.propTypes = {
 
 //export default withStyles(styles)(MediaCard);
 
-import codes from "../src/codes";
-
-import Fuse from "fuse.js";
-
 const DEFAULT_FUSE_OPTIONS = {
   shouldSort: true,
   tokenize: true,
@@ -88,32 +85,42 @@ const DEFAULT_FUSE_OPTIONS = {
 
 const getFuse = data => new Fuse(data, DEFAULT_FUSE_OPTIONS);
 
+// class GridData extends React.Component {
+//   state = {
+//     codes: []
+//   };
+//   render() {}
+// }
+
 class Home extends React.Component {
   state = {
     query: "",
-    items: this.props.items
+    codes: this.props.codes
   };
+  static async getInitialProps({ query }) {
+    const codes = await fetchCodes();
+    return { codes };
+  }
   componentDidMount() {
-    this.fuse = getFuse(this.props.items);
+    this.fuse = getFuse(this.props.codes);
   }
   onKeyDown = e => {
     const query = e.target.value;
     if (query.trim() === "") {
-      this.setState({ query, items: this.props.items });
+      this.setState({ query, codes: this.props.codes });
       return;
     }
-    const items = this.fuse
+    const codes = this.fuse
       .search(query.trim())
       .filter(q => q.matches.length)
       .map(r => r.item)
       .slice(0, 25);
 
-    this.setState({ query, items });
+    this.setState({ query, codes });
   };
   render() {
     const { classes } = this.props;
-    const { query, items } = this.state;
-    //const showCodes = this.props.items.filter(code => !!code.description);
+    const { query, codes } = this.state;
     return (
       <Layout
         enableDrawer={false}
@@ -125,20 +132,25 @@ class Home extends React.Component {
             inputProps={{ style: { fontSize: "1.3em" } }}
             placeholder="ex: code du travail"
             helperText={`Choisissez parmi les ${
-              this.props.items.length
+              this.props.codes.length
             } codes disponibles dans LEGI`}
             fullWidth
             onChange={this.onKeyDown}
             value={query}
             margin="normal"
           />
-          <CodesGrid classes={classes} codes={items} />
+          <CodesGrid classes={classes} codes={codes} />
+          <CardApi
+            classes={this.props.classes}
+            style={{ width: "100%" }}
+            url={`https://legi.now.sh/codes.json`}
+          />
         </div>
       </Layout>
     );
   }
 }
 Home.defaultProps = {
-  items: codes.filter(code => !!code.description)
+  codes: []
 };
 export default withStyles(styles)(Home);
