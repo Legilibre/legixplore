@@ -1,8 +1,8 @@
 import React from "react";
 import cx from "classnames";
-import { withRouter } from "next/router";
 
 import { Link } from "./routes";
+import Tree from "./Tree";
 
 import {
   Hidden,
@@ -10,8 +10,6 @@ import {
   Drawer as MaterialDrawer,
   Typography
 } from "@material-ui/core";
-
-import Tree from "./Tree";
 
 const Drawer = ({ classes, cid, onToggle, opened, structure }) => (
   <div style={{ alignItems: "start" }}>

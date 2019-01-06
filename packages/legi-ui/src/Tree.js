@@ -1,5 +1,4 @@
 import React from "react";
-import find from "unist-util-find";
 import cx from "classnames";
 import { withRouter } from "next/router";
 import { withStyles } from "@material-ui/core/styles";
@@ -8,23 +7,6 @@ import { Typography } from "@material-ui/core";
 import { Folder, FolderOpen, Subject } from "@material-ui/icons";
 
 import { Link } from "./routes";
-
-const isParentOf = (id, type, children, filters) => {
-  const child = find({ children }, node => {
-    if (filters.section) {
-      if (id == filters.section && type === "section") {
-        return true;
-      }
-      return node.type === "section" && node.id === filters.section;
-    } else if (filters.article) {
-      if (id == filters.article && type === "article") {
-        return true;
-      }
-      return node.type === "article" && node.id === filters.article;
-    }
-  });
-  return child;
-};
 
 const isActive = (props, id) => {
   return props.article === id || props.section === id;
@@ -60,15 +42,10 @@ const TreeNode = ({
   onClick,
   children,
   query,
+  isExpanded,
   depth = 0
 }) => {
-  const expand =
-    depth < 2 ||
-    isParentOf(id, type, children, {
-      section: query.section,
-      article: query.article
-    });
-
+  const expand = isExpanded({ id, depth });
   return (
     <div
       key={id}
@@ -80,6 +57,7 @@ const TreeNode = ({
       {depth > 0 && (
         <Link route={type} params={{ code: cid, [type]: id }}>
           <Typography
+            onClick={e => onClick(id, expand)}
             className={cx(
               classes.nodeLabel,
               isActive(query, id) && classes.underlined
@@ -114,6 +92,7 @@ const TreeNode = ({
               onClick={onClick}
               depth={depth + 1}
               query={query}
+              isExpanded={isExpanded}
             />
           ))}
       </div>
@@ -121,17 +100,39 @@ const TreeNode = ({
   );
 };
 
+TreeNode.defaultProps = {
+  isExpanded: ({ id, depth }) => true
+};
+
+// handle local state
 class Tree extends React.Component {
+  state = { opened: [] };
+  onClick = (id, opened) => {
+    this.setState(state => {
+      if (opened) {
+        return {
+          opened: this.state.opened.filter(x => x !== id)
+        };
+      }
+      return {
+        opened: [...this.state.opened, id]
+      };
+    });
+  };
+  isExpanded = ({ id, depth }) => {
+    return depth < 2 || this.state.opened.indexOf(id) > -1;
+  };
   render() {
     const { classes, cid, id, titre_ta, children, router } = this.props;
     return (
       <TreeNode
         id={id}
         cid={cid}
+        onClick={this.onClick}
         classes={classes}
         titre_ta={titre_ta}
-        onClick={this.onToggle}
         query={router.query}
+        isExpanded={this.isExpanded}
       >
         {children}
       </TreeNode>
