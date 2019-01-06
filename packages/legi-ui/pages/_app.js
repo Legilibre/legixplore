@@ -11,7 +11,7 @@ import { withStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 const styles = {
-  root: {
+  routerProgress: {
     position: "fixed",
     top: 0,
     width: "100%",
@@ -63,9 +63,12 @@ class _RouterLinearProgress extends React.Component {
   }
   render() {
     return (
-      <div className={this.props.classes.root}>
-        {this.state.loading && <LinearProgress />}
-      </div>
+      (this.state.loading && (
+        <div className={this.props.classes.routerProgress}>
+          {<LinearProgress />}
+        </div>
+      )) ||
+      null
     );
   }
 }
