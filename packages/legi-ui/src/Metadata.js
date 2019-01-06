@@ -135,8 +135,8 @@ export const CardMetadata = ({ classes, data }) => {
     </React.Fragment>
   );
 };
-export const CardApi = ({ classes, url }) => (
-  <Card className={classes.card} style={{ marginTop: 10 }}>
+export const CardApi = ({ classes, url, style }) => (
+  <Card className={classes.card} style={{ marginTop: 10, ...style }}>
     <CardContent>
       <Typography variant="h5" component="h2">
         API
