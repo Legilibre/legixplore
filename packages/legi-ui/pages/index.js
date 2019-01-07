@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Fuse from "fuse.js";
+import { format } from "date-fns";
 
 import { Link } from "../src/routes";
 import Layout from "../src/Layout";
@@ -50,7 +51,7 @@ const CodesGrid = ({ classes, codes, children }) => (
   </Grid>
 );
 
-const Code = ({ classes, id, titre, description }) => (
+const Code = ({ classes, id, titre, description, derniere_modification }) => (
   <Link route="code" params={{ code: id }}>
     <Card className={classes.codeCard}>
       <CardActionArea>
@@ -58,6 +59,10 @@ const Code = ({ classes, id, titre, description }) => (
         <CardContent>
           <Typography gutterBottom variant="h6" component="h2">
             {titre}
+          </Typography>
+          <Typography component="p">
+            <b>Dernière modification : </b>
+            {format(derniere_modification, "DD/MM/YYYY")}
           </Typography>
           <Typography component="p">{description}</Typography>
         </CardContent>
