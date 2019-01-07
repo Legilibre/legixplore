@@ -1,98 +1,19 @@
 import React from "react";
 import App, { Container } from "next/app";
 import Head from "next/head";
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import JssProvider from "react-jss/lib/JssProvider";
 import { withRouter } from "next/router";
+
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
 import getPageContext from "../src/getPageContext";
-
-import { withStyles } from "@material-ui/core/styles";
-import LinearProgress from "@material-ui/core/LinearProgress";
-
-const styles = {
-  routerProgress: {
-    position: "fixed",
-    top: 0,
-    width: "100%",
-    height: "4px",
-    zIndex: 9999
-  }
-};
-
-class _RouterLinearProgress extends React.Component {
-  state = {
-    loading: false
-  };
-  handleRouteChangeStart = url => {
-    this.setState({ loading: true });
-  };
-  handleRouteChangeComplete = url => {
-    this.setState({ loading: false });
-  };
-  handleRouteChangeError = url => {
-    this.setState({ loading: false });
-  };
-  componentDidMount() {
-    this.props.router.events.on(
-      "routeChangeStart",
-      this.handleRouteChangeStart
-    );
-    this.props.router.events.on(
-      "routeChangeComplete",
-      this.handleRouteChangeComplete
-    );
-    this.props.router.events.on(
-      "routeChangeError",
-      this.handleRouteChangeError
-    );
-  }
-  componentWillUnmount() {
-    this.props.router.events.off(
-      "routeChangeStart",
-      this.handleRouteChangeStart
-    );
-    this.props.router.events.off(
-      "routeChangeComplete",
-      this.handleRouteChangeComplete
-    );
-    this.props.router.events.off(
-      "routeChangeError",
-      this.handleRouteChangeError
-    );
-  }
-  render() {
-    return (
-      (this.state.loading && (
-        <div className={this.props.classes.routerProgress}>
-          {<LinearProgress />}
-        </div>
-      )) ||
-      null
-    );
-  }
-}
-
-const RouterLinearProgress = withStyles(styles)(
-  withRouter(_RouterLinearProgress)
-);
+import RouterProgress from "../src/RouterProgress";
 
 class MyApp extends App {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.pageContext = getPageContext();
-  }
-  componentDidUpdate() {
-    this.scrollTop();
-  }
-  scrollTop() {
-    if (typeof document !== undefined) {
-      window.scrollTo(0, 0);
-      const main = document.querySelector("main");
-      if (main) {
-        main.scrollTop = 0;
-      }
-    }
   }
 
   componentDidMount() {
@@ -100,6 +21,20 @@ class MyApp extends App {
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
+    }
+  }
+
+  componentDidUpdate() {
+    this.scrollTop();
+  }
+
+  scrollTop() {
+    if (typeof document !== undefined) {
+      window.scrollTo(0, 0);
+      const main = document.querySelector("main");
+      if (main) {
+        main.scrollTop = 0;
+      }
     }
   }
 
@@ -126,9 +61,9 @@ class MyApp extends App {
             {/* Pass pageContext to the _document though the renderPage enhancer
                 to render collected styles on server side. */}
             <Component pageContext={this.pageContext} {...pageProps} />
+            <RouterProgress router={this.props.router} />
           </MuiThemeProvider>
         </JssProvider>
-        <RouterLinearProgress />
       </Container>
     );
   }

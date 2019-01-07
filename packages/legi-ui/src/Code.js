@@ -1,45 +1,24 @@
 import React from "react";
+import map from "unist-util-map";
+
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
-
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import { withStyles } from "@material-ui/core/styles";
-import map from "unist-util-map";
 
 import AsyncArticle from "./AsyncArticle";
 import { CardApi } from "./Metadata";
 import ButtonLegifrance from "./ButtonLegifrance";
 import ButtonDetailSection from "./ButtonDetailSection";
 import { SectionChildLink } from "./Section";
-//import Section from "./Section";
 
 const styles = {
   card: {
     minWidth: 275
   }
 };
-
-const structureToSection = structure =>
-  map(structure, node => ({
-    ...node,
-    cid: "pouet",
-    data: {
-      ...node,
-      children: undefined
-    },
-    children:
-      (node.children &&
-        node.children.map(child => ({
-          ...child,
-          data: {
-            ...child,
-            type: "section"
-          }
-        }))) ||
-      []
-  }));
 
 const Code = ({ classes, cid, titre, structure }) => (
   <React.Fragment>

@@ -20,6 +20,10 @@ const styles = theme => ({
     width: 400,
     height: "100%"
   },
+  codeCard: {
+    width: 400,
+    height: "100%"
+  },
   gridList: {
     width: 900
   },
@@ -48,7 +52,7 @@ const CodesGrid = ({ classes, codes, children }) => (
 
 const Code = ({ classes, id, titre, description }) => (
   <Link route="code" params={{ code: id }}>
-    <Card className={classes.card}>
+    <Card className={classes.codeCard}>
       <CardActionArea>
         <div className={classes.colorStripe} />
         <CardContent>

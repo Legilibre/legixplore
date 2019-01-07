@@ -70,62 +70,6 @@ export const SectionChildLink = ({ cid, id, titre_ta }) => (
   </div>
 );
 
-// const SectionChild = ({
-//   classes,
-//   type,
-//   cid,
-//   id,
-//   recurse = true,
-//   depth = 0,
-//   maxDepth = 1
-// }) => {
-//   if (child.data && child.type === "article") {
-//     return <AsyncArticle cid={child.data.cid} id={child.data.id} />;
-//   } else if (child.data && child.type === "section") {
-//     if (depth < maxDepth) {
-//       return (
-//         <Section
-//           classes={classes}
-//           depth={depth + 1}
-//           maxDepth={maxDepth}
-//           data={child.data}
-//         >
-//           {child.children}
-//         </Section>
-//       );
-//     }
-//     return (
-//       <SectionChildLink
-//         cid={child.data.cid}
-//         id={child.data.id}
-//         titre_ta={child.data.titre_ta}
-//       />
-//     );
-//   }
-// };
-
-/*
-    return (
-      (
-        <div key={child.data.id}>
-          {(depth < MAX_DEPTH && (
-            // recursive component
-            <Section classes={classes} depth={depth + 1} data={child.data}>
-              {child.children}
-            </Section>
-          )) || (
-            <SectionChildLink
-              cid={child.data.cid}
-              id={child.data.id}
-              titre_ta={child.data.titre_ta}
-            />
-          )}
-        </div>
-      ) || null
-    );
-  }
-};
-*/
 const Section = ({ classes, data, children, depth = 0 }) => {
   // content of the current section
   const content = (
@@ -149,7 +93,7 @@ const Section = ({ classes, data, children, depth = 0 }) => {
           } else if (child.data && child.type === "section") {
             return (
               (
-                <div key={child.data.id}>
+                <div key={child.data.id} style={{ marginTop: 20 }}>
                   {(depth < MAX_DEPTH && (
                     // recursive component
                     <Section

@@ -125,16 +125,14 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           title="Cité par"
           links={citePar}
           Icon={SubjectIcon}
-          render={link =>
-            console.log(link) || (
-              <Link
-                route="article"
-                params={{ code: link.article_cid, article: link.src_id }}
-              >
-                <a>{link.dst_titre || link.titre || link.dst_id}</a>
-              </Link>
-            )
-          }
+          render={link => (
+            <Link
+              route="article"
+              params={{ code: link.article_cid, article: link.src_id }}
+            >
+              <a>{link.dst_titre || link.titre || link.dst_id}</a>
+            </Link>
+          )}
         />
         <BlocLinks
           title="Codifié par"
