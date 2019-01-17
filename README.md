@@ -8,11 +8,11 @@ Une version de démo est disponible ici : [legi.now.sh](https://legi.now.sh)
 
 ## Contenu
 
-| package  | usage                                                   |
-| -------- | ------------------------------------------------------- |
-| legi.js  | API NodeJS pour interroger une base LEGI/Postgres       |
-| legi-api | API HTTP au-dessus de legi.js pour récupérer les textes |
-| legi-ui  | Interface web de consultation                           |
+| package                         | usage                                                   |
+| ------------------------------- | ------------------------------------------------------- |
+| [legi.js](./packages/legi.js)   | API NodeJS pour interroger une base LEGI/Postgres       |
+| [legi-api](./packages/legi-api) | API HTTP au-dessus de legi.js pour récupérer les textes |
+| [legi-ui](./packages/legi-ui)   | Interface web de consultation                           |
 
 ## Process
 
