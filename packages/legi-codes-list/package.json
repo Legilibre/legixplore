@@ -1,0 +1,14 @@
+{
+  "name": "legi-codes-list",
+  "version": "1.0.0",
+  "author": "Julien Bouquillon <julien@bouquillon.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/revolunet/legi-codes-list.git"
+  },
+  "homepage": "https://revolunet.github.io/legi-codes-list/",
+  "bugs": {
+    "url": "https://github.com/revolunet/legi-codes-list/issues"
+  }
+}
