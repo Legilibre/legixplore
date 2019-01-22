@@ -8,6 +8,12 @@ Par défaut l'explorateur utilise l'API publique sur [https://legi-api.now.sh](h
 
 Vous pouvez mettre en place votre propre API avec votre propre base LEGI. cf [legi-api]()
 
+### Dev
+
+```
+yarn dev
+```
+
 ## Todo
 
 - ajouter les articles liés

@@ -2,7 +2,7 @@
   "name": "legi-ui",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Julien Bouquillon <julien.bouquillon@sg.social.gouv.fr>",
+  "author": "Julien Bouquillon <julien@bouquillon.com>",
   "license": "MIT",
   "scripts": {
     "dev": "node server",

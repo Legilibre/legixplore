@@ -1,8 +1,10 @@
 // shared with server.js so dont use babel stuff
-const fetch = require("node-fetch");
+const nodeFetch = require("node-fetch");
 const memoize = require("memoizee");
 
 const API_URL = process.env.API_URL || "https://legi-api.now.sh"; // http://127.0.0.1:3005";
+
+const fetch = params => console.log("fetch", params) || nodeFetch(params);
 
 const fetchSection = memoize((code, id) =>
   fetch(`${API_URL}/code/${code}/section/${id}`).then(r => r.json())
