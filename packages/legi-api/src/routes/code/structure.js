@@ -6,12 +6,14 @@ const legi = require("../../legi");
 
 // extract basic text structure
 const getStructure = tree =>
-  map(tree, node => ({
-    children: node.children,
-    type: node.type,
-    id: node.data && node.data.id,
-    titre_ta: (node.data && (node.data.titre_ta || node.data.titre)) || ""
-  }));
+  (tree &&
+    map(tree, node => ({
+      children: node.children,
+      type: node.type,
+      id: node.data && node.data.id,
+      titre_ta: (node.data && (node.data.titre_ta || node.data.titre)) || ""
+    }))) ||
+  {};
 
 const getSommaireData = memoize(
   code =>
