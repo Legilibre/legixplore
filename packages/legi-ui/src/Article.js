@@ -36,7 +36,7 @@ export const ArticleContent = ({ data }) => (
     />
     {(data.nota && striptags(data.nota).trim() !== "" && (
       <React.Fragment>
-        <Divider />
+        <Divider style={{ margin: "20px 0" }} />
         <Typography
           component="p"
           dangerouslySetInnerHTML={{ __html: data.nota }}
