@@ -32,11 +32,12 @@ const MetaCard = ({ classes, title, children }) => (
 );
 
 const BlocLinks = ({ title, links, Icon, render }) =>
-  (links &&
-    links.length && (
-      <div style={{ marginTop: 20 }}>
-        <Typography variant="h6">{title}</Typography>
-        {links.map(link => (
+  (links && links.length && (
+    <div style={{ marginTop: 20 }}>
+      <Typography variant="h6">{title}</Typography>
+      {links
+        .filter(link => link.article_cid)
+        .map(link => (
           <Typography
             key={link.src_id + link.dst_id + link.typelien}
             style={{ marginTop: 5, marginLeft: 15 }}
@@ -54,9 +55,17 @@ const BlocLinks = ({ title, links, Icon, render }) =>
             {render(link)}
           </Typography>
         ))}
-      </div>
-    )) ||
+    </div>
+  )) ||
   null;
+
+const _Link = ({ code, article, children }) =>
+  (code && code.match(/^LEGITEXT/) && (
+    <Link route="article" params={{ code, article }}>
+      <a>{children}</a>
+    </Link>
+  )) ||
+  children;
 
 export const CardMetadata = ({ classes, data, currentId }) => {
   const metadata = (
@@ -78,7 +87,6 @@ export const CardMetadata = ({ classes, data, currentId }) => {
   const citePar = filterBy("CITATION_R");
   const codifiePar = filterBy("CODIFICATION");
   const anciensTextes = filterBy("CONCORDANCE");
-
   return (
     <React.Fragment>
       <MetaCard classes={classes} title="Liens">
@@ -87,12 +95,9 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={creePar}
           Icon={EventAvailableIcon}
           render={link => (
-            <Link
-              route="article"
-              params={{ code: link.dst_cid || "unknown", article: link.dst_id }}
-            >
-              <a>{link.dst_titre || link.titre}</a>
-            </Link>
+            <_Link code={link.dst_cid} article={link.dst_id}>
+              {link.dst_titre || link.titre}
+            </_Link>
           )}
         />
         <BlocLinks
@@ -100,12 +105,9 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={abrogePar}
           Icon={DeleteIcon}
           render={link => (
-            <Link
-              route="article"
-              params={{ code: link.dst_cid || "unknown", article: link.dst_id }}
-            >
-              <a>{link.dst_titre || link.titre}</a>
-            </Link>
+            <_Link code={link.dst_cid} article={link.dst_id}>
+              {link.dst_titre || link.titre}
+            </_Link>
           )}
         />
         <BlocLinks
@@ -113,12 +115,9 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={cite}
           Icon={SubjectIcon}
           render={link => (
-            <Link
-              route="article"
-              params={{ code: link.dst_cid || "unknown", article: link.dst_id }}
-            >
-              <a>{link.dst_titre || link.titre}</a>
-            </Link>
+            <_Link code={link.dst_cid} article={link.dst_id}>
+              {link.dst_titre || link.titre}
+            </_Link>
           )}
         />
         <BlocLinks
@@ -126,12 +125,9 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={citePar}
           Icon={SubjectIcon}
           render={link => (
-            <Link
-              route="article"
-              params={{ code: link.article_cid, article: link.src_id }}
-            >
-              <a>{link.dst_titre || link.titre || link.dst_id}</a>
-            </Link>
+            <_Link code={link.article_cid} article={link.src_id}>
+              {link.dst_titre || link.titre || link.dst_id}
+            </_Link>
           )}
         />
         <BlocLinks
@@ -139,9 +135,7 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={codifiePar}
           Icon={SubjectIcon}
           render={link => (
-            <Link route="code" params={{ code: link.dst_cid }}>
-              <a>{link.dst_titre || link.titre}</a>
-            </Link>
+            <_Link code={link.dst_cid}>{link.dst_titre || link.titre}</_Link>
           )}
         />
         <BlocLinks

@@ -34,16 +34,15 @@ export const ArticleContent = ({ data }) => (
       component="p"
       dangerouslySetInnerHTML={{ __html: data.bloc_textuel }}
     />
-    {(data.nota &&
-      striptags(data.nota).trim() !== "" && (
-        <React.Fragment>
-          <Divider />
-          <Typography
-            component="p"
-            dangerouslySetInnerHTML={{ __html: data.nota }}
-          />
-        </React.Fragment>
-      )) ||
+    {(data.nota && striptags(data.nota).trim() !== "" && (
+      <React.Fragment>
+        <Divider />
+        <Typography
+          component="p"
+          dangerouslySetInnerHTML={{ __html: data.nota }}
+        />
+      </React.Fragment>
+    )) ||
       null}
   </React.Fragment>
 );
