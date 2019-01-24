@@ -38,7 +38,7 @@ class CodePage extends React.Component {
         <Head>
           <title>{codeTitle} - legiXplore</title>
         </Head>
-        {(detailData.data && (
+        {(detailData && detailData.data && (
           <div style={{ marginTop: 20 }}>
             {/*<BreadCrumbs
               title={codeTitle}
