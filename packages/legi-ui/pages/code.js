@@ -2,7 +2,6 @@ import React from "react";
 import Head from "next/head";
 
 import Layout from "../src/Layout";
-import BreadCrumbs from "../src/BreadCrumbs";
 import DetailView from "../src/DetailView";
 import Code from "../src/Code";
 
@@ -12,8 +11,6 @@ import {
   fetchStructure,
   fetchCodes
 } from "../src/api";
-
-const getCodeTitle = cid => codes.find(code => code.id === cid).titre;
 
 class CodePage extends React.Component {
   static async getInitialProps({ query }) {
@@ -39,7 +36,7 @@ class CodePage extends React.Component {
     return (
       <Layout title={codeTitle} structure={structure} cid={query.code}>
         <Head>
-          <title>{codeTitle} - LEGI explorer</title>
+          <title>{codeTitle} - legiXplore</title>
         </Head>
         {(detailData.data && (
           <div style={{ marginTop: 20 }}>

@@ -1,8 +1,15 @@
 import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
-import { Menu as MenuIcon } from "@material-ui/icons";
-import { IconButton, Typography, AppBar, Toolbar } from "@material-ui/core";
+import { Menu as MenuIcon, Info as InfoIcon } from "@material-ui/icons";
+import {
+  IconButton,
+  Typography,
+  AppBar,
+  Toolbar,
+  Badge,
+  Tooltip
+} from "@material-ui/core";
 
 import { Link } from "./routes";
 import withToggle from "./lib/withToggle";
@@ -79,8 +86,24 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3,
     height: "100vh",
     overflow: "auto"
-  }
+  },
+  infoTooltip: { fontSize: "1em" }
 });
+
+const TooltipChild = () => (
+  <div>
+    Service gratuit et non officiel.
+    <br />
+    <br />
+    <a
+      target="_blank"
+      style={{ color: "white" }}
+      href="https://github.com/legilibre/legixplore"
+    >
+      Contribuez sur GitHub
+    </a>
+  </div>
+);
 
 const ToolbarTitle = ({ classes, style, title }) => (
   <Typography
@@ -125,15 +148,25 @@ const _Layout = ({
         </IconButton>
         {(cid && (
           <Link route="code" params={{ code: cid }}>
-            <div>
-              <ToolbarTitle
-                classes={classes}
-                title={title}
-                style={{ cursor: "pointer" }}
-              />
-            </div>
+            <ToolbarTitle
+              classes={classes}
+              title={title}
+              style={{ cursor: "pointer" }}
+            />
           </Link>
         )) || <ToolbarTitle classes={classes} title={title} />}
+
+        <Tooltip
+          leaveDelay={1000}
+          interactive
+          placement="left"
+          title={<TooltipChild />}
+          classes={{ tooltip: classes.infoTooltip }}
+        >
+          <IconButton color="inherit">
+            <InfoIcon />
+          </IconButton>
+        </Tooltip>
       </Toolbar>
     </AppBar>
     {(enableDrawer && (

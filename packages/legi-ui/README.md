@@ -16,5 +16,5 @@ yarn dev
 
 ## Todo
 
-- ajouter les articles liés
 - detection patterns de liens dans les textes (ex: R. 342-7)
+- breadcrumbs

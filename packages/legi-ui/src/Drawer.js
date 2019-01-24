@@ -21,7 +21,7 @@ const Drawer = ({ classes, cid, onToggle, opened, structure }) => (
           align="center"
           style={{ width: "100%", cursor: "pointer" }}
         >
-          legiXplorer
+          legiXplore
         </Typography>
       </Link>
     </div>
