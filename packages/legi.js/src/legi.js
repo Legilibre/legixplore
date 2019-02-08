@@ -14,10 +14,12 @@ const legi = (knexConfig = {}) => {
   // the public API methods handlers will receive current knex connection as 1st arg
   return {
     getCode: knexify(require("./getCode")),
+    getConteneur: knexify(require("./getConteneur")),
     getCodesList: knexify(require("./getCodesList")),
     getArticle: knexify(require("./getArticle")),
     getSection: knexify(require("./getSection")),
-    getSommaire: knexify(require("./getSommaire")),
+    getSommaireCode: knexify(require("./getSommaire").getSommaireCode),
+    getSommaireConteneur: knexify(require("./getSommaire").getSommaireConteneur),
     close: () => knex && knex.destroy(),
     knex
   };

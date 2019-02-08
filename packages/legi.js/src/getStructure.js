@@ -1,5 +1,17 @@
 const makeArticle = require("./makeArticle");
 const makeSection = require("./makeSection");
+const makeTetier = require("./makeTetier");
+const makeTexte = require("./makeTexte");
+const { getItemType } = require("./utils");
+
+const makeItem = itemType => {
+  return {
+    article: makeArticle,
+    section: makeSection,
+    tetier: makeTetier,
+    texte: makeTexte
+  }[itemType];
+};
 
 // postgreSQL queries to get the full structure in a single-query
 
@@ -33,74 +45,113 @@ ${/* get full structure in a one-shot flat array */ ""}
 
 ${/* map some data from previous recursive call */ ""}
 
-SELECT  hierarchie.element as id, sections.parent, sections.titre_ta, hierarchie.position, hierarchie.etat, null as num
-  from hierarchie
-  left join sections on sections.id=hierarchie.element
-  where LEFT(hierarchie.element, 8) = 'LEGISCTA'
-union ALL(
-SELECT  hierarchie.element as id, hierarchie.parent, CONCAT('Article ', COALESCE(hierarchie.num, articles.num)) as titre_ta, hierarchie.position, hierarchie.etat, COALESCE(hierarchie.num, articles.num, 'inconnu')
-  from hierarchie
-  left join articles on articles.id=hierarchie.element
-  where LEFT(hierarchie.element, 8) = 'LEGIARTI'
-  order by articles.id)
-
+SELECT
+  hierarchie.element as id,
+  hierarchie.parent,
+  tetiers.titre_tm as titre_ta,
+  hierarchie.position,
+  hierarchie.etat,
+  hierarchie.num
+FROM hierarchie
+LEFT JOIN tetiers ON tetiers.id = hierarchie.element
+WHERE SUBSTR(hierarchie.element, 5, 2) = 'TM'
+UNION ALL(
+  SELECT
+    hierarchie.element AS id,
+    hierarchie.parent,
+    textes_versions.titre AS titre_ta,
+    hierarchie.position,
+    hierarchie.etat,
+    NULL AS num
+  FROM hierarchie
+  LEFT JOIN textes_versions ON textes_versions.id = hierarchie.element
+  WHERE SUBSTR(hierarchie.element, 5, 4) = 'TEXT'
+)
+UNION ALL(
+  SELECT
+    hierarchie.element AS id,
+    hierarchie.parent,
+    sections.titre_ta,
+    hierarchie.position,
+    hierarchie.etat,
+    null AS num
+  FROM hierarchie
+  LEFT JOIN sections ON sections.id = hierarchie.element
+  WHERE SUBSTR(hierarchie.element, 5, 4) = 'SCTA'
+)
+UNION ALL(
+  SELECT
+    hierarchie.element as id,
+    hierarchie.parent,
+    CONCAT('Article ', COALESCE(hierarchie.num, articles.num)) as titre_ta,
+    hierarchie.position,
+    hierarchie.etat,
+    COALESCE(hierarchie.num, articles.num, 'inconnu')
+  FROM hierarchie
+  LEFT JOIN articles ON articles.id = hierarchie.element
+  WHERE SUBSTR(hierarchie.element, 5, 4) = 'ARTI'
+  ORDER BY articles.id
+)
 `;
 
 // SQL where id IN (x, y, z) query
 const getRowsIn = (knex, table, ids, key = "id") => knex.from(table).whereIn(key, ids);
 
-const isSection = id => id.substring(0, 8) === "LEGISCTA";
-const isArticle = id => id.substring(0, 8) === "LEGIARTI";
+const getInitialCondition = (cid, conteneurId, section) => {
+  if (section) {
+    return `sommaires.element='${section}'`;
+  } else if (conteneurId) {
+    return `sommaires.parent='${conteneurId}'`;
+  } else {
+    return `sommaires.parent='${cid}'`;
+  }
+};
+
+const itemTypeToTable = itemType => (itemType == "texte" ? "textes_versions" : `${itemType}s`);
 
 // get flat rows with the articles/sections for given section/date
-const getRawStructure = async ({ knex, cid, section, date, maxDepth = 0 }) =>
+const getRawStructure = async ({ knex, cid, conteneurId, section, date, maxDepth = 0 }) =>
   knex.raw(
     getStructureSQL({
       date,
       cid,
+      conteneurId,
       maxDepth,
-      initialCondition: section ? `sommaires.element='${section}'` : "sommaires.parent is null"
+      initialCondition: getInitialCondition(cid, conteneurId, section)
     })
   );
-//.debug();
 
 // build AST-like deep structure for a given node
 // useful for full data dumps
-const getStructure = async ({ knex, cid, section = undefined, date, maxDepth = 0 }) =>
-  getRawStructure({ knex, cid, section, date, maxDepth }).then(async result => {
+const getStructure = async ({
+  knex,
+  cid,
+  conteneurId = undefined,
+  section = undefined,
+  date,
+  maxDepth = 0
+}) =>
+  getRawStructure({ knex, cid, section, conteneurId, date, maxDepth }).then(async result => {
     // cache related data
-    const allSections = await getRowsIn(
-      knex,
-      "sections",
-      result.rows.filter(row => isSection(row.id)).map(row => row.id)
-    );
-    const allArticles = await getRowsIn(
-      knex,
-      "articles",
-      result.rows.filter(row => isArticle(row.id)).map(row => row.id)
-    );
-
-    const getSection = row => allSections.find(section => section.id === row.id);
-    const getArticle = row => allArticles.find(article => article.id === row.id);
+    const cache = {};
+    for (const itemType of ["article", "texte", "section", "tetier"]) {
+      cache[itemTypeToTable(itemType)] = await getRowsIn(
+        knex,
+        itemTypeToTable(itemType),
+        result.rows.filter(row => getItemType(row) === itemType).map(row => row.id)
+      );
+    }
 
     // enrich sommaire rows with related data (sections, articles)
     // add hierarchical data so we can build an AST later on
     const getRow = row => {
-      if (row.id.substring(0, 8) === "LEGISCTA") {
-        const section = getSection(row);
-        return makeSection({
-          ...section,
-          position: row.position,
-          parent: row.parent
-        });
-      } else if (row.id.substring(0, 8) === "LEGIARTI") {
-        const article = getArticle(row);
-        return makeArticle({
-          ...article,
-          position: row.position,
-          parent: row.parent
-        });
-      }
+      const itemType = getItemType(row);
+      const item = cache[itemTypeToTable(itemType)].find(item => item.id === row.id);
+      return makeItem(itemType)({
+        ...item,
+        position: row.position,
+        parent: row.parent
+      });
     };
     return result.rows.map(getRow);
   });

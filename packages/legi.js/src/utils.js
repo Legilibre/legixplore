@@ -86,7 +86,18 @@ const sortByKey = key => (a, b) => {
   return 0;
 };
 
-const isSection = id => id.substring(0, 8) === "LEGISCTA";
+const getItemType = item => {
+  if (item.id.substring(4, 8) == "SCTA") {
+    return "section";
+  } else if (item.id.substring(4, 8) == "TEXT") {
+    return "texte";
+  } else if (item.id.substring(4, 8) == "ARTI") {
+    return "article";
+  } else if (item.id.substring(4, 6) == "TM") {
+    return "tetier";
+  }
+};
+const canContainChildren = item => ["section", "texte", "tetier"].includes(getItemType(item));
 
 // transform flat rows to hierarchical tree
 const makeAst = (rows, parent = null) =>
@@ -96,7 +107,7 @@ const makeAst = (rows, parent = null) =>
     .map(row => ({
       ...row,
       // add children nodes for sections
-      children: (isSection(row.data.id) && makeAst(rows, row.data.id)) || undefined
+      children: (canContainChildren(row.data) && makeAst(rows, row.data.id)) || undefined
     }));
 
 module.exports = {
@@ -111,5 +122,7 @@ module.exports = {
   cleanData,
   JSONread,
   JSONlog,
-  sortByKey
+  sortByKey,
+  getItemType,
+  canContainChildren
 };
