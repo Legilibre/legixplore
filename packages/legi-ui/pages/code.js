@@ -4,6 +4,7 @@ import Head from "next/head";
 import Layout from "../src/Layout";
 import DetailView from "../src/DetailView";
 import Code from "../src/Code";
+import ContentNotFound from "../src/ContentNotFound";
 
 import {
   fetchArticle,
@@ -33,12 +34,15 @@ class CodePage extends React.Component {
   render() {
     const { structure, detailData, query, codes } = this.props;
     const codeTitle = codes.find(code => code.id === query.code).titre;
+    const notFound = (query.article || query.section) && detailData === null;
     return (
       <Layout title={codeTitle} structure={structure} cid={query.code}>
         <Head>
           <title>{codeTitle} - legiXplore</title>
         </Head>
-        {(detailData && detailData.data && (
+        {notFound ? (
+          <ContentNotFound />
+        ) : detailData ? (
           <div style={{ marginTop: 20 }}>
             {/*<BreadCrumbs
               title={codeTitle}
@@ -48,7 +52,9 @@ class CodePage extends React.Component {
             />*/}
             <DetailView cid={query.code} node={detailData} />
           </div>
-        )) || <Code cid={query.code} titre={codeTitle} structure={structure} />}
+        ) : (
+          <Code cid={query.code} titre={codeTitle} structure={structure} />
+        )}
       </Layout>
     );
   }
