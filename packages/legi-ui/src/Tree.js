@@ -6,7 +6,7 @@ import { Typography } from "@material-ui/core";
 
 import { Folder, FolderOpen, Subject } from "@material-ui/icons";
 
-import { Link } from "./routes";
+import Link from "./DILABaseLink";
 
 const isActive = (props, id) => {
   return props.article === id || props.section === id;
@@ -66,7 +66,7 @@ const TreeNode = ({
             noWrap={true}
             title={titre_ta}
           >
-            {type === "section" ? (
+            {["section", "texte", "tetier"].includes(type) ? (
               expand ? (
                 <FolderOpen className={classes.icon} />
               ) : (

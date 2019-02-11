@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { default as LinkIcon } from "@material-ui/icons/Link";
 
-import { Link } from "./routes";
+import DILABaseLink from "./DILABaseLink";
 import ArticleMeta from "./ArticleMeta";
 
 const Lien = ({ src_id, dst_cid, dst_id, dst_titre, typelien }) => (

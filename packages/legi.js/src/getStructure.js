@@ -16,16 +16,12 @@ const makeItem = itemType => {
 // postgreSQL queries to get the full structure in a single-query
 
 // basic SQL date/vigueur filters
-const getSommaireFilters = (cid, date) =>
-  `cid='${cid}' and sommaires.debut <= '${date}' and (sommaires.fin > '${date}' or sommaires.fin = '${date}' or sommaires.etat = 'VIGUEUR')`;
+const getSommaireFilters = (date) => `1=1`;
+  // `sommaires.debut <= '${date}' and (sommaires.fin > '${date}' or sommaires.fin = '${date}' or LEFT(sommaires.etat, 7) = 'VIGUEUR')`;
+// removed `cid='${cid}' and`
 
 // add sections + articles basic data from the sommaires results
-const getStructureSQL = ({
-  cid,
-  date,
-  initialCondition = "sommaires.parent is null",
-  maxDepth = 1
-}) => `
+const getStructureSQL = ({ date, initialCondition = "sommaires.parent is null", maxDepth = 1 }) => `
 
 ${/* DECLARE RECURSIVE FUNCTION */ ""}
 ${/* get full structure in a one-shot flat array */ ""}
@@ -33,12 +29,12 @@ ${/* get full structure in a one-shot flat array */ ""}
  WITH RECURSIVE hierarchie(element, depth) AS (
   SELECT sommaires.element, 0 as depth, sommaires.position, sommaires.etat, sommaires.num, sommaires.parent, sommaires.debut, sommaires.fin
     FROM sommaires
-    WHERE ${getSommaireFilters(cid, date)}
+    WHERE ${getSommaireFilters(date)}
     and ${initialCondition}
   UNION ALL
   SELECT DISTINCT sommaires.element, depth + 1 as depth, sommaires.position, sommaires.etat, sommaires.num, sommaires.parent, sommaires.debut, sommaires.fin
     FROM sommaires, hierarchie
-    WHERE ${getSommaireFilters(cid, date)}
+    WHERE ${getSommaireFilters(date)}
     and sommaires.parent = hierarchie.element
     ${maxDepth > 0 ? `and depth <= ${Math.max(0, maxDepth - 1)}` : ``}
  )
@@ -97,27 +93,24 @@ UNION ALL(
 // SQL where id IN (x, y, z) query
 const getRowsIn = (knex, table, ids, key = "id") => knex.from(table).whereIn(key, ids);
 
-const getInitialCondition = (cid, conteneurId, section) => {
+const getInitialCondition = (parentId, section) => {
   if (section) {
     return `sommaires.element='${section}'`;
-  } else if (conteneurId) {
-    return `sommaires.parent='${conteneurId}'`;
-  } else {
-    return `sommaires.parent='${cid}'`;
+  } else if (parentId) {
+    return `sommaires.parent='${parentId}'`;
   }
 };
 
 const itemTypeToTable = itemType => (itemType == "texte" ? "textes_versions" : `${itemType}s`);
 
 // get flat rows with the articles/sections for given section/date
-const getRawStructure = async ({ knex, cid, conteneurId, section, date, maxDepth = 0 }) =>
+const getRawStructure = async ({ knex, parentId, section, date, maxDepth = 0 }) =>
   knex.raw(
     getStructureSQL({
       date,
-      cid,
-      conteneurId,
+      parentId,
       maxDepth,
-      initialCondition: getInitialCondition(cid, conteneurId, section)
+      initialCondition: getInitialCondition(parentId, section)
     })
   );
 
@@ -125,13 +118,12 @@ const getRawStructure = async ({ knex, cid, conteneurId, section, date, maxDepth
 // useful for full data dumps
 const getStructure = async ({
   knex,
-  cid,
-  conteneurId = undefined,
+  parentId = undefined,
   section = undefined,
   date,
   maxDepth = 0
 }) =>
-  getRawStructure({ knex, cid, section, conteneurId, date, maxDepth }).then(async result => {
+  getRawStructure({ knex, section, parentId, date, maxDepth }).then(async result => {
     // cache related data
     const cache = {};
     for (const itemType of ["article", "texte", "section", "tetier"]) {

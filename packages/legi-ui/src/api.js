@@ -7,18 +7,28 @@ const API_URL = process.env.API_URL || "https://legi-api.now.sh"; // http://127.
 const fetch = params => console.log("fetch", params) || nodeFetch(params);
 
 const fetchSection = memoize((code, id) =>
-  fetch(`${API_URL}/code/${code}/section/${id}`).then(r => r.json())
+  fetch(`${API_URL}/section/${id}`).then(r => r.json())
 );
 
 const fetchArticle = memoize((code, id) =>
-  fetch(`${API_URL}/code/${code}/article/${id}`).then(r => r.json())
+  fetch(`${API_URL}/article/${id}`).then(r => r.json())
 );
 
-const fetchStructure = memoize(code =>
+const fetchTetier = memoize((code, id) =>
+  fetch(`${API_URL}/tetier/${id}`).then(r => r.json())
+);
+
+const fetchCodeStructure = memoize(code =>
   fetch(`${API_URL}/code/${code}/structure`).then(r => r.json())
+);
+const fetchConteneurStructure = memoize(code =>
+  fetch(`${API_URL}/conteneur/${code}/structure`).then(r => r.json())
 );
 
 const fetchCodes = memoize(() => fetch(`${API_URL}/codes`).then(r => r.json()));
+const fetchConteneurs = memoize(() =>
+  fetch(`${API_URL}/conteneurs`).then(r => r.json())
+);
 
 const fetchNode = (code, node) => {
   if (node.type === "article") {
@@ -32,7 +42,10 @@ const fetchNode = (code, node) => {
 module.exports = {
   fetchSection,
   fetchArticle,
-  fetchStructure,
+  fetchTetier,
+  fetchCodeStructure,
+  fetchConteneurStructure,
   fetchCodes,
+  fetchConteneurs,
   fetchNode
 };

@@ -2,7 +2,7 @@ const routes = require("express").Router();
 const memoize = require("memoizee");
 const map = require("unist-util-map");
 
-const legi = require("../../legi");
+const legi = require("../legi");
 
 // extract basic text structure
 const getStructure = tree =>
@@ -15,7 +15,7 @@ const getStructure = tree =>
 
 const getSommaireData = memoize(
   code =>
-    legi.getSommaire({
+    legi.getSommaireCode({
       cid: code,
       date: "2019-01-01"
     }),

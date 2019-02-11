@@ -3,18 +3,23 @@ const routes = require("@socialgouv/next-routes");
 module.exports = routes()
   .add({
     name: "section",
-    pattern: "/code/:code/section/:section",
+    pattern: "/:base/code/:code/section/:section",
     page: "code"
   })
   .add({
     name: "article",
-    pattern: "/code/:code/article/:article",
+    pattern: "/:base/code/:code/article/:article",
     page: "code"
   })
   .add({
     name: "code",
-    pattern: "/code/:code",
+    pattern: "/:base/code/:code",
     page: "code"
   })
-  .add({ name: "codes", pattern: "/codes", page: "index" })
-  .add({ name: "index", pattern: "/", page: "index" });
+  .add({
+    name: "tetier",
+    pattern: "/:base/code/:code/tetier/:tetier",
+    page: "code"
+  })
+  .add({ name: "codes", pattern: "/:base/codes", page: "codes" })
+  .add({ name: "bases", pattern: "/", page: "index" });

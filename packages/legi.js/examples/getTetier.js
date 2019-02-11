@@ -1,10 +1,11 @@
 const legi = require("./legi");
 const { JSONlog } = require("../src/utils");
 
-// get code sommaire
+// get single article
 legi
-  .getSommaireConteneur({ id: "KALICONT000005635807", date: "2019-01-01" })
+  .getTetier({
+    id: "KALITM000030594537-0"
+  })
   .then(JSONlog)
   .catch(console.log)
   .then(legi.close);
-

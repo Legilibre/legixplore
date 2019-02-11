@@ -3,8 +3,7 @@ const { JSONlog } = require("../src/utils");
 
 // get code sommaire
 legi
-  .getSommaireConteneur({ id: "KALICONT000005635807", date: "2019-01-01" })
+  .getConteneursList()
   .then(JSONlog)
   .catch(console.log)
   .then(legi.close);
-

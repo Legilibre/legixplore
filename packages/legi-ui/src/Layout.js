@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Menu as MenuIcon } from "@material-ui/icons";
 import { IconButton, Typography, AppBar, Toolbar } from "@material-ui/core";
 
-import { Link } from "./routes";
+import Link from "./DILABaseLink";
 import withToggle from "./lib/withToggle";
 import Drawer from "./Drawer";
 

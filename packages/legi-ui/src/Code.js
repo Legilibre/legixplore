@@ -35,7 +35,7 @@ const Code = ({ classes, cid, titre, structure }) => (
               <Typography variant="h5">{child.titre_ta}</Typography>
               <List>
                 {child.children.map(child2 => {
-                  if (child2.type === "section") {
+                  if (["section", "texte"].includes(child2.type)) {
                     return (
                       <SectionChildLink
                         key={child2.id}
