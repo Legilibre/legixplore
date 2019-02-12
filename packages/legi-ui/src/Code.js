@@ -39,7 +39,7 @@ const Code = ({ classes, cid, titre, structure }) => (
                     return (
                       <SectionChildLink
                         key={child2.id}
-                        cid={cid}
+                        parentId={cid}
                         id={child2.id}
                         titre_ta={child2.titre_ta}
                       />

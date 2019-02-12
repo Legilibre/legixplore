@@ -6,15 +6,15 @@ const API_URL = process.env.API_URL || "https://legi-api.now.sh"; // http://127.
 
 const fetch = params => console.log("fetch", params) || nodeFetch(params);
 
-const fetchSection = memoize((code, id) =>
+const fetchSection = memoize((id) =>
   fetch(`${API_URL}/section/${id}`).then(r => r.json())
 );
 
-const fetchArticle = memoize((code, id) =>
+const fetchArticle = memoize((id) =>
   fetch(`${API_URL}/article/${id}`).then(r => r.json())
 );
 
-const fetchTetier = memoize((code, id) =>
+const fetchTetier = memoize((id) =>
   fetch(`${API_URL}/tetier/${id}`).then(r => r.json())
 );
 
@@ -30,11 +30,11 @@ const fetchConteneurs = memoize(() =>
   fetch(`${API_URL}/conteneurs`).then(r => r.json())
 );
 
-const fetchNode = (code, node) => {
+const fetchNode = (node) => {
   if (node.type === "article") {
-    return fetchArticle(code, node.data.id);
+    return fetchArticle(node.data.id);
   } else if (node.type === "section") {
-    return fetchSection(code, node.data.id);
+    return fetchSection(node.data.id);
   }
   return Promise.reject("invalid node type");
 };

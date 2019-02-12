@@ -55,7 +55,7 @@ const TreeNode = ({
       }}
     >
       {depth > 0 && (
-        <Link route={type} params={{ code: cid, [type]: id }}>
+        <Link route={type} params={{ texte: cid, [type]: id }}>
           <Typography
             onClick={e => onClick(id, expand)}
             className={cx(

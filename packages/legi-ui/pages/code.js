@@ -25,24 +25,21 @@ class CodePage extends React.Component {
     const base = query.base || 'LEGI';
     let structure, codes;
     if (base == 'LEGI') {
-      structure = await fetchCodeStructure(query.code);
+      structure = await fetchCodeStructure(query.texte);
       codes = await fetchCodes();
     } else {
-      structure = await fetchConteneurStructure(query.code);
+      structure = await fetchConteneurStructure(query.texte);
       codes = await fetchConteneurs();
     }
     let detailData = {};
     if (query.article) {
-      detailData = await fetchArticle(query.code, query.article);
+      detailData = await fetchArticle(query.article);
     }
     if (query.tetier) {
-      detailData = await fetchTetier(query.code, query.tetier);
-    }
-    if (query.texte) {
-      detailData = await fetchTexte(query.code, query.texte);
+      detailData = await fetchTetier(query.tetier);
     }
     if (query.section) {
-      detailData = await fetchSection(query.code, query.section);
+      detailData = await fetchSection(query.section);
     }
     return {
       query,
@@ -54,10 +51,10 @@ class CodePage extends React.Component {
   }
   render() {
     const { structure, detailData, query, codes, base } = this.props;
-    const codeTitle = codes.find(code => code.id === query.code).titre;
+    const codeTitle = codes.find(code => code.id === query.texte).titre;
     return (
       <DILABaseContext.Provider value={base}>
-        <Layout title={codeTitle} structure={structure} cid={query.code}>
+        <Layout title={codeTitle} structure={structure} cid={query.texte}>
           <Head>
             <title>{codeTitle} - LEGI explorer</title>
           </Head>
@@ -65,13 +62,13 @@ class CodePage extends React.Component {
             <div style={{ marginTop: 20 }}>
               {/*<BreadCrumbs
                 title={codeTitle}
-                cid={query.code}
+                cid={query.texte}
                 items={[{ titre_ta: codeTitle }, ...detailData.parents]}
                 onClick={() => {}}
               />*/}
-              <DetailView parentId={query.code} cid={query.node} node={detailData} />
+              <DetailView parentId={query.texte} cid={query.texte} node={detailData} />
             </div>
-          )) || <Code cid={query.code} titre={codeTitle} structure={structure} />}
+          )) || <Code cid={query.texte} titre={codeTitle} structure={structure} />}
         </Layout>
       </DILABaseContext.Provider>
     );

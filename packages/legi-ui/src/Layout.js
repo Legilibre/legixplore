@@ -15,7 +15,8 @@ const styles = theme => ({
     display: "flex"
   },
   toolbar: {
-    paddingRight: 24 // keep right padding when drawer closed
+    paddingRight: 24, // keep right padding when drawer closed
+    overflow: "hidden"  // avoid long titles horizontal overflow
   },
   toolbarIcon: {
     display: "flex",
@@ -124,7 +125,7 @@ const _Layout = ({
           <MenuIcon />
         </IconButton>
         {(cid && (
-          <Link route="code" params={{ code: cid }}>
+          <Link route="texte" params={{ texte: cid }}>
             <div>
               <ToolbarTitle
                 classes={classes}

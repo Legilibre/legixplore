@@ -20,14 +20,14 @@ app.prepare().then(() => {
     .get("/codes.json", async (req, res) => {
       res.json(await fetchCodes());
     })
-    .get("/code/:code.json", async (req, res) => {
-      res.json(await fetchStructure(req.params.code));
+    .get("/texte/:texte.json", async (req, res) => {
+      res.json(await fetchStructure(req.params.texte));
     })
-    .get("/code/:code/article/:article.json", async (req, res) => {
-      res.json(await fetchArticle(req.params.code, req.params.article));
+    .get("/textearticle/:article.json", async (req, res) => {
+      res.json(await fetchArticle(req.params.article));
     })
-    .get("/code/:code/section/:section.json", async (req, res) => {
-      res.json(await fetchSection(req.params.code, req.params.section));
+    .get("/texte/:texte/section/:section.json", async (req, res) => {
+      res.json(await fetchSection(req.params.section));
     })
     // next-routes handler
     .use(handler)

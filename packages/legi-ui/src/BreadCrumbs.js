@@ -23,7 +23,7 @@ const Breadcrumbs = ({ classes = {}, title, cid, items, onClick }) => (
             className={classes.title}
           >
             {p.id ? (
-              <Link route="section" params={{ code: cid, section: p.id }}>
+              <Link route="section" params={{ texte: cid, section: p.id }}>
                 <span
                   style={{ textDecoration: "underline" }}
                   title={p.titre_ta}
@@ -34,7 +34,7 @@ const Breadcrumbs = ({ classes = {}, title, cid, items, onClick }) => (
                 </span>
               </Link>
             ) : (
-              <Link route="code" params={{ code: cid }}>
+              <Link route="texte" params={{ texte: cid }}>
                 <span>{p.titre_ta}</span>
               </Link>
             )}

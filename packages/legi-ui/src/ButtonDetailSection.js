@@ -8,7 +8,7 @@ import Link from "./DILABaseLink";
 const ButtonDetailSection = ({ code, section, title = "Détails" }) => (
   <Link
     route="section"
-    params={{ code, section }}
+    params={{ texte: code, section }}
   >
     <Button color="primary" variant="outlined" size="small">
       <ZoomInIcon style={{ marginRight: 5 }} />

@@ -52,7 +52,7 @@ export const SectionChildLink = ({ parentId, id, titre_ta }) => (
   <div style={{ marginLeft: 10 }}>
     <Link
       route="section"
-      params={{ code: parentId, section: id }}
+      params={{ texte: parentId, section: id }}
       >
       <Typography
         variant="subtitle1"
@@ -72,7 +72,7 @@ const Section = ({ parentId, classes, data, children, depth = 0 }) => {
   const content = (
     <React.Fragment>
       <SectionTitle
-        linkParams={{ code: parentId, section: data.id }}
+        linkParams={{ texte: parentId, section: data.id }}
         variant={getMaxH(depth + 5)}
         title={data.titre_ta || data.titre_tm || data.titre}
       />
@@ -84,7 +84,6 @@ const Section = ({ parentId, classes, data, children, depth = 0 }) => {
               return (
                 <AsyncArticle
                   key={child.data.id}
-                  cid={parentId}
                   id={child.data.id}
                 />
               );

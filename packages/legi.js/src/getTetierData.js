@@ -3,7 +3,7 @@ const getTetierData = (knex, filters) =>
     .clearSelect()
     .clearWhere()
     .clearOrder()
-    .select("id", "titre_tm", "niv")
+    .select("id", "titre_tm", "niv", "conteneur_id")
     .from("tetiers")
     .where(filters)
     .first()

@@ -89,7 +89,7 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           render={link => (
             <Link
               route="article"
-              params={{ code: link.dst_cid || "unknown", article: link.dst_id }}
+              params={{ texte: link.dst_cid || "unknown", article: link.dst_id }}
             >
               <a>{link.dst_titre || link.titre}</a>
             </Link>
@@ -102,7 +102,7 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           render={link => (
             <Link
               route="article"
-              params={{ code: link.dst_cid || "unknown", article: link.dst_id }}
+              params={{ texte: link.dst_cid || "unknown", article: link.dst_id }}
             >
               <a>{link.dst_titre || link.titre}</a>
             </Link>
@@ -115,7 +115,7 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           render={link => (
             <Link
               route="article"
-              params={{ code: link.dst_cid || "unknown", article: link.dst_id }}
+              params={{ texte: link.dst_cid || "unknown", article: link.dst_id }}
             >
               <a>{link.dst_titre || link.titre}</a>
             </Link>
@@ -128,7 +128,7 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           render={link => (
             <Link
               route="article"
-              params={{ code: link.article_cid, article: link.src_id }}
+              params={{ texte: link.article_cid, article: link.src_id }}
             >
               <a>{link.dst_titre || link.titre || link.dst_id}</a>
             </Link>
@@ -139,7 +139,7 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={codifiePar}
           Icon={SubjectIcon}
           render={link => (
-            <Link route="code" params={{ code: link.dst_cid }}>
+            <Link route="texte" params={{ texte: link.dst_cid }}>
               <a>{link.dst_titre || link.titre}</a>
             </Link>
           )}

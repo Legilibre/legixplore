@@ -52,7 +52,7 @@ const CodesGrid = ({ classes, codes, children, base }) => (
 );
 
 const Code = ({ classes, base, id, titre, description, derniere_modification }) => (
-  <Link route="code" params={{ base: base, code: id }}>
+  <Link route="texte" params={{ base: base, texte: id }}>
     <Card className={classes.codeCard}>
       <CardActionArea>
         <div className={classes.colorStripe} />

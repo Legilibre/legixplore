@@ -5,11 +5,7 @@ const legi = require("../legi");
 
 const getArticleData = memoize(
   (id) =>
-    legi.getArticle({
-      // cid: code,
-      id,
-      // date: "2019-01-01"
-    }),
+    legi.getArticle({id}),
   { promise: true }
 );
 /*
