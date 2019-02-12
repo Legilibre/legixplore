@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { default as LinkIcon } from "@material-ui/icons/Link";
 
-import DILABaseLink from "./DILABaseLink";
+import DocumentLink from "./DILABaseLink";
 import ArticleMeta from "./ArticleMeta";
 
 const Lien = ({ src_id, dst_cid, dst_id, dst_titre, typelien }) => (
@@ -69,7 +69,8 @@ export const CardMetadata = ({ classes, data, currentId }) => {
     return metadata;
   }
 
-  const filterBy = type => data.liens.filter(lien => lien.typelien === type);
+  const filterBy = type =>
+    data.liens.filter(lien => lien.typelien === type && lien.dst_id);
 
   const creePar = filterBy("CREATION");
   const abrogePar = filterBy("ABROGATION");
@@ -78,6 +79,7 @@ export const CardMetadata = ({ classes, data, currentId }) => {
   const citePar = filterBy("CITATION_R");
   const codifiePar = filterBy("CODIFICATION");
   const anciensTextes = filterBy("CONCORDANCE");
+  const rattachements = filterBy("RATTACHEMENT");
 
   return (
     <React.Fragment>
@@ -87,12 +89,13 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={creePar}
           Icon={EventAvailableIcon}
           render={link => (
-            <Link
-              route="article"
-              params={{ texte: link.dst_cid || "unknown", article: link.dst_id }}
+            <DocumentLink
+              type="article"
+              id={link.dst_id}
+              texteId={link.dst_cid || "unknown"}
             >
               <a>{link.dst_titre || link.titre}</a>
-            </Link>
+            </DocumentLink>
           )}
         />
         <BlocLinks
@@ -100,12 +103,13 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={abrogePar}
           Icon={DeleteIcon}
           render={link => (
-            <Link
-              route="article"
-              params={{ texte: link.dst_cid || "unknown", article: link.dst_id }}
+            <DocumentLink
+              type="article"
+              id={link.dst_id}
+              texteId={link.dst_cid || "unknown"}
             >
               <a>{link.dst_titre || link.titre}</a>
-            </Link>
+            </DocumentLink>
           )}
         />
         <BlocLinks
@@ -113,12 +117,13 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={cite}
           Icon={SubjectIcon}
           render={link => (
-            <Link
-              route="article"
-              params={{ texte: link.dst_cid || "unknown", article: link.dst_id }}
+            <DocumentLink
+              type="article"
+              id={link.dst_id}
+              texteId={link.dst_cid || "unknown"}
             >
               <a>{link.dst_titre || link.titre}</a>
-            </Link>
+            </DocumentLink>
           )}
         />
         <BlocLinks
@@ -126,12 +131,12 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={citePar}
           Icon={SubjectIcon}
           render={link => (
-            <Link
-              route="article"
+            <DocumentLink
+              type="article"
               params={{ texte: link.article_cid, article: link.src_id }}
             >
               <a>{link.dst_titre || link.titre || link.dst_id}</a>
-            </Link>
+            </DocumentLink>
           )}
         />
         <BlocLinks
@@ -139,9 +144,9 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={codifiePar}
           Icon={SubjectIcon}
           render={link => (
-            <Link route="texte" params={{ texte: link.dst_cid }}>
+            <DocumentLink type="texte" id={link.dst_cid}>
               <a>{link.dst_titre || link.titre}</a>
-            </Link>
+            </DocumentLink>
           )}
         />
         <BlocLinks
@@ -149,6 +154,19 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={anciensTextes}
           Icon={SubjectIcon}
           render={link => link.dst_titre || link.titre || link.dst_id}
+        />
+        <BlocLinks
+          title="Rattachés"
+          links={rattachements}
+          Icon={EventAvailableIcon}
+          render={link => (
+            <Link
+              type="article"
+              params={{ texte: link.dst_cid || "unknown", article: link.dst_id }}
+            >
+              <a>{link.dst_titre || link.titre}</a>
+            </Link>
+          )}
         />
       </MetaCard>
       {metadata}

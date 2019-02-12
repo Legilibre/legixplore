@@ -41,7 +41,7 @@ const Code = ({ classes, cid, titre, structure }) => (
                         key={child2.id}
                         parentId={cid}
                         id={child2.id}
-                        titre_ta={child2.titre_ta}
+                        titre={child2.titre}
                       />
                     );
                   } else if (child2.type === "article") {
@@ -51,7 +51,7 @@ const Code = ({ classes, cid, titre, structure }) => (
               </List>
             </CardContent>
             <CardActions>
-              <ButtonDetailSection code={cid} section={child.id} />
+              <ButtonDetailSection texteId={cid} section={child.id} />
               <ButtonLegifrance
                 href={`https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${
                   child.id

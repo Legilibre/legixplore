@@ -56,7 +56,7 @@ const Article = ({ classes, data, showPreview }) => (
       </CardContent>
       <CardActions>
         {(!showPreview && (
-          <ButtonDetailArticle code={data.cid} article={data.id} />
+          <ButtonDetailArticle texteId={data.cid} article={data.id} />
         )) ||
           null}
         <ButtonLegifrance

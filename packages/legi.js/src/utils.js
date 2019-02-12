@@ -100,8 +100,8 @@ const getItemType = item => {
 const canContainChildren = item => ["section", "texte", "tetier"].includes(getItemType(item));
 
 // transform flat rows to hierarchical tree
-const makeAst = (rows, parent = null) =>
-  rows
+const makeAst = (rows, parent = null) => {
+  return rows
     .filter(row => row.data.parent === parent)
     .sort(sortByKey("data.position"))
     .map(row => ({
@@ -109,6 +109,7 @@ const makeAst = (rows, parent = null) =>
       // add children nodes for sections
       children: (canContainChildren(row.data) && makeAst(rows, row.data.id)) || undefined
     }));
+};
 
 module.exports = {
   serial,

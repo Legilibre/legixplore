@@ -11,7 +11,7 @@ import {
   Typography
 } from "@material-ui/core";
 
-const Drawer = ({ classes, cid, onToggle, opened, structure }) => (
+const Drawer = ({ classes, cid, conteneurId, onToggle, opened, structure }) => (
   <div style={{ alignItems: "start" }}>
     <div className={classes.toolbarIcon}>
       <Link route="index">
@@ -38,7 +38,7 @@ const Drawer = ({ classes, cid, onToggle, opened, structure }) => (
           keepMounted: true // Better open performance on mobile.
         }}
       >
-        <Tree cid={cid} {...structure} />
+        <Tree conteneurId={conteneurId} cid={cid} {...structure} />
       </MaterialDrawer>
     </Hidden>
     <Hidden xsDown initialWidth="lg">
@@ -49,7 +49,7 @@ const Drawer = ({ classes, cid, onToggle, opened, structure }) => (
         variant="permanent"
         open={opened}
       >
-        <Tree cid={cid} {...structure} />
+        <Tree conteneurId={conteneurId} cid={cid} {...structure} />
       </MaterialDrawer>
     </Hidden>
   </div>

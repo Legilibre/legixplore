@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Menu as MenuIcon } from "@material-ui/icons";
 import { IconButton, Typography, AppBar, Toolbar } from "@material-ui/core";
 
-import Link from "./DILABaseLink";
+import DocumentLink from "./DILABaseLink";
 import withToggle from "./lib/withToggle";
 import Drawer from "./Drawer";
 
@@ -97,6 +97,7 @@ const ToolbarTitle = ({ classes, style, title }) => (
 );
 
 const _Layout = ({
+  conteneurId,
   cid,
   title,
   classes,
@@ -125,7 +126,7 @@ const _Layout = ({
           <MenuIcon />
         </IconButton>
         {(cid && (
-          <Link route="texte" params={{ texte: cid }}>
+          <DocumentLink type="texte" id={cid}>
             <div>
               <ToolbarTitle
                 classes={classes}
@@ -133,13 +134,14 @@ const _Layout = ({
                 style={{ cursor: "pointer" }}
               />
             </div>
-          </Link>
+          </DocumentLink>
         )) || <ToolbarTitle classes={classes} title={title} />}
       </Toolbar>
     </AppBar>
     {(enableDrawer && (
       <Drawer
         cid={cid}
+        conteneurId={conteneurId}
         structure={structure}
         classes={classes}
         onToggle={onToggle}

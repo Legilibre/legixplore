@@ -6,7 +6,7 @@ import { Typography } from "@material-ui/core";
 
 import { Folder, FolderOpen, Subject } from "@material-ui/icons";
 
-import Link from "./DILABaseLink";
+import DocumentLink from "./DILABaseLink";
 
 const isActive = (props, id) => {
   return props.article === id || props.section === id;
@@ -36,8 +36,9 @@ const styles = theme => ({
 const TreeNode = ({
   id,
   classes,
+  conteneurId,
   cid,
-  titre_ta,
+  titre,
   type,
   onClick,
   children,
@@ -55,7 +56,7 @@ const TreeNode = ({
       }}
     >
       {depth > 0 && (
-        <Link route={type} params={{ texte: cid, [type]: id }}>
+        <DocumentLink type={type} id={id} conteneurId={conteneurId} texteId={cid}>
           <Typography
             onClick={e => onClick(id, expand)}
             className={cx(
@@ -64,7 +65,7 @@ const TreeNode = ({
             )}
             color="inherit"
             noWrap={true}
-            title={titre_ta}
+            title={titre}
           >
             {["section", "texte", "tetier"].includes(type) ? (
               expand ? (
@@ -75,9 +76,9 @@ const TreeNode = ({
             ) : (
               <Subject className={classes.icon} />
             )}
-            {titre_ta}
+            {titre}
           </Typography>
-        </Link>
+        </DocumentLink>
       )}
       <div>
         {children &&
@@ -87,6 +88,7 @@ const TreeNode = ({
             <TreeNode
               classes={classes}
               key={child.id}
+              conteneurId={conteneurId}
               cid={cid}
               {...child}
               onClick={onClick}
@@ -123,14 +125,15 @@ class Tree extends React.Component {
     return depth < 2 || this.state.opened.indexOf(id) > -1;
   };
   render() {
-    const { classes, cid, id, titre_ta, children, router } = this.props;
+    const { classes, conteneurId, cid, id, titre, children, router } = this.props;
     return (
       <TreeNode
         id={id}
         cid={cid}
+        conteneurId={conteneurId}
         onClick={this.onClick}
         classes={classes}
-        titre_ta={titre_ta}
+        titre={titre}
         query={router.query}
         isExpanded={this.isExpanded}
       >

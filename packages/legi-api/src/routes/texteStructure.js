@@ -10,20 +10,15 @@ const getStructure = tree =>
     children: node.children,
     type: node.type,
     id: node.data && node.data.id,
-    titre_ta: (node.data && (node.data.titre_ta || node.data.titre)) || ""
+    titre: node.data && node.data.titre
   }));
 
 const getSommaireData = memoize(
-  code =>
-    legi.getSommaireCode({
-      cid: code,
-      date: "2019-01-01"
-    }),
-  { promise: true }
+  id => legi.getSommaireTexte({id}), { promise: true }
 );
 
-routes.get("/code/:code/structure", async (req, res) => {
-  const data = await getSommaireData(req.params.code);
+routes.get("/texte/:texte/structure", async (req, res) => {
+  const data = await getSommaireData(req.params.texte);
   res.json(getStructure(data));
 });
 

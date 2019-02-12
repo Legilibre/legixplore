@@ -4,14 +4,10 @@ const memoize = require("memoizee");
 const legi = require("../legi");
 
 const getTetierData = memoize(
-  (id) =>
-    legi.getTetier({
-      // cid: code,
-      id,
-      // date: "2019-01-01"
-    }),
+  (id) => legi.getTetier({id}),
   { promise: true }
 );
+
 /*
  parents
  liens

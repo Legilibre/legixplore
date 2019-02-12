@@ -18,11 +18,11 @@ const fetchTetier = memoize((id) =>
   fetch(`${API_URL}/tetier/${id}`).then(r => r.json())
 );
 
-const fetchCodeStructure = memoize(code =>
-  fetch(`${API_URL}/code/${code}/structure`).then(r => r.json())
+const fetchTexteStructure = memoize(texte =>
+  fetch(`${API_URL}/texte/${texte}/structure`).then(r => r.json())
 );
-const fetchConteneurStructure = memoize(code =>
-  fetch(`${API_URL}/conteneur/${code}/structure`).then(r => r.json())
+const fetchConteneurStructure = memoize(texte =>
+  fetch(`${API_URL}/conteneur/${texte}/structure`).then(r => r.json())
 );
 
 const fetchCodes = memoize(() => fetch(`${API_URL}/codes`).then(r => r.json()));
@@ -43,7 +43,7 @@ module.exports = {
   fetchSection,
   fetchArticle,
   fetchTetier,
-  fetchCodeStructure,
+  fetchTexteStructure,
   fetchConteneurStructure,
   fetchCodes,
   fetchConteneurs,

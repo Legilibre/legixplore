@@ -6,7 +6,7 @@ const pkg = require("../package.json");
 const app = express();
 app.use(cors());
 
-app.use("/", require("./routes/codeStructure"));
+app.use("/", require("./routes/texteStructure"));
 app.use("/", require("./routes/conteneurStructure"));
 app.use("/", require("./routes/section"));
 app.use("/", require("./routes/article"));

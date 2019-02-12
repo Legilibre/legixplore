@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 
 import ButtonDetailSection from "./ButtonDetailSection";
 import ButtonLegifrance from "./ButtonLegifrance";
-import Link from "./DILABaseLink";
+import DocumentLink from "./DILABaseLink";
 import AsyncArticle from "./AsyncArticle";
 import { CardMetadata, CardApi } from "./Metadata";
 
@@ -28,8 +28,8 @@ const MAX_DEPTH = 1;
 
 const getMaxH = val => `h${Math.min(6, val)}`;
 
-const SectionTitle = ({ title, variant = "h3", linkParams }) => (
-  <Link route="section" params={linkParams}>
+const SectionTitle = ({ title, variant = "h3", sectionId, texteId }) => (
+  <DocumentLink type="section" id={sectionId} texteId={texteId}>
     <Typography
       component="span"
       style={{ marginTop: 10, cursor: "pointer" }}
@@ -37,7 +37,7 @@ const SectionTitle = ({ title, variant = "h3", linkParams }) => (
     >
       {title}
     </Typography>
-  </Link>
+  </DocumentLink>
 );
 
 const DefaultEmptyMessage = ({ children }) =>
@@ -48,12 +48,9 @@ const DefaultEmptyMessage = ({ children }) =>
     </Typography>
   );
 
-export const SectionChildLink = ({ parentId, id, titre_ta }) => (
+export const SectionChildLink = ({ parentId, id, titre }) => (
   <div style={{ marginLeft: 10 }}>
-    <Link
-      route="section"
-      params={{ texte: parentId, section: id }}
-      >
+    <DocumentLink type="section" id={id} texteId={parentId}>
       <Typography
         variant="subtitle1"
         style={{
@@ -61,9 +58,9 @@ export const SectionChildLink = ({ parentId, id, titre_ta }) => (
           textDecoration: "underline"
         }}
       >
-        {titre_ta}
+        {titre}
       </Typography>
-    </Link>
+    </DocumentLink>
   </div>
 );
 
@@ -72,9 +69,10 @@ const Section = ({ parentId, classes, data, children, depth = 0 }) => {
   const content = (
     <React.Fragment>
       <SectionTitle
-        linkParams={{ texte: parentId, section: data.id }}
+        sectionId={data.id}
+        texteId={parentId}
         variant={getMaxH(depth + 5)}
-        title={data.titre_ta || data.titre_tm || data.titre}
+        title={data.titre}
       />
       <DefaultEmptyMessage>{children}</DefaultEmptyMessage>
       {children &&
@@ -110,7 +108,7 @@ const Section = ({ parentId, classes, data, children, depth = 0 }) => {
                     <SectionChildLink
                       parentId={parentId}
                       id={child.data.id}
-                      titre_ta={child.data.titre_ta}
+                      titre={child.data.titre}
                     />
                   )}
                 </div>
@@ -127,7 +125,7 @@ const Section = ({ parentId, classes, data, children, depth = 0 }) => {
         <CardContent>{content}</CardContent>
         <CardActions>
           {(depth > 0 && (
-            false && <ButtonDetailSection code={parentId} section={data.id} />
+            <ButtonDetailSection texteId={parentId} section={data.id} />
           )) ||
             null}
           <ButtonLegifrance

@@ -10,15 +10,11 @@ const getStructure = tree =>
     children: node.children,
     type: node.type,
     id: node.data && node.data.id,
-    titre_ta: node.data.titre || node.data.titre_ta
+    titre: node.data && node.data.titre
   }));
 
 const getSommaireData = memoize(
-  id => legi.getSommaireConteneur({
-    id,
-    // date: "2019-01-01"
-  }),
-  { promise: true }
+  id => legi.getSommaireConteneur({id}), { promise: true }
 );
 
 routes.get("/conteneur/:conteneurId/structure", async (req, res) => {
