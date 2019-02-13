@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 
-import { Link } from "./routes";
+import Link from "next/link";
 import Tree from "./Tree";
 
 import {
@@ -14,7 +14,7 @@ import {
 const Drawer = ({ classes, cid, conteneurId, onToggle, opened, structure }) => (
   <div style={{ alignItems: "start" }}>
     <div className={classes.toolbarIcon}>
-      <Link route="index">
+      <Link href="/index">
         <Typography
           color="inherit"
           variant="h4"

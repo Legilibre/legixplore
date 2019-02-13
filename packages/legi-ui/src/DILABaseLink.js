@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "./routes";
+import Link from "next/link";
 import DILABaseContext from './DILABaseContext';
 
 /*
@@ -10,26 +10,32 @@ import DILABaseContext from './DILABaseContext';
 
 class DILABaseLink extends React.Component {
   static contextType = DILABaseContext;
-  render() {
+
+  getPathname() {
+    const { type } = this.props;
+    return `/${type}`;
+  }
+
+  getQuery() {
     const { type, id, conteneurId, texteId } = this.props;
     const base = this.context;
     if (type === "conteneur") {
-      return <Link route="conteneur" params={{ conteneur: id, base }}>
-        {this.props.children}
-      </Link>
+      return { id: conteneurId, base }
     } else if (type === "tetier") {
-      return <Link route="tetier" params={{ tetier: id, conteneur: conteneurId, base }}>
-        {this.props.children}
-      </Link>
+      return { tetier: id, conteneur:  conteneurId, base};
     } else if (type === "texte") {
-      return <Link route="texte" params={{ texte: id, base }}>
-        {this.props.children}
-      </Link>
+      return { texte: id, base };
     } else {
-      return <Link route={type} params={{ [type]: id, texte: texteId, base }}>
-        {this.props.children}
-      </Link>
+      return { [type]: id, texte: texteId, base };
     }
+  }
+
+  render() {
+    const pathname = this.getPathname();
+    const query = this.getQuery();
+    return <Link href={{ pathname, query }}>
+      {this.props.children}
+    </Link>;
   }
 }
 

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Fuse from "fuse.js";
 import { format } from "date-fns";
 
-import { Link } from "../src/routes";
+import Link from 'next/link'
 import Layout from "../src/Layout";
 import { fetchCodes, fetchConteneurs } from "../src/api";
 import { CardApi } from "../src/Metadata";
@@ -52,7 +52,7 @@ const CodesGrid = ({ classes, codes, children, base }) => (
 );
 
 const Code = ({ classes, base, id, titre, description, derniere_modification }) => (
-  <Link route="texte" params={{ base: base, texte: id }}>
+  <Link href={{ pathname: "/conteneur", query: { base: base, conteneur: id } }}>
     <Card className={classes.codeCard}>
       <CardActionArea>
         <div className={classes.colorStripe} />

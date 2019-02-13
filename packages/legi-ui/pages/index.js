@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Link } from "../src/routes";
+import Link from 'next/link';
 import Layout from "../src/Layout";
 
 import { Typography } from "@material-ui/core";
@@ -47,7 +47,7 @@ const BasesGrid = ({ classes, bases }) => (
 );
 
 const Base = ({ classes, id, titre, description }) => (
-  <Link route="codes" params={{ base: id }}>
+  <Link href={{ pathname: "/codes", query: { base: id } }}>
     <Card className={classes.codeCard}>
       <CardActionArea>
         <div className={classes.colorStripe} />
