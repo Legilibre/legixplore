@@ -2,7 +2,7 @@ const routes = require("express").Router();
 const memoize = require("memoizee");
 const map = require("unist-util-map");
 
-const legi = require("../legi");
+const getLegi = require("../getLegi");
 
 // extract basic text structure
 const getStructure = tree =>
@@ -15,11 +15,12 @@ const getStructure = tree =>
   }));
 
 const getSommaireData = memoize(
-  id => legi.getSommaireTexte({id}), { promise: true }
+  (baseDILA, id) => getLegi(baseDILA).getSommaireTexte({id}),
+  { promise: true }
 );
 
 routes.get("/texte/:texte/structure", async (req, res) => {
-  const data = await getSommaireData(req.params.texte);
+  const data = await getSommaireData(req.baseDILA, req.params.texte);
   res.json(getStructure(data));
 });
 

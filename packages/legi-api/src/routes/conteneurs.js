@@ -1,9 +1,9 @@
 const routes = require("express").Router();
 
-const legi = require("../legi");
+const getLegi = require("../getLegi");
 
 routes.get("/conteneurs", async (req, res) => {
-  const data = await legi.getConteneursList();
+  const data = await getLegi(req.baseDILA).getConteneursList();
   res.json(data);
 });
 

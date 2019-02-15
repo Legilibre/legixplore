@@ -1,18 +1,26 @@
 const express = require("express");
 const cors = require("cors");
 
+const getLegi = require("./getLegi");
 const pkg = require("../package.json");
 
 const app = express();
 app.use(cors());
 
-app.use("/", require("./routes/texteStructure"));
-app.use("/", require("./routes/conteneurStructure"));
-app.use("/", require("./routes/section"));
-app.use("/", require("./routes/article"));
-app.use("/", require("./routes/tetier"));
-app.use("/", require("./routes/codes"));
-app.use("/", require("./routes/conteneurs"));
+app.use(
+  "/v1/base/:baseDILA",
+  function(req, res, next) {
+    req.baseDILA = req.params.baseDILA;
+    next();
+  },
+  require("./routes/texteStructure"),
+  require("./routes/conteneurStructure"),
+  require("./routes/section"),
+  require("./routes/article"),
+  require("./routes/tetier"),
+  require("./routes/codes"),
+  require("./routes/conteneurs")
+);
 // TODO : can't we use /routes/* ?
 
 app.get("/", (req, res) => res.send({ version: pkg.version, name: pkg.name }));

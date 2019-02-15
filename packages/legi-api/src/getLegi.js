@@ -1,6 +1,6 @@
-const Legi = require("../../legi.js");
+const Legi = require("../../legi.js/src/index.js");
 // const legi = new Legi();
-const legi = new Legi({
+const getLegi = (baseDILA) => new Legi({
   client: "pg",
   version: "9.6",
   connection: {
@@ -8,7 +8,7 @@ const legi = new Legi({
     port: 5444,
     user: "user",
     password: "pass",
-    database: "kali"
+    database: baseDILA.toLowerCase()
   },
   pool: {
     min: 0,
@@ -16,4 +16,4 @@ const legi = new Legi({
   }
 });
 
-module.exports = legi;
+module.exports = getLegi;

@@ -1,11 +1,10 @@
 const routes = require("express").Router();
 const memoize = require("memoizee");
 
-const legi = require("../legi");
+const getLegi = require("../getLegi");
 
 const getArticleData = memoize(
-  (id) =>
-    legi.getArticle({id}),
+  (baseDILA, id) => getLegi(baseDILA).getArticle({id}),
   { promise: true }
 );
 /*
@@ -14,7 +13,7 @@ const getArticleData = memoize(
  versions
 */
 routes.get("/article/:article", async (req, res) => {
-  const article = await getArticleData(req.params.article);
+  const article = await getArticleData(req.baseDILA, req.params.article);
   res.json(article);
 });
 

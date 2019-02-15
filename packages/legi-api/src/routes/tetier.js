@@ -1,10 +1,10 @@
 const routes = require("express").Router();
 const memoize = require("memoizee");
 
-const legi = require("../legi");
+const getLegi = require("../getLegi");
 
 const getTetierData = memoize(
-  (id) => legi.getTetier({id}),
+  (baseDILA, id) => getLegi(baseDILA).getTetier({id}),
   { promise: true }
 );
 
@@ -14,7 +14,7 @@ const getTetierData = memoize(
  versions
 */
 routes.get("/tetier/:id", async (req, res) => {
-  const tetier = await getTetierData(req.params.id);
+  const tetier = await getTetierData(req.baseDILA, req.params.id);
   res.json(tetier);
 });
 
