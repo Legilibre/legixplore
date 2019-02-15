@@ -16,10 +16,6 @@ const styles = theme => ({
     width: 400,
     height: "100%"
   },
-  codeCard: {
-    width: 400,
-    height: "100%"
-  },
   gridList: {
     width: 900
   },
@@ -31,24 +27,9 @@ const styles = theme => ({
   }
 });
 
-const BasesGrid = ({ classes, bases }) => (
-  <Grid
-    style={{ marginTop: 20, justifyContent: "center" }}
-    container
-    justify="center"
-    spacing={32}
-  >
-    {bases.map(base => (
-      <Grid key={base.id} item>
-        <Base classes={classes} {...base} />
-      </Grid>
-    ))}
-  </Grid>
-);
-
-const Base = ({ classes, id, titre, description }) => (
-  <Link href={{ pathname: "/codes", query: { base: id } }}>
-    <Card className={classes.codeCard}>
+const Base = ({ classes, id, titre, description, pathname }) => (
+  <Link href={{ pathname , query: { base: id } }}>
+    <Card className={classes.card}>
       <CardActionArea>
         <div className={classes.colorStripe} />
         <CardContent>
@@ -73,16 +54,22 @@ class Bases extends React.Component {
     return (
       <Layout enableDrawer={false} title={`legiXplore`}>
         <div style={{ margin: "20px auto", maxWidth: 900 }}>
-          <BasesGrid classes={classes} bases={[
-            {id: "LEGI", titre: "LEGI", description: "Le droit"},
-            {id: "KALI", titre: "KALI", description: "Les CCNs"}
-          ]} />
+          <Grid
+            style={{ marginTop: 20, justifyContent: "center" }}
+            container
+            justify="center"
+            spacing={32}
+          >
+            <Grid key="LEGI" item>
+              <Base classes={classes} id="LEGI" titre="LEGI" description="Le droit" pathname="/codes" />
+            </Grid>
+            <Grid key="KALI" item>
+              <Base classes={classes} id="KALI" titre="KALI" description="Les conventions collectives nationales" pathname="/conteneurs" />
+            </Grid>
+          </Grid>
         </div>
       </Layout>
     );
   }
 }
-Bases.defaultProps = {
-  codes: []
-};
 export default withStyles(styles)(Bases);
