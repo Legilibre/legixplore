@@ -49,7 +49,7 @@ const Texte = ({ classes, conteneurId, texteId, titre, titrefull, structure }) =
                       />
                     );
                   } else if (child2.type === "article") {
-                    return <AsyncArticle conteneurId={conteneurId} cid={texteId} id={child2.id} />;
+                    return <AsyncArticle conteneurId={conteneurId} texteId={texteId} id={child2.id} />;
                   }
                 })}
               </List>
@@ -59,7 +59,7 @@ const Texte = ({ classes, conteneurId, texteId, titre, titrefull, structure }) =
               <ButtonLegifrance
                 href={`https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${
                   child.id
-                }&cidTexte=${child.cid}`}
+                }&cidTexte=${texteId}`}
               />
             </CardActions>
           </Card>

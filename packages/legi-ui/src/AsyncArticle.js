@@ -3,12 +3,12 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import AsyncFetch from "./lib/AsyncFetch";
 import { fetchArticle } from "./api";
 
-const AsyncArticle = ({ id, conteneurId }) => (
+const AsyncArticle = ({ id, texteId, conteneurId }) => (
   <AsyncFetch
     fetch={() => fetchArticle(id)}
     autoFetch={true}
     render={({ status, result }) =>
-      (result && <Article showDetails={false} {...result} conteneurId={conteneurId} />) || (
+      (result && <Article showDetails={false} {...result} conteneurId={conteneurId} texteId={texteId} />) || (
         <CircularProgress style={{ display: "block", margin: 10 }} />
       )
     }

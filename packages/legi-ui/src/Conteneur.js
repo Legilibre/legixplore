@@ -31,7 +31,7 @@ const Conteneur = ({ classes, conteneurId, titre, structure }) => (
               <Typography variant="h5">{tetier.titre}</Typography>
               <List>
                 {tetier.children.map(texte =>
-                  <div style={{ marginLeft: 10 }}>
+                  <div key={texte.id} style={{ marginLeft: 10 }}>
                     <DocumentLink type="texte" id={texte.id} conteneurId={conteneurId}>
                       <Typography
                         variant="subtitle1"

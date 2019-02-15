@@ -84,6 +84,7 @@ const Section = ({ conteneurId, texteId, classes, data, children, depth = 0 }) =
                 key={child.data.id}
                 id={child.data.id}
                 conteneurId={conteneurId}
+                texteId={texteId}
               />
             );
           } else if (child.data && ["section", "texte"].includes(child.type)) {

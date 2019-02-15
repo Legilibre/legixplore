@@ -32,7 +32,7 @@ class ArticlePage extends React.Component {
           <Head>
             <title>{texte.titre} - {article.titre} LEGI explorer</title>
           </Head>
-          <Article parentId={texte.id} conteneurId={conteneurId} cid={texte.id} {...article} showPreview={true} />
+          <Article parentId={texte.id} conteneurId={conteneurId} texteId={texte.id} {...article} showPreview={true} />
         </Layout>
       </DILABaseContext.Provider>
     );
