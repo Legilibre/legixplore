@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 
 import Layout from "../src/Layout";
-import Code from "../src/Code";
+import Texte from "../src/Texte";
 import DILABaseContext from "../src/DILABaseContext";
 import {
   fetchTexteStructure,
@@ -29,7 +29,7 @@ class TextePage extends React.Component {
           <Head>
             <title>{texte.titre} - LEGI explorer</title>
           </Head>
-          <Code
+          <Texte
             texteId={texte.id}
             conteneurId={conteneurId}
             titre={texte.titre}

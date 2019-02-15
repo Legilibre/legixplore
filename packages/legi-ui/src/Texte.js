@@ -20,7 +20,7 @@ const styles = {
   }
 };
 
-const Code = ({ classes, conteneurId, texteId, titre, titrefull, structure }) => (
+const Texte = ({ classes, conteneurId, texteId, titre, titrefull, structure }) => (
   <React.Fragment>
     <Card className={classes.card} style={{ marginTop: 10 }}>
       <CardContent>
@@ -75,4 +75,4 @@ const Code = ({ classes, conteneurId, texteId, titre, titrefull, structure }) =>
   </React.Fragment>
 );
 
-export default withStyles(styles)(Code);
+export default withStyles(styles)(Texte);
