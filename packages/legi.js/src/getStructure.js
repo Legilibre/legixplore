@@ -44,7 +44,7 @@ ${/* map some data from previous recursive call */ ""}
 SELECT
   hierarchie.element as id,
   hierarchie.parent,
-  tetiers.titre_tm as titre_ta,
+  tetiers.titre_tm as titre,
   hierarchie.position,
   hierarchie.etat,
   hierarchie.num
@@ -55,7 +55,7 @@ UNION ALL(
   SELECT
     hierarchie.element AS id,
     hierarchie.parent,
-    textes_versions.titre AS titre_ta,
+    textes_versions.titre AS titre,
     hierarchie.position,
     hierarchie.etat,
     NULL AS num
@@ -67,7 +67,7 @@ UNION ALL(
   SELECT
     hierarchie.element AS id,
     hierarchie.parent,
-    sections.titre_ta,
+    sections.titre_ta AS titre,
     hierarchie.position,
     hierarchie.etat,
     null AS num
@@ -79,7 +79,7 @@ UNION ALL(
   SELECT
     hierarchie.element as id,
     hierarchie.parent,
-    CONCAT('Article ', COALESCE(hierarchie.num, articles.num)) as titre_ta,
+    CONCAT('Article ', COALESCE(hierarchie.num, articles.num)) AS titre,
     hierarchie.position,
     hierarchie.etat,
     COALESCE(hierarchie.num, articles.num, 'inconnu')
@@ -92,6 +92,7 @@ UNION ALL(
 
 // SQL where id IN (x, y, z) query
 const getRowsIn = (knex, table, ids, key = "id") => knex.from(table).whereIn(key, ids);
+const reformatRows = row => ({ ...row, titre: row.titre_ta || row.titre_tm || row.titre });
 
 const getInitialCondition = (parentId, section) => {
   if (section) {
@@ -131,7 +132,7 @@ const getStructure = async ({
         knex,
         itemTypeToTable(itemType),
         result.rows.filter(row => getItemType(row) === itemType).map(row => row.id)
-      );
+      ).map(reformatRows);
     }
 
     // enrich sommaire rows with related data (sections, articles)

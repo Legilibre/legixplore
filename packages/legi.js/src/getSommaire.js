@@ -7,7 +7,7 @@ const getRow = row => ({
   type: getItemType(row),
   data: cleanData({
     id: row.id,
-    titre: row.titre_ta,
+    titre: row.titre,
     position: row.position,
     parent: row.parent
   })
