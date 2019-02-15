@@ -7,7 +7,7 @@ import Tetier from "../src/Tetier";
 
 import { fetchTetier, fetchConteneurStructure } from "../src/api";
 
-class SectionPage extends React.Component {
+class TetierPage extends React.Component {
   static async getInitialProps({ query }) {
     const base = query.base || 'LEGI';
     const conteneur = await fetchConteneurStructure(query.conteneur);
@@ -29,4 +29,4 @@ class SectionPage extends React.Component {
   }
 }
 
-export default SectionPage;
+export default TetierPage;

@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 
 import Layout from "../src/Layout";
-import Code from "../src/Code";
+import Conteneur from "../src/Conteneur";
 import DILABaseContext from "../src/DILABaseContext";
 import { fetchConteneurStructure } from "../src/api";
 
@@ -20,9 +20,8 @@ class ConteneurPage extends React.Component {
           <Head>
             <title>{conteneur.titre} - LEGI explorer</title>
           </Head>
-          <Code
+          <Conteneur
             conteneurId={conteneur.id}
-            texteId={null}
             titre={conteneur.titre}
             structure={conteneur} />
         </Layout>
