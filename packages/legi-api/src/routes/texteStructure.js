@@ -10,7 +10,8 @@ const getStructure = tree =>
     children: node.children,
     type: node.type,
     id: node.data && node.data.id,
-    titre: node.data && node.data.titre
+    titre: node.data && node.data.titre,
+    titrefull: node.data && node.data.titrefull
   }));
 
 const getSommaireData = memoize(

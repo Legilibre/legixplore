@@ -19,15 +19,23 @@ class DILABaseLink extends React.Component {
   getQuery() {
     const { type, id, conteneurId, texteId } = this.props;
     const base = this.context;
+    let q = { base };
     if (type === "conteneur") {
-      return { id: conteneurId, base }
+      q.id = conteneurId;
     } else if (type === "tetier") {
-      return { tetier: id, conteneur:  conteneurId, base};
+      q.tetier = id;
+      q.conteneur = conteneurId;
     } else if (type === "texte") {
-      return { texte: id, base };
+      q.texte = id;
+      if (base === "KALI")
+        q.conteneur = conteneurId;
     } else {
-      return { [type]: id, texte: texteId, base };
+      q[type] = id;
+      q.texte = texteId;
+      if (base === "KALI")
+        q.conteneur = conteneurId;
     }
+    return q;
   }
 
   render() {

@@ -28,7 +28,7 @@ const styles = {
 export const ArticleContent = ({ data }) => (
   <React.Fragment>
     <Typography variant="h5" component="h2" style={{ marginBottom: 20 }}>
-      {data.titre_ta}
+      {data.titre}
     </Typography>
     <Typography
       component="p"
@@ -48,7 +48,7 @@ export const ArticleContent = ({ data }) => (
   </React.Fragment>
 );
 
-const Article = ({ classes, data, showPreview }) => (
+const Article = ({ classes, data, conteneurId, showPreview }) => (
   <React.Fragment>
     <Card className={classes.card} style={{ marginTop: 10 }}>
       <CardContent>
@@ -56,7 +56,7 @@ const Article = ({ classes, data, showPreview }) => (
       </CardContent>
       <CardActions>
         {(!showPreview && (
-          <ButtonDetailArticle texteId={data.cid} article={data.id} />
+          <ButtonDetailArticle texteId={data.cid} article={data.id} conteneurId={conteneurId} />
         )) ||
           null}
         <ButtonLegifrance

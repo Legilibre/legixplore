@@ -28,8 +28,8 @@ const MAX_DEPTH = 1;
 
 const getMaxH = val => `h${Math.min(6, val)}`;
 
-const SectionTitle = ({ title, variant = "h3", sectionId, texteId }) => (
-  <DocumentLink type="section" id={sectionId} texteId={texteId}>
+const SectionTitle = ({ title, variant = "h3", sectionId, texteId, conteneurId }) => (
+  <DocumentLink type="section" id={sectionId} texteId={texteId} conteneurId={conteneurId}>
     <Typography
       component="span"
       style={{ marginTop: 10, cursor: "pointer" }}
@@ -48,9 +48,9 @@ const DefaultEmptyMessage = ({ children }) =>
     </Typography>
   );
 
-export const SectionChildLink = ({ parentId, id, titre }) => (
+export const SectionChildLink = ({ conteneurId, texteId, id, titre }) => (
   <div style={{ marginLeft: 10 }}>
-    <DocumentLink type="section" id={id} texteId={parentId}>
+    <DocumentLink type="section" id={id} texteId={texteId} conteneurId={conteneurId}>
       <Typography
         variant="subtitle1"
         style={{
@@ -64,13 +64,14 @@ export const SectionChildLink = ({ parentId, id, titre }) => (
   </div>
 );
 
-const Section = ({ parentId, classes, data, children, depth = 0 }) => {
+const Section = ({ conteneurId, texteId, classes, data, children, depth = 0 }) => {
   // content of the current section
   const content = (
     <React.Fragment>
       <SectionTitle
         sectionId={data.id}
-        texteId={parentId}
+        conteneurId={conteneurId}
+        texteId={texteId}
         variant={getMaxH(depth + 5)}
         title={data.titre}
       />
@@ -78,18 +79,13 @@ const Section = ({ parentId, classes, data, children, depth = 0 }) => {
       {children &&
         children.map(child => {
           if (child.data && child.type === "article") {
-            if (depth < MAX_DEPTH) {
-              return (
-                <AsyncArticle
-                  key={child.data.id}
-                  id={child.data.id}
-                />
-              );
-            } else {
-              return (
-                <h4>Article {child.data.num} {child.data.titre}</h4>
-              );
-            }
+            return (
+              <AsyncArticle
+                key={child.data.id}
+                id={child.data.id}
+                conteneurId={conteneurId}
+              />
+            );
           } else if (child.data && ["section", "texte"].includes(child.type)) {
             return (
               (
@@ -97,7 +93,8 @@ const Section = ({ parentId, classes, data, children, depth = 0 }) => {
                   {(depth < MAX_DEPTH && (
                     // recursive component
                     <Section
-                      parentId={parentId}
+                      conteneurId={conteneurId}
+                      texteId={texteId}
                       classes={classes}
                       depth={depth + 1}
                       data={child.data}
@@ -106,7 +103,8 @@ const Section = ({ parentId, classes, data, children, depth = 0 }) => {
                     </Section>
                   )) || (
                     <SectionChildLink
-                      parentId={parentId}
+                      conteneurId={conteneurId}
+                      texteId={texteId}
                       id={child.data.id}
                       titre={child.data.titre}
                     />
@@ -125,13 +123,13 @@ const Section = ({ parentId, classes, data, children, depth = 0 }) => {
         <CardContent>{content}</CardContent>
         <CardActions>
           {(depth > 0 && (
-            <ButtonDetailSection texteId={parentId} section={data.id} />
+            <ButtonDetailSection texteId={texteId} section={data.id} conteneurId={conteneurId} />
           )) ||
             null}
           <ButtonLegifrance
             href={`https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${
               data.id
-            }&cidTexte=${parentId}`}
+            }&cidTexte=${texteId}`}
           />
         </CardActions>
       </Card>
@@ -140,7 +138,7 @@ const Section = ({ parentId, classes, data, children, depth = 0 }) => {
         <React.Fragment>
           <CardMetadata data={data} classes={classes} currentId={data.id} />
           <CardApi
-            url={`https://legi.now.sh/code/${parentId}/section/${data.id}.json`}
+            url={`https://legi.now.sh/code/${texteId}/section/${data.id}.json`}
             classes={classes}
           />
         </React.Fragment>

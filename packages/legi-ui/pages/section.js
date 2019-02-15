@@ -2,12 +2,13 @@ import React from "react";
 import Head from "next/head";
 
 import Layout from "../src/Layout";
-import DetailView from "../src/DetailView";
+import Section from "../src/Section";
 import DILABaseContext from "../src/DILABaseContext";
 
 import {
   fetchSection,
-  fetchTexteStructure
+  fetchTexteStructure,
+  fetchConteneurStructure
 } from "../src/api";
 
 class SectionPage extends React.Component {
@@ -15,17 +16,27 @@ class SectionPage extends React.Component {
     const base = query.base || 'LEGI';
     const texte = await fetchTexteStructure(query.texte);
     const section = await fetchSection(query.section);
-    return { base, texte, section };
+    let conteneur;
+    if (query.conteneur) {
+      conteneur = await fetchConteneurStructure(query.conteneur);
+    }
+    return { base, texte, conteneur, section };
   }
   render() {
-    const { base, texte, section } = this.props;
+    const { base, texte, conteneur, section } = this.props;
+    const structure = conteneur || texte;
+    const conteneurId = conteneur && conteneur.id || null;
     return (
       <DILABaseContext.Provider value={base}>
-        <Layout title={texte.titre} structure={texte} cid={texte.id}>
+        <Layout title={texte.titre} structure={structure} texteId={texte.id} conteneurId={conteneurId} sectionId={section.data.id}>
           <Head>
             <title>{texte.titre} - {section.titre} LEGI explorer</title>
           </Head>
-          <DetailView parentId={texte.id} cid={texte.id} node={section} />
+          <Section
+            texteId={texte.id}
+            conteneurId={conteneurId}
+            showPreview={true}
+            {...section} />
         </Layout>
       </DILABaseContext.Provider>
     );

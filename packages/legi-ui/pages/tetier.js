@@ -22,7 +22,7 @@ class SectionPage extends React.Component {
           <Head>
             <title>{conteneur.titre} - {tetier.titre} LEGI explorer</title>
           </Head>
-          <Tetier parentId={conteneur.id} cid={conteneur.id} {...tetier} />
+          <Tetier conteneurId={conteneur.id} {...tetier} />
         </Layout>
       </DILABaseContext.Provider>
     );

@@ -16,11 +16,15 @@ class ConteneurPage extends React.Component {
     const { conteneur, base } = this.props;
     return (
       <DILABaseContext.Provider value={base}>
-        <Layout title={conteneur.titre} structure={conteneur} cid={conteneur.id} conteneurId={conteneur.id}>
+        <Layout title={conteneur.titre} structure={conteneur} texteId={conteneur.id} conteneurId={conteneur.id}>
           <Head>
             <title>{conteneur.titre} - LEGI explorer</title>
           </Head>
-          <Code cid={conteneur.id} titre={conteneur.titre} structure={conteneur} />}
+          <Code
+            conteneurId={conteneur.id}
+            texteId={null}
+            titre={conteneur.titre}
+            structure={conteneur} />
         </Layout>
       </DILABaseContext.Provider>
     );

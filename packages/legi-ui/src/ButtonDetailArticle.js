@@ -5,11 +5,11 @@ import { ZoomIn as ZoomInIcon } from "@material-ui/icons";
 
 import DocumentLink from "./DILABaseLink";
 
-const ButtonDetailArticle = ({ texteId, article }) => (
-  <DocumentLink type="article" id={article} texteId={texteId}>
+const ButtonDetailArticle = ({ article, texteId, conteneurId }) => (
+  <DocumentLink type="article" id={article} texteId={texteId} conteneurId={conteneurId}>
     <Button color="primary" variant="outlined" size="small">
       <ZoomInIcon style={{ marginRight: 5 }} />
-      Détails
+      Voir l'article en détail
     </Button>
   </DocumentLink>
 );

@@ -31,9 +31,9 @@ const TetierTitle = ({ title, variant = "h3", tetierId, conteneurId }) => (
   </DocumentLink>
 );
 
-export const TetierChildLink = ({ parentId, id, titre }) => (
+export const TetierChildLink = ({ conteneurId, id, titre }) => (
   <div style={{ marginLeft: 10 }}>
-    <DocumentLink type="texte" id={id}>
+    <DocumentLink type="texte" id={id} conteneurId={conteneurId}>
       <Typography
         variant="subtitle1"
         style={{
@@ -55,13 +55,13 @@ const DefaultEmptyMessage = ({ children }) =>
     </Typography>
   );
 
-const Tetier = ({ parentId, classes, data, children, depth = 0 }) => {
+const Tetier = ({ conteneurId, classes, data, children, depth = 0 }) => {
   // content of the current section
   const content = (
     <React.Fragment>
       <TetierTitle
         tetierId={data.id}
-        conteneurId={parentId}
+        conteneurId={conteneurId}
         title={data.titre}
       />
       <DefaultEmptyMessage>{children}</DefaultEmptyMessage>
@@ -71,7 +71,7 @@ const Tetier = ({ parentId, classes, data, children, depth = 0 }) => {
           ["texte"].includes(child.type) &&
           <div key={child.data.id} style={{ marginTop: 20 }}>
             <TetierChildLink
-              parentId={parentId}
+              conteneurId={conteneurId}
               id={child.data.id}
               titre={child.data.titre}
             />

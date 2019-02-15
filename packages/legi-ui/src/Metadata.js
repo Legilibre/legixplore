@@ -160,12 +160,11 @@ export const CardMetadata = ({ classes, data, currentId }) => {
           links={rattachements}
           Icon={EventAvailableIcon}
           render={link => (
-            <Link
-              type="article"
-              params={{ texte: link.dst_cid || "unknown", article: link.dst_id }}
+            <DocumentLink
+              type="article" id={link.dst_id} texteId={link.dst_cid}
             >
               <a>{link.dst_titre || link.titre}</a>
-            </Link>
+            </DocumentLink>
           )}
         />
       </MetaCard>

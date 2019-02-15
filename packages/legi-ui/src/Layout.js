@@ -98,7 +98,8 @@ const ToolbarTitle = ({ classes, style, title }) => (
 
 const _Layout = ({
   conteneurId,
-  cid,
+  texteId,
+  sectionId,
   title,
   classes,
   opened,
@@ -125,8 +126,8 @@ const _Layout = ({
         >
           <MenuIcon />
         </IconButton>
-        {(cid && (
-          <DocumentLink type="texte" id={cid}>
+        {(texteId && (
+          <DocumentLink type="texte" id={texteId}>
             <div>
               <ToolbarTitle
                 classes={classes}
@@ -140,8 +141,9 @@ const _Layout = ({
     </AppBar>
     {(enableDrawer && (
       <Drawer
-        cid={cid}
+        texteId={texteId}
         conteneurId={conteneurId}
+        sectionId={sectionId}
         structure={structure}
         classes={classes}
         onToggle={onToggle}

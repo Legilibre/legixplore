@@ -37,7 +37,8 @@ const TreeNode = ({
   id,
   classes,
   conteneurId,
-  cid,
+  texteId,
+  sectionId,
   titre,
   type,
   onClick,
@@ -56,7 +57,7 @@ const TreeNode = ({
       }}
     >
       {depth > 0 && (
-        <DocumentLink type={type} id={id} conteneurId={conteneurId} texteId={cid}>
+        <DocumentLink type={type} id={id} conteneurId={conteneurId} texteId={texteId} sectionId={sectionId}>
           <Typography
             onClick={e => onClick(id, expand)}
             className={cx(
@@ -89,7 +90,8 @@ const TreeNode = ({
               classes={classes}
               key={child.id}
               conteneurId={conteneurId}
-              cid={cid}
+              texteId={texteId}
+              sectionId={sectionId}
               {...child}
               onClick={onClick}
               depth={depth + 1}
@@ -108,7 +110,14 @@ TreeNode.defaultProps = {
 
 // handle local state
 class Tree extends React.Component {
-  state = { opened: [] };
+  constructor(props) {
+    super(props);
+    this.state = { opened: [
+      props.conteneurId,
+      props.texteId,
+      props.sectionId,
+    ] };
+  }
   onClick = (id, opened) => {
     this.setState(state => {
       if (opened) {
@@ -125,12 +134,13 @@ class Tree extends React.Component {
     return depth < 2 || this.state.opened.indexOf(id) > -1;
   };
   render() {
-    const { classes, conteneurId, cid, id, titre, children, router } = this.props;
+    const { classes, conteneurId, texteId, sectionId, id, titre, children, router } = this.props;
     return (
       <TreeNode
         id={id}
-        cid={cid}
+        texteId={texteId}
         conteneurId={conteneurId}
+        sectionId={sectionId}
         onClick={this.onClick}
         classes={classes}
         titre={titre}
