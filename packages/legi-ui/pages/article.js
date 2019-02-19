@@ -14,11 +14,11 @@ import {
 class ArticlePage extends React.Component {
   static async getInitialProps({ query }) {
     const base = query.base || 'LEGI';
-    const texte = await fetchTexteStructure(query.texte);
-    const article = await fetchArticle(query.article);
+    const texte = await fetchTexteStructure(query.texte, base);
+    const article = await fetchArticle(query.article, base);
     let conteneur;
     if (query.conteneur) {
-      conteneur = await fetchConteneurStructure(query.conteneur);
+      conteneur = await fetchConteneurStructure(query.conteneur, base);
     }
     return { base, conteneur, texte, article };
   }

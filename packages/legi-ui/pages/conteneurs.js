@@ -77,7 +77,7 @@ class Home extends React.Component {
   static async getInitialProps({ query }) {
     const { base } = query;
     if (base !== "KALI") throw new Error("conteneurs pages only accessible for KALI");
-    const conteneurs = await fetchConteneurs();
+    const conteneurs = await fetchConteneurs(base);
     return { conteneurs, base };
   }
   componentDidMount() {

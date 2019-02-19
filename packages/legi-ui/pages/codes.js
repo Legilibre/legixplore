@@ -5,7 +5,7 @@ import { format } from "date-fns";
 
 import Link from 'next/link'
 import Layout from "../src/Layout";
-import { fetchCodes, fetchConteneurs } from "../src/api";
+import { fetchCodes } from "../src/api";
 import { CardApi } from "../src/Metadata";
 
 import { Typography } from "@material-ui/core";
@@ -52,7 +52,7 @@ const CodesGrid = ({ classes, codes, children, base }) => (
 );
 
 const Code = ({ classes, base, id, titre, description, derniere_modification }) => (
-  <Link href={{ pathname: "/code", query: { base: base, conteneur: id } }}>
+  <Link href={{ pathname: "/texte", query: { base: base, texte: id } }}>
     <Card className={classes.codeCard}>
       <CardActionArea>
         <div className={classes.colorStripe} />
@@ -96,7 +96,7 @@ class Home extends React.Component {
   static async getInitialProps({ query }) {
     const base = query.base || 'LEGI';
     if (base !== "LEGI") throw new Error("codes pages only accessible for LEGI");
-    const codes = await fetchCodes();
+    const codes = await fetchCodes(base);
     return { codes, base };
   }
   componentDidMount() {

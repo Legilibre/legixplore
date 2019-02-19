@@ -8,7 +8,7 @@ const getTexte = (knex, { id, date }) =>
     type: "texte",
     // add root section data if needed
     data: await getTexteData(knex, { id }),
-    children: makeAst(rows)
+    children: makeAst(rows, id)
   }));
 
 module.exports = getTexte;

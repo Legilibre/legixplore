@@ -10,8 +10,8 @@ import { fetchTetier, fetchConteneurStructure } from "../src/api";
 class TetierPage extends React.Component {
   static async getInitialProps({ query }) {
     const base = query.base || 'LEGI';
-    const conteneur = await fetchConteneurStructure(query.conteneur);
-    const tetier = await fetchTetier(query.tetier);
+    const conteneur = await fetchConteneurStructure(query.conteneur, base);
+    const tetier = await fetchTetier(query.tetier, base);
     return { base, conteneur, tetier };
   }
   render() {

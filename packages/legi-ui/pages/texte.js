@@ -12,10 +12,10 @@ import {
 class TextePage extends React.Component {
   static async getInitialProps({ query }) {
     const base = query.base || 'LEGI';
-    const texte = await fetchTexteStructure(query.texte);
+    const texte = await fetchTexteStructure(query.texte, base);
     let conteneur;
     if (query.conteneur) {
-      conteneur = await fetchConteneurStructure(query.conteneur);
+      conteneur = await fetchConteneurStructure(query.conteneur, base);
     }
     return { texte, conteneur, base };
   }

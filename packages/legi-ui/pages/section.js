@@ -14,11 +14,11 @@ import {
 class SectionPage extends React.Component {
   static async getInitialProps({ query }) {
     const base = query.base || 'LEGI';
-    const texte = await fetchTexteStructure(query.texte);
-    const section = await fetchSection(query.section);
+    const texte = await fetchTexteStructure(query.texte, base);
+    const section = await fetchSection(query.section, base);
     let conteneur;
     if (query.conteneur) {
-      conteneur = await fetchConteneurStructure(query.conteneur);
+      conteneur = await fetchConteneurStructure(query.conteneur, base);
     }
     return { base, texte, conteneur, section };
   }

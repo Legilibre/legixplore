@@ -9,7 +9,7 @@ import { fetchConteneurStructure } from "../src/api";
 class ConteneurPage extends React.Component {
   static async getInitialProps({ query }) {
     const base = query.base || 'LEGI';
-    const conteneur = await fetchConteneurStructure(query.conteneur);
+    const conteneur = await fetchConteneurStructure(query.conteneur, base);
     return { conteneur, base };
   }
   render() {
