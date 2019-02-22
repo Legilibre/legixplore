@@ -14,12 +14,13 @@ const getStructure = tree =>
   }));
 
 const getSommaireData = memoize(
-  (baseDILA, id) => getLegi(baseDILA).getSommaireConteneur({id}),
+  (baseDILA, id, date) => getLegi(baseDILA).getSommaireConteneur({id, date}),
   { promise: true }
 );
 
 routes.get("/conteneur/:conteneurId/structure", async (req, res) => {
-  const data = await getSommaireData(req.baseDILA, req.params.conteneurId);
+  const date = new Date().toISOString().slice(0, 10);
+  const data = await getSommaireData(req.baseDILA, req.params.conteneurId, date);
   res.json(getStructure(data));
 });
 

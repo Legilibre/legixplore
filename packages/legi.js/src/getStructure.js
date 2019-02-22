@@ -16,9 +16,17 @@ const makeItem = itemType => {
 // postgreSQL queries to get the full structure in a single-query
 
 // basic SQL date/vigueur filters
-const getSommaireFilters = (date) => `1=1`;
-  // `sommaires.debut <= '${date}' and (sommaires.fin > '${date}' or sommaires.fin = '${date}' or LEFT(sommaires.etat, 7) = 'VIGUEUR')`;
-// removed `cid='${cid}' and`
+const getSommaireFilters = date => `
+  (
+    sommaires.debut <= '${date}'
+    OR sommaires.debut IS NULL  /* those from conteneurs */
+  ) AND (
+    sommaires.fin > '${date}'
+    OR sommaires.fin = '${date}'
+    OR sommaires.fin IS NULL  /* those from conteneurs */
+    OR LEFT(sommaires.etat, 7) = 'VIGUEUR'
+  )
+`;
 
 // add sections + articles basic data from the sommaires results
 const getStructureSQL = ({ date, initialCondition = "sommaires.parent is null", maxDepth = 1 }) => `
