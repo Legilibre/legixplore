@@ -148,6 +148,11 @@ const getStructure = async ({
     const getRow = row => {
       const itemType = getItemType(row);
       const item = cache[itemTypeToTable(itemType)].find(item => item.id === row.id);
+      if (!item) {
+        throw Error(
+          `no match in cache for item ${row.id} - ${itemType} - ${itemTypeToTable(itemType)}`
+        );
+      }
       return makeItem(itemType)({
         ...item,
         position: row.position,
