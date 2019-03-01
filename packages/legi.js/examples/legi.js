@@ -1,3 +1,3 @@
-const Legi = require("../src/Legi");
+const Legi = require("../src/legi");
 
 module.exports = new Legi();
