@@ -14,6 +14,10 @@ Une version de démo est disponible ici : [legi.now.sh](https://legi.now.sh)
 | [legi-api](./packages/legi-api) | API HTTP au-dessus de legi.js pour récupérer les textes |
 | [legi-ui](./packages/legi-ui)   | Interface web de consultation                           |
 
+## Installation locale
+
+⚠️ Ce projet ne fonctionne pour l'instant qu'avec NodeJS 9 ! Il y a une erreur de compilation pour NodeJS 11.
+
 ## Process
 
 La base DILA, initialement au format XML est consolidée et convertie au format SQLite par [legi.py](https://github.com/Legilibre/legi.py), puis reconvertie au format postgreSQL par [legi-postgres](https://github.com/Legilibre/legi-postgres).
