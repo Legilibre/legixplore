@@ -26,7 +26,8 @@ app.use(
 app.get("/", (req, res) => res.send({ version: pkg.version, name: pkg.name }));
 
 const PORT = process.env.PORT || 3005;
+const HOST = process.env.NODE_ENV == 'production' ? '0.0.0.0' : '127.0.0.1';
 
-app.listen(PORT, () => {
-  console.log(`listening on http://127.0.0.1:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`listening on http://${HOST}:${PORT}`);
 });
