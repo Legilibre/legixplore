@@ -1,7 +1,9 @@
-const getConteneursList = knex =>
-  knex
+const getConteneursList = (knex, filters = {}) => {
+  const { etats = ["VIGUEUR", "VIGUEUR_ETEN", "VIGUEUR_NON_ETEN"] } = filters;
+  return knex
     .table("conteneurs")
-    .whereIn("etat", ["VIGUEUR", "VIGUEUR_ETEN", "VIGUEUR_NON_ETEN"])
+    .whereIn("etat", etats)
     .orderBy("date_publi", "desc");
+};
 
 module.exports = getConteneursList;
