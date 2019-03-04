@@ -3,7 +3,7 @@ const { JSONlog } = require("../src/utils");
 
 // get code sommaire
 legi
-  .getConteneursList({ etats: ["VIGUEUR_ETEN"] })
+  .getConteneursList({ etat: ["VIGUEUR_ETEN"], nature: "TI" })
   .then(JSONlog)
   .catch(console.log)
   .then(legi.close);
