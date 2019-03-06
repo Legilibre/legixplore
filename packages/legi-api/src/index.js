@@ -19,6 +19,7 @@ app.use(
   require("./routes/article"),
   require("./routes/tetier"),
   require("./routes/codes"),
+  require("./routes/conteneur"),
   require("./routes/conteneurs")
 );
 // TODO : can't we use /routes/* ?
