@@ -3,7 +3,6 @@ const unified = require("unified");
 const rehypeStringify = require("rehype-stringify");
 const remark2rehype = require("remark-rehype");
 const doc = require("rehype-document");
-const select = require("unist-util-select");
 const map = require("unist-util-map");
 
 const toMarkdown = require("./markdown");
@@ -40,7 +39,7 @@ const mdAstToHtml = async node => {
       element: "markdown-body"
     })
     .use(doc, {
-      css: "https://rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css",
+      css: "https://unpkg.com/github-markdown-css",
       title: "legi.js",
       language: "fr"
     })

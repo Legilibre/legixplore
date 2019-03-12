@@ -44,7 +44,7 @@ const SectionTitle = ({ title, variant = "h3", linkParams }) => (
 const DefaultEmptyMessage = ({ children }) =>
   children &&
   children.length === 0 && (
-    <Typography>
+    <Typography style={{ marginTop: 20 }}>
       Le présent chapitre ne comprend pas de dispositions réglementaires.
     </Typography>
   );
