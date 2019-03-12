@@ -42,7 +42,7 @@ class CodePage extends React.Component {
   }
   render() {
     const { structure, detailData, query, codes } = this.props;
-    const codeTitle = codes.find(code => code.id === query.code).titre;
+    const codeTitle = codes.find(code => code.cid === query.code).titre;
     const notFound = (query.article || query.section) && detailData === null;
     const DetailComponent = getDetailComponent(detailData && detailData.type);
     return (

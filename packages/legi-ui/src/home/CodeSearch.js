@@ -4,8 +4,6 @@ import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 
-import { fetchCodes } from "../api";
-
 import Code from "./Code";
 
 const featuredCodes = [
@@ -14,7 +12,7 @@ const featuredCodes = [
   "LEGITEXT000023086525",
   "LEGITEXT000006072050",
   "LEGITEXT000006070719",
-  "LEGITEXT000022197698"
+  "LEGITEXT000006071367"
 ];
 
 const DEFAULT_FUSE_OPTIONS = {
@@ -52,12 +50,8 @@ const CodesGrid = ({ classes, codes, children }) => (
 class CodeSearch extends React.Component {
   state = {
     query: "",
-    codes: this.props.codes.filter(code => featuredCodes.indexOf(code.id) > -1)
+    codes: this.props.codes.filter(code => featuredCodes.indexOf(code.cid) > -1)
   };
-  static async getInitialProps({ query }) {
-    const codes = await fetchCodes();
-    return { codes };
-  }
   componentDidMount() {
     this.fuse = getFuse(this.props.codes);
   }

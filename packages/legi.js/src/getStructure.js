@@ -5,7 +5,7 @@ const makeSection = require("./makeSection");
 
 // basic SQL date/vigueur filters
 const getSommaireFilters = (cid, date) =>
-  `cid='${cid}' and sommaires.debut <= '${date}' and (sommaires.fin > '${date}' or sommaires.fin = '${date}' or sommaires.etat = 'VIGUEUR')`;
+  `cid='${cid}' and sommaires.debut <= '${date}' and sommaires.fin >= '${date}' `;
 
 // add sections + articles basic data from the sommaires results
 const getStructureSQL = ({
@@ -33,14 +33,14 @@ ${/* get full structure in a one-shot flat array */ ""}
 
 ${/* map some data from previous recursive call */ ""}
 
-SELECT  hierarchie.element as id, sections.parent, sections.titre_ta, hierarchie.position, hierarchie.etat, null as num
+SELECT  hierarchie.element as id, hierarchie.parent, sections.titre_ta, hierarchie.position, hierarchie.etat, null as num
   from hierarchie
   left join sections on sections.id=hierarchie.element
   where LEFT(hierarchie.element, 8) = 'LEGISCTA'
   ${
     /* group by prevents some duplicates like "select * from sommaires where cid='LEGITEXT000006071367' and parent is null" */ ""
   }
-  group by hierarchie.element, sections.parent, sections.titre_ta, hierarchie.position,  hierarchie.etat
+  group by hierarchie.element, hierarchie.parent, sections.titre_ta, hierarchie.position,  hierarchie.etat
 union ALL(
 SELECT  hierarchie.element as id, hierarchie.parent, CONCAT('Article ', COALESCE(hierarchie.num, articles.num)) as titre_ta, hierarchie.position, hierarchie.etat, COALESCE(hierarchie.num, articles.num, 'inconnu')
   from hierarchie

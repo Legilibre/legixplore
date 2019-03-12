@@ -18,7 +18,11 @@ const fetchStructure = memoize(code =>
   fetch(`${API_URL}/code/${code}/structure`).then(r => r.json())
 );
 
-const fetchCodes = memoize(() => fetch(`${API_URL}/codes`).then(r => r.json()));
+const fetchCodes = memoize(() =>
+  fetch(`${API_URL}/codes`)
+    .then(r => r.json())
+    .then(codes => codes.filter(c => c.etat !== "MODIFIE"))
+);
 
 const fetchNode = (code, node) => {
   if (node.type === "article") {

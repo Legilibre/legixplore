@@ -56,12 +56,13 @@ const getClassName = label =>
 const Code = ({
   classes,
   id,
+  cid,
   titrefull,
   description,
   derniere_modification,
   etat
 }) => (
-  <Link route="code" params={{ code: id }}>
+  <Link route="code" params={{ code: cid }}>
     <Card className={classes.codeCard}>
       <CardActionArea>
         <div className={classes[getClassName(etat)]}>
