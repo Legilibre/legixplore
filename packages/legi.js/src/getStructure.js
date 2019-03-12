@@ -37,6 +37,10 @@ SELECT  hierarchie.element as id, sections.parent, sections.titre_ta, hierarchie
   from hierarchie
   left join sections on sections.id=hierarchie.element
   where LEFT(hierarchie.element, 8) = 'LEGISCTA'
+  ${
+    /* group by prevents some duplicates like "select * from sommaires where cid='LEGITEXT000006071367' and parent is null" */ ""
+  }
+  group by hierarchie.element, sections.parent, sections.titre_ta, hierarchie.position,  hierarchie.etat
 union ALL(
 SELECT  hierarchie.element as id, hierarchie.parent, CONCAT('Article ', COALESCE(hierarchie.num, articles.num)) as titre_ta, hierarchie.position, hierarchie.etat, COALESCE(hierarchie.num, articles.num, 'inconnu')
   from hierarchie
@@ -53,15 +57,17 @@ const isSection = id => id.substring(0, 8) === "LEGISCTA";
 const isArticle = id => id.substring(0, 8) === "LEGIARTI";
 
 // get flat rows with the articles/sections for given section/date
-const getRawStructure = async ({ knex, cid, section, date, maxDepth = 0 }) =>
-  knex.raw(
-    getStructureSQL({
-      date,
-      cid,
-      maxDepth,
-      initialCondition: section ? `sommaires.element='${section}'` : "sommaires.parent is null"
-    })
-  );
+const getRawStructure = async ({ knex, cid, section, date, maxDepth = 0 }) => {
+  const filters = {
+    date,
+    cid,
+    maxDepth,
+    initialCondition: section ? `sommaires.element='${section}'` : "sommaires.parent is null"
+  };
+
+  const sql = getStructureSQL(filters);
+  return knex.raw(sql);
+};
 //.debug();
 
 // build AST-like deep structure for a given node
