@@ -7,7 +7,7 @@ exports[`getCode then html 1`] = `
 <meta charset=\\"utf-8\\">
 <title>legi.js</title>
 <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
-<link rel=\\"stylesheet\\" href=\\"https://rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css\\">
+<link rel=\\"stylesheet\\" href=\\"https://unpkg.com/github-markdown-css\\">
 </head>
 <body>
 <div class=\\"markdown-body\\"><p><h1>Chapitre I : Monnaies et médailles</h1><br>
