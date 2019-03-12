@@ -10,7 +10,8 @@ import ButtonDetailSection from "./ButtonDetailSection";
 import ButtonLegifrance from "./ButtonLegifrance";
 import { Link } from "./routes";
 import AsyncArticle from "./AsyncArticle";
-import { CardMetadata, CardApi } from "./Metadata";
+import { CardMetadata } from "./Metadata";
+import CardApi from "./CardApi";
 
 const styles = {
   card: {

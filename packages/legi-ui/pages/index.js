@@ -1,9 +1,8 @@
 import React from "react";
-import Fuse from "fuse.js";
 
 import Layout from "../src/Layout";
 import { fetchCodes } from "../src/api";
-import { CardApi } from "../src/Metadata";
+import CardApi from "../src/CardApi";
 
 import { withStyles } from "@material-ui/core/styles";
 

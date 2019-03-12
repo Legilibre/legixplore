@@ -2,9 +2,10 @@ import React from "react";
 import Head from "next/head";
 
 import Layout from "../src/Layout";
-import DetailView from "../src/DetailView";
 import Code from "../src/Code";
 import ContentNotFound from "../src/ContentNotFound";
+import Article from "../src/Article";
+import Section from "../src/Section";
 
 import {
   fetchArticle,
@@ -13,11 +14,19 @@ import {
   fetchCodes
 } from "../src/api";
 
+const detailViewComponents = {
+  article: Article,
+  section: Section
+};
+
+const getDetailComponent = nodeType =>
+  detailViewComponents[nodeType] || ContentNotFound;
+
 class CodePage extends React.Component {
   static async getInitialProps({ query }) {
     const structure = await fetchStructure(query.code);
     const codes = await fetchCodes();
-    let detailData = {};
+    let detailData = null;
     if (query.article) {
       detailData = await fetchArticle(query.code, query.article);
     }
@@ -35,6 +44,7 @@ class CodePage extends React.Component {
     const { structure, detailData, query, codes } = this.props;
     const codeTitle = codes.find(code => code.id === query.code).titre;
     const notFound = (query.article || query.section) && detailData === null;
+    const DetailComponent = getDetailComponent(detailData && detailData.type);
     return (
       <Layout title={codeTitle} structure={structure} cid={query.code}>
         <Head>
@@ -50,7 +60,11 @@ class CodePage extends React.Component {
               items={[{ titre_ta: codeTitle }, ...detailData.parents]}
               onClick={() => {}}
             />*/}
-            <DetailView cid={query.code} node={detailData} />
+            <DetailComponent
+              showPreview={true}
+              cid={query.code}
+              {...detailData}
+            />
           </div>
         ) : (
           <Code cid={query.code} titre={codeTitle} structure={structure} />

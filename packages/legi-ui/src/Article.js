@@ -9,7 +9,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
-import { CardMetadata, CardApi } from "./Metadata";
+import { CardMetadata } from "./Metadata";
+import CardApi from "./CardApi";
 import ButtonLegifrance from "./ButtonLegifrance";
 import ButtonDetailArticle from "./ButtonDetailArticle";
 

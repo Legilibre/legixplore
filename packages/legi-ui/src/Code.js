@@ -1,5 +1,4 @@
 import React from "react";
-import map from "unist-util-map";
 
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
@@ -9,7 +8,7 @@ import CardActions from "@material-ui/core/CardActions";
 import { withStyles } from "@material-ui/core/styles";
 
 import AsyncArticle from "./AsyncArticle";
-import { CardApi } from "./Metadata";
+import CardApi from "./CardApi";
 import ButtonLegifrance from "./ButtonLegifrance";
 import ButtonDetailSection from "./ButtonDetailSection";
 import { SectionChildLink } from "./Section";
