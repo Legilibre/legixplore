@@ -23,16 +23,19 @@ const getSommaireTexte = (knex, { id, date }) => {
     data: await getTexteData(knex, { id }),
     children: makeAst(result.rows.filter(canContainChildren).map(getRow), id)
   }));
-}
+};
 
-const getSommaireConteneur = (knex, { id, date }) =>
-  getRawStructure({ knex, parentId: id, date, maxDepth: 0 }).then(async result => ({
+const getSommaireConteneur = (knex, { id, date, includeArticles = false }) => {
+  // eslint-disable-next-line no-unused-vars
+  const filterRow = includeArticles ? _ => true : canContainChildren;
+  return getRawStructure({ knex, parentId: id, date, maxDepth: 0 }).then(async result => ({
     // make the final AST-like structure
     type: "conteneur",
     // add root section data if needed
     data: await getConteneurData(knex, { id: id }),
-    children: makeAst(result.rows.filter(canContainChildren).map(getRow), id)
+    children: makeAst(result.rows.filter(filterRow).map(getRow), id)
   }));
+};
 
 module.exports = {
   getSommaireTexte,

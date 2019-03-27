@@ -14,13 +14,16 @@ const getStructure = tree =>
   }));
 
 const getSommaireData = memoize(
-  (baseDILA, id, date) => getLegi(baseDILA).getSommaireConteneur({id, date}),
+  (baseDILA, id, date, includeArticles) => (
+    getLegi(baseDILA).getSommaireConteneur({id, date, includeArticles})
+  ),
   { promise: true }
 );
 
 routes.get("/conteneur/:conteneurId/structure", async (req, res) => {
   const date = new Date().toISOString().slice(0, 10);
-  const data = await getSommaireData(req.baseDILA, req.params.conteneurId, date);
+  const includeArticles = req.query.includeArticles === 'true' || false;
+  const data = await getSommaireData(req.baseDILA, req.params.conteneurId, date, includeArticles);
   res.json(getStructure(data));
 });
 

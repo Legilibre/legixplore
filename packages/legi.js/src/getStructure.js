@@ -87,7 +87,7 @@ UNION ALL(
   SELECT
     hierarchie.element as id,
     hierarchie.parent,
-    CONCAT('Article ', COALESCE(hierarchie.num, articles.num)) AS titre,
+    CONCAT('Article ', COALESCE(hierarchie.num, articles.num), ' ', articles.titre) AS titre,
     hierarchie.position,
     hierarchie.etat,
     COALESCE(hierarchie.num, articles.num, 'inconnu')
