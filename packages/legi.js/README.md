@@ -1,4 +1,6 @@
-# legi.js [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+# legi.js
+
+## Deprecated, use https://github.com/SocialGouv/legi-data
 
 [![npm](https://img.shields.io/npm/v/legi.svg)](https://www.npmjs.com/package/legi)
 ![license](https://img.shields.io/npm/l/legi.svg)
