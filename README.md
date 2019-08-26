@@ -1,5 +1,7 @@
 # legiXplore
 
+## Deprecated, use https://github.com/SocialGouv/legi-data
+
 Consultation la base LEGI.
 
 Ce projet _sans valeur officielle_ permet de consulter les textes issus de la [base LEGI publiée par la DILA](https://www.data.gouv.fr/fr/datasets/legi-codes-lois-et-reglements-consolides/).
