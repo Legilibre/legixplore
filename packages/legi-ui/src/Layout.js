@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Menu as MenuIcon } from "@material-ui/icons";
 import { IconButton, Typography, AppBar, Toolbar } from "@material-ui/core";
 
-import { Link } from "./routes";
+import DocumentLink from "./DILABaseLink";
 import withToggle from "./lib/withToggle";
 import Drawer from "./Drawer";
 
@@ -15,7 +15,8 @@ const styles = theme => ({
     display: "flex"
   },
   toolbar: {
-    paddingRight: 24 // keep right padding when drawer closed
+    paddingRight: 24, // keep right padding when drawer closed
+    overflow: "hidden"  // avoid long titles horizontal overflow
   },
   toolbarIcon: {
     display: "flex",
@@ -96,7 +97,9 @@ const ToolbarTitle = ({ classes, style, title }) => (
 );
 
 const _Layout = ({
-  cid,
+  conteneurId,
+  texteId,
+  sectionId,
   title,
   classes,
   opened,
@@ -123,8 +126,8 @@ const _Layout = ({
         >
           <MenuIcon />
         </IconButton>
-        {(cid && (
-          <Link route="code" params={{ code: cid }}>
+        {(texteId && (
+          <DocumentLink type="texte" id={texteId}>
             <div>
               <ToolbarTitle
                 classes={classes}
@@ -132,13 +135,15 @@ const _Layout = ({
                 style={{ cursor: "pointer" }}
               />
             </div>
-          </Link>
+          </DocumentLink>
         )) || <ToolbarTitle classes={classes} title={title} />}
       </Toolbar>
     </AppBar>
     {(enableDrawer && (
       <Drawer
-        cid={cid}
+        texteId={texteId}
+        conteneurId={conteneurId}
+        sectionId={sectionId}
         structure={structure}
         classes={classes}
         onToggle={onToggle}

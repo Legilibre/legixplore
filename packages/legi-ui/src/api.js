@@ -6,33 +6,39 @@ const API_URL = process.env.API_URL || "https://legi-api.now.sh"; // http://127.
 
 const fetch = params => console.log("fetch", params) || nodeFetch(params);
 
-const fetchSection = memoize((code, id) =>
-  fetch(`${API_URL}/code/${code}/section/${id}`).then(r => r.json())
+const fetchSection = memoize((id, base) =>
+  fetch(`${API_URL}/v1/base/${base}/section/${id}`).then(r => r.json())
 );
 
-const fetchArticle = memoize((code, id) =>
-  fetch(`${API_URL}/code/${code}/article/${id}`).then(r => r.json())
+const fetchArticle = memoize((id, base) =>
+  fetch(`${API_URL}/v1/base/${base}/article/${id}`).then(r => r.json())
 );
 
-const fetchStructure = memoize(code =>
-  fetch(`${API_URL}/code/${code}/structure`).then(r => r.json())
+const fetchTetier = memoize((id, base) =>
+  fetch(`${API_URL}/v1/base/${base}/tetier/${id}`).then(r => r.json())
 );
 
-const fetchCodes = memoize(() => fetch(`${API_URL}/codes`).then(r => r.json()));
+const fetchTexteStructure = memoize((id, base) =>
+  fetch(`${API_URL}/v1/base/${base}/texte/${id}/structure`).then(r => r.json())
+);
+const fetchConteneurStructure = memoize((id, base) =>
+  fetch(`${API_URL}/v1/base/${base}/conteneur/${id}/structure`).then(r => r.json())
+);
 
-const fetchNode = (code, node) => {
-  if (node.type === "article") {
-    return fetchArticle(code, node.data.id);
-  } else if (node.type === "section") {
-    return fetchSection(code, node.data.id);
-  }
-  return Promise.reject("invalid node type");
-};
+const fetchCodes = memoize((base) =>
+  fetch(`${API_URL}/v1/base/${base}/codes`).then(r => r.json())
+);
+const fetchConteneurs = memoize((base) =>
+  fetch(`${API_URL}/v1/base/${base}/conteneurs`).then(r => r.json())
+);
+
 
 module.exports = {
   fetchSection,
   fetchArticle,
-  fetchStructure,
+  fetchTetier,
+  fetchTexteStructure,
+  fetchConteneurStructure,
   fetchCodes,
-  fetchNode
+  fetchConteneurs
 };

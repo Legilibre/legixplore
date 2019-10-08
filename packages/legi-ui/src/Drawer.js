@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 
-import { Link } from "./routes";
+import Link from "next/link";
 import Tree from "./Tree";
 
 import {
@@ -11,10 +11,12 @@ import {
   Typography
 } from "@material-ui/core";
 
-const Drawer = ({ classes, cid, onToggle, opened, structure }) => (
+const Drawer = ({
+  classes, texteId, conteneurId, sectionId, onToggle, opened, structure
+}) => (
   <div style={{ alignItems: "start" }}>
     <div className={classes.toolbarIcon}>
-      <Link route="index">
+      <Link href="/index">
         <Typography
           color="inherit"
           variant="h4"
@@ -38,7 +40,7 @@ const Drawer = ({ classes, cid, onToggle, opened, structure }) => (
           keepMounted: true // Better open performance on mobile.
         }}
       >
-        <Tree cid={cid} {...structure} />
+        <Tree conteneurId={conteneurId} texteId={texteId} sectionId={sectionId} {...structure} />
       </MaterialDrawer>
     </Hidden>
     <Hidden xsDown initialWidth="lg">
@@ -49,7 +51,7 @@ const Drawer = ({ classes, cid, onToggle, opened, structure }) => (
         variant="permanent"
         open={opened}
       >
-        <Tree cid={cid} {...structure} />
+        <Tree conteneurId={conteneurId} texteId={texteId} sectionId={sectionId} {...structure} />
       </MaterialDrawer>
     </Hidden>
   </div>

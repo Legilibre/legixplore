@@ -6,7 +6,7 @@ import { Typography } from "@material-ui/core";
 
 import { Folder, FolderOpen, Subject } from "@material-ui/icons";
 
-import { Link } from "./routes";
+import DocumentLink from "./DILABaseLink";
 
 const isActive = (props, id) => {
   return props.article === id || props.section === id;
@@ -36,8 +36,10 @@ const styles = theme => ({
 const TreeNode = ({
   id,
   classes,
-  cid,
-  titre_ta,
+  conteneurId,
+  texteId,
+  sectionId,
+  titre,
   type,
   onClick,
   children,
@@ -55,7 +57,7 @@ const TreeNode = ({
       }}
     >
       {depth > 0 && (
-        <Link route={type} params={{ code: cid, [type]: id }}>
+        <DocumentLink type={type} id={id} conteneurId={conteneurId} texteId={texteId} sectionId={sectionId}>
           <Typography
             onClick={e => onClick(id, expand)}
             className={cx(
@@ -64,9 +66,9 @@ const TreeNode = ({
             )}
             color="inherit"
             noWrap={true}
-            title={titre_ta}
+            title={titre}
           >
-            {type === "section" ? (
+            {["section", "texte", "tetier"].includes(type) ? (
               expand ? (
                 <FolderOpen className={classes.icon} />
               ) : (
@@ -75,9 +77,9 @@ const TreeNode = ({
             ) : (
               <Subject className={classes.icon} />
             )}
-            {titre_ta}
+            {titre}
           </Typography>
-        </Link>
+        </DocumentLink>
       )}
       <div>
         {children &&
@@ -87,7 +89,9 @@ const TreeNode = ({
             <TreeNode
               classes={classes}
               key={child.id}
-              cid={cid}
+              conteneurId={conteneurId}
+              texteId={texteId}
+              sectionId={sectionId}
               {...child}
               onClick={onClick}
               depth={depth + 1}
@@ -106,7 +110,14 @@ TreeNode.defaultProps = {
 
 // handle local state
 class Tree extends React.Component {
-  state = { opened: [] };
+  constructor(props) {
+    super(props);
+    this.state = { opened: [
+      props.conteneurId,
+      props.texteId,
+      props.sectionId,
+    ] };
+  }
   onClick = (id, opened) => {
     this.setState(state => {
       if (opened) {
@@ -123,14 +134,16 @@ class Tree extends React.Component {
     return depth < 2 || this.state.opened.indexOf(id) > -1;
   };
   render() {
-    const { classes, cid, id, titre_ta, children, router } = this.props;
+    const { classes, conteneurId, texteId, sectionId, id, titre, children, router } = this.props;
     return (
       <TreeNode
         id={id}
-        cid={cid}
+        texteId={texteId}
+        conteneurId={conteneurId}
+        sectionId={sectionId}
         onClick={this.onClick}
         classes={classes}
-        titre_ta={titre_ta}
+        titre={titre}
         query={router.query}
         isExpanded={this.isExpanded}
       >

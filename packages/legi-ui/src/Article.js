@@ -28,7 +28,7 @@ const styles = {
 export const ArticleContent = ({ data }) => (
   <React.Fragment>
     <Typography variant="h5" component="h2" style={{ marginBottom: 20 }}>
-      {data.titre_ta}
+      {data.titre}
     </Typography>
     <Typography
       component="p"
@@ -48,7 +48,7 @@ export const ArticleContent = ({ data }) => (
   </React.Fragment>
 );
 
-const Article = ({ classes, data, showPreview }) => (
+const Article = ({ classes, data, texteId, conteneurId, showPreview }) => (
   <React.Fragment>
     <Card className={classes.card} style={{ marginTop: 10 }}>
       <CardContent>
@@ -56,13 +56,13 @@ const Article = ({ classes, data, showPreview }) => (
       </CardContent>
       <CardActions>
         {(!showPreview && (
-          <ButtonDetailArticle code={data.cid} article={data.id} />
+          <ButtonDetailArticle texteId={texteId} article={data.id} conteneurId={conteneurId} />
         )) ||
           null}
         <ButtonLegifrance
           href={`https://www.legifrance.gouv.fr/affichCodeArticle.do?idArticle=${
             data.id
-          }&cidTexte=${data.cid}`}
+          }&cidTexte=${texteId}`}
         />
       </CardActions>
     </Card>
@@ -72,7 +72,7 @@ const Article = ({ classes, data, showPreview }) => (
         <CardMetadata classes={classes} data={data} currentId={data.id} />
         <CardApi
           classes={classes}
-          url={`https://legi.now.sh/code/${data.cid}/article/${data.id}.json`}
+          url={`https://legi.now.sh/code/${texteId}/article/${data.id}.json`}
         />
       </React.Fragment>
     )) ||

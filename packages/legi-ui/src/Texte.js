@@ -20,11 +20,14 @@ const styles = {
   }
 };
 
-const Code = ({ classes, cid, titre, structure }) => (
+const Texte = ({ classes, conteneurId, texteId, titre, titrefull, structure }) => (
   <React.Fragment>
     <Card className={classes.card} style={{ marginTop: 10 }}>
       <CardContent>
         <Typography variant="h4">{titre}</Typography>
+        {titrefull &&
+          <Typography variant="h5">{titrefull}</Typography>
+        }
         {structure.children.map(child => (
           <Card
             key={child.id}
@@ -32,30 +35,31 @@ const Code = ({ classes, cid, titre, structure }) => (
             style={{ marginTop: 10 }}
           >
             <CardContent>
-              <Typography variant="h5">{child.titre_ta}</Typography>
+              <Typography variant="h5">{child.titre}</Typography>
               <List>
                 {child.children.map(child2 => {
-                  if (child2.type === "section") {
+                  if (["section", "texte"].includes(child2.type)) {
                     return (
                       <SectionChildLink
                         key={child2.id}
-                        cid={cid}
+                        conteneurId={conteneurId}
+                        texteId={texteId}
                         id={child2.id}
-                        titre_ta={child2.titre_ta}
+                        titre={child2.titre}
                       />
                     );
                   } else if (child2.type === "article") {
-                    return <AsyncArticle cid={cid} id={child2.id} />;
+                    return <AsyncArticle conteneurId={conteneurId} texteId={texteId} id={child2.id} />;
                   }
                 })}
               </List>
             </CardContent>
             <CardActions>
-              <ButtonDetailSection code={cid} section={child.id} />
+              <ButtonDetailSection texteId={texteId} section={child.id} conteneurId={conteneurId} />
               <ButtonLegifrance
                 href={`https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${
                   child.id
-                }&cidTexte=${child.cid}`}
+                }&cidTexte=${texteId}`}
               />
             </CardActions>
           </Card>
@@ -63,12 +67,12 @@ const Code = ({ classes, cid, titre, structure }) => (
       </CardContent>
       <CardActions>
         <ButtonLegifrance
-          href={`https://www.legifrance.gouv.fr/affichCode.do?cidTexte=${cid}`}
+          href={`https://www.legifrance.gouv.fr/affichCode.do?cidTexte=${texteId}`}
         />
       </CardActions>
     </Card>
-    <CardApi classes={classes} url={`https://legi.now.sh/code/${cid}.json`} />
+    <CardApi classes={classes} url={`https://legi.now.sh/code/${texteId}.json`} />
   </React.Fragment>
 );
 
-export default withStyles(styles)(Code);
+export default withStyles(styles)(Texte);

@@ -11,7 +11,7 @@ Vous pouvez mettre en place votre propre API avec votre propre base LEGI. cf [le
 ### Dev
 
 ```
-yarn dev
+API_URL=http://localhost:3005 yarn dev
 ```
 
 ## Todo
